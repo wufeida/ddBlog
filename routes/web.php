@@ -21,7 +21,7 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
     Route::get('check','LoginController@check');
     Route::post('login','LoginController@toLogin');
 
-    Route::group(['middleware'=>'auth'],function (){
+    Route::group(['middleware'=>'admincheck'],function (){
         Route::get('index','HomeController@index');
         Route::get('logout','LoginController@logout');
     });
