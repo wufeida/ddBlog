@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <title>INSPINIA | Dashboard</title>
+    <title>哒哒后台管理 | 首页</title>
 
     <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
     <link href="/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -62,7 +62,7 @@
         <div id="page-wrapper" class="gray-bg dashbard-1">
             @include('admin.layous.top')
             <div class="col-md-12" id="mainFrameTabs" style="padding : 0px;">
-                <div class="row  border-bottom white-bg dashboard-header">
+                <div class="row  border-bottom white-bg dashboard-header" style="padding: 5px 20px 0 20px;">
                      <ul class="nav nav-tabs" role="tablist">
                          <li role="presentation" class="active noclose"><a href="#bTabs_navTabsMainPage" data-toggle="tab">首页</a></li>
                      </ul>
