@@ -32,13 +32,16 @@
                 {{csrf_field()}}
                 <div class="form-group">
                     @if(session('msg'))
-                        <p style="color: red;">{{ session('msg') }}</p>
+                        <div class="alert alert-danger">
+                            {{ session('msg') }}
+                        </div>
                     @endif
                     @if (count($errors) > 0)
                         @foreach ($errors->all() as $error)
-                            <p style="color: red;">{{ $error }}</p>
+                                <div class="alert alert-danger">
+                                    {{ $error }}
+                                </div>
                         @endforeach
-                    {{--<p style="color: red;">{{$errors}}</p>--}}
                     @endif
                     <input type="text" name="name" class="form-control" value="{{old('name')}}" placeholder="Username" >
                 </div>

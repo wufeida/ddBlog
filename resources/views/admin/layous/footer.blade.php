@@ -7,6 +7,7 @@
     </div>
 </div>
 <script>
+    showTime();
     function showTime()
     {
         //创建Date对象
