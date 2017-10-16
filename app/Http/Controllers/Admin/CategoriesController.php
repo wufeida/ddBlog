@@ -2,12 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\CategoriesRequest;
+use App\Model\Categories;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 
 class CategoriesController extends Controller
 {
+    protected $categories;
+    public function __construct(Categories $categories)
+    {
+        $this->categories = $categories;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,8 @@ class CategoriesController extends Controller
     public function index()
     {
         //
-        return view('admin.categories');
+        $data = $this->categories->paginate(10);
+        return view('admin.categories')->with(compact('data'));
     }
 
     /**
@@ -60,6 +68,8 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         //
+        $data = $this->categories->where('id', $id)->first();
+        return custom_json($data);
     }
 
     /**
@@ -69,9 +79,16 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoriesRequest $request, $id)
     {
         //
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description,
+            'path' => $request->path,
+        ];
+        $res = $this->categories->where('id', $id)->update($data);
+        return custom_json($res);
     }
 
     /**
