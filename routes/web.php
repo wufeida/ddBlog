@@ -16,13 +16,13 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
-    Route::get('login','LoginController@login');
+    Route::get('login','LoginController@login')->name('dd.login');
     Route::get('reg','LoginController@reg');
     Route::get('check','LoginController@check');
     Route::post('login','LoginController@toLogin');
 
     Route::group(['middleware'=>'admincheck'],function (){
-        Route::get('index','HomeController@index');
+        Route::get('index','HomeController@index')->name('dd.index');
         Route::get('logout','LoginController@logout');
         Route::resource('categories', 'CategoriesController');
     });
