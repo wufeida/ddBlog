@@ -23,7 +23,7 @@ class CategoriesController extends Controller
     public function index()
     {
         //
-        $data = $this->categories->paginate(10);
+        $data = $this->categories->orderBy('id', 'desc')->paginate(10);
         return view('admin.categories')->with(compact('data'));
     }
 
@@ -43,9 +43,16 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoriesRequest $request)
     {
         //
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description,
+            'path' => $request->path,
+        ];
+        $res = $this->categories->create($data);
+        return custom_json($res);
     }
 
     /**

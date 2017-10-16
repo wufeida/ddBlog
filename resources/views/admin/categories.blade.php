@@ -15,7 +15,14 @@
     <link href="/admin/css/style.css" rel="stylesheet">
 
 </head>
-
+<style>
+    .pagination{
+        margin: 0px 0px;
+    }
+    .alert{
+        margin-bottom: 0px;
+    }
+</style>
 <body class="gray-bg">
         <div class="gray-bg">
         <div class="wrapper wrapper-content animated fadeInRight">
@@ -23,7 +30,7 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <h5>分类管理  </h5>
+                            <button type="button" class="btn btn-success btn-sm add-categories" data-toggle="modal" data-target="#upModal">添加分类</button>
                             <a onclick="location.reload();" class="glyphicon glyphicon-refresh" style="float: right;color: green;font-size: 25px"></a>
                         </div>
                         <div class="ibox-content">
@@ -56,11 +63,14 @@
                                 </tr>
                                 @endforeach
                                 </tbody>
+
                             </table>
-                            <div style="float: right">
-                                {{ $data->links() }}
-                            </div>
+
                         </div>
+                        <div style="float: right;">
+                            {{ $data->links() }}
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -73,6 +83,8 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="myModalLabel">分类修改</h4>
+                    </div>
+                    <div id="error" style="display: none;margin-bottom:0px">
                     </div>
                     <form method="post" id="cate-form" action="{{ route('categories.store') }}" enctype="multipart/form-data">
                         {{csrf_field()}}
@@ -131,6 +143,7 @@
         });
         
         $(document).on("click", ".up-categories", function () {
+            $('#error').html('')
             var id = $(this).parent().parent().children().eq(0).html();
             var url = "/dd/categories/"+id+"/edit"
             $.getJSON(url, function(msg){
@@ -139,9 +152,19 @@
                 $('#up_cpath').val(msg.path)
                 var up_url = "/dd/categories/"+msg.id
                 $('#cate-form').attr('action',up_url)
-                var put = '<input type="hidden" name="_method" value="PUT">'
+                var put = '<input id="put" type="hidden" name="_method" value="PUT">'
                 $('#cate-form').append(put)
             })
+        })
+
+        $(document).on("click", ".add-categories", function () {
+            $('#error').html('')
+            $('#up_cname').val('')
+            $('#up_cdes').val('')
+            $('#up_cpath').val('')
+            var add_url = "/dd/categories";
+            $('#cate-form').attr('action',add_url)
+            $('#put').remove()
         })
 
         function saveCate(z) {
@@ -154,11 +177,22 @@
                 url: $("#cate-form").attr('action'),
                 data:formData,
                 async: false,
-                error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    console.log(XMLHttpRequest.status,XMLHttpRequest.readyState,textStatus);
+                error: function(msg) {
+                    if(msg.responseJSON.errors) {
+                        var str = '';
+                        for (x in msg.responseJSON.errors) {
+                            str += "<div class='alert alert-danger'>";
+                            str += msg.responseJSON.errors[x];
+                            str += "</div>";
+                        }
+                        if (str) {
+                            $('#error').append(str)
+                            $('#error').css('display','block');
+                        }
+                    }
                 },
                 success: function (msg) {
-
+                    location.reload();
                 }
             });
         }
