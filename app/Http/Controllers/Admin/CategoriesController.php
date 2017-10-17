@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\CategoriesRequest;
-use App\Model\Categories;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Session;
+use App\Repositories\CategoriesRepository;
 
 class CategoriesController extends Controller
 {
     protected $categories;
-    public function __construct(Categories $categories)
+    public function __construct(CategoriesRepository $categories)
     {
         $this->categories = $categories;
     }
@@ -23,7 +21,7 @@ class CategoriesController extends Controller
     public function index()
     {
         //
-        $data = $this->categories->orderBy('id', 'desc')->paginate(10);
+        $data = $this->categories->page(10,'desc','id');
         return view('admin.categories')->with(compact('data'));
     }
 
@@ -46,12 +44,7 @@ class CategoriesController extends Controller
     public function store(CategoriesRequest $request)
     {
         //
-        $data = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'path' => $request->path,
-        ];
-        $res = $this->categories->create($data);
+        $res = $this->categories->store($request->all());
         return custom_json($res);
     }
 
@@ -75,7 +68,7 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         //
-        $data = $this->categories->where('id', $id)->first();
+        $data = $this->categories->getById($id);
         return custom_json($data);
     }
 
@@ -89,12 +82,7 @@ class CategoriesController extends Controller
     public function update(CategoriesRequest $request, $id)
     {
         //
-        $data = [
-            'name' => $request->name,
-            'description' => $request->description,
-            'path' => $request->path,
-        ];
-        $res = $this->categories->where('id', $id)->update($data);
+        $res = $this->categories->update($id,$request->all());
         return custom_json($res);
     }
 
@@ -107,5 +95,7 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         //
+        $res = $this->categories->destroy($id);
+        return custom_json($res);
     }
 }

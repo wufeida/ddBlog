@@ -192,7 +192,7 @@
                     }
                 },
                 success: function (msg) {
-                    location.reload();
+//                    location.reload();
                 }
             });
         }

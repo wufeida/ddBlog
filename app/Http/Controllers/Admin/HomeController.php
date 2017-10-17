@@ -11,13 +11,12 @@ class HomeController extends Controller
     public function index()
     {
         $pdo     = \DB::connection()->getPdo();
-
         $version = $pdo->query('select version()')->fetchColumn();
-
+        $remote_host = Request()->getClientIp();
         $data = [
             'server'          => $_SERVER['SERVER_SOFTWARE'],
             'http_host'       => $_SERVER['HTTP_HOST'],
-            'remote_host'     => isset($_SERVER['REMOTE_HOST']) ? $_SERVER['REMOTE_HOST'] : $_SERVER['REMOTE_ADDR'],
+            'remote_host'     => $remote_host,
             'user_agent'      => $_SERVER['HTTP_USER_AGENT'],
             'php'             => phpversion(),
             'sapi_name'       => php_sapi_name(),
