@@ -16,11 +16,18 @@
 
 </head>
 <style>
-    .pagination{
+    .pagination {
         margin: 0px 0px;
     }
-    .alert{
+    .alert {
         margin-bottom: 0px;
+    }
+    .del-footer {
+        padding: 5px;
+        text-align: center;
+    }
+    .del-h4 {
+        text-align: center;
     }
 </style>
 <body class="gray-bg">
@@ -30,7 +37,7 @@
                 <div class="col-lg-12">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <button type="button" class="btn btn-success btn-sm add-categories" data-toggle="modal" data-target="#upModal">添加分类</button>
+                            <button type="button" class="btn btn-success btn-sm add-categories" data-toggle="modal" data-target="#formModal">添加分类</button>
                             <a onclick="location.reload();" class="glyphicon glyphicon-refresh" style="float: right;color: green;font-size: 25px"></a>
                         </div>
                         <div class="ibox-content">
@@ -57,8 +64,8 @@
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->updated_at}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-info btn-xs up-categories" data-toggle="modal" data-target="#upModal">编辑</button>
-                                        <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target="#myModal">删除</button>
+                                        <button type="button" class="btn btn-info btn-xs up-categories" data-toggle="modal" data-target="#formModal">编辑</button>
+                                        <button type="button" class="btn btn-danger btn-xs del-categories" data-toggle="modal" data-target=".delModal">删除</button>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -76,8 +83,8 @@
             </div>
         </div>
         </div>
-        <!-- Modal -->
-        <div class="modal fade" id="upModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <!--form Modal -->
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -115,6 +122,25 @@
                 </div>
             </div>
         </div>
+        <!-- delete modal -->
+        <div class="modal fade delModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <form method="post" id="del-form">
+                        {{csrf_field()}}
+                        {{ method_field('DELETE') }}
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title del-h4" id="myModalLabel">确认删除？</h4>
+                        </div>
+                        <div class="modal-footer del-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                            <button type="button" onclick="delCate($(this))" class="btn btn-danger">确认</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     <!-- Mainly scripts -->
     <script src="/admin/js/jquery-2.1.1.js"></script>
     <script src="/admin/js/bootstrap.min.js"></script>
@@ -133,6 +159,7 @@
 
     <!-- Peity -->
     <script src="/admin/js/demo/peity-demo.js"></script>
+    <script src="/admin/js/layer/layer.js"></script>
 
     <script>
         $(document).ready(function(){
@@ -141,7 +168,7 @@
                 radioClass: 'iradio_square-green',
             });
         });
-        
+        //点击编辑按钮
         $(document).on("click", ".up-categories", function () {
             $('#error').html('')
             var id = $(this).parent().parent().children().eq(0).html();
@@ -156,7 +183,13 @@
                 $('#cate-form').append(put)
             })
         })
-
+        //点击删除按钮
+        $(document).on("click", ".del-categories", function () {
+            var id = $(this).parent().parent().children().eq(0).html();
+            var url = "/dd/categories/"+id;
+            $('#del-form').attr('action',url)
+        })
+        //点击添加按钮
         $(document).on("click", ".add-categories", function () {
             $('#error').html('')
             $('#up_cname').val('')
@@ -166,7 +199,7 @@
             $('#cate-form').attr('action',add_url)
             $('#put').remove()
         })
-
+        //确认保存数据
         function saveCate(z) {
             var formData = new FormData($('#cate-form')[0]);
             $.ajax({
@@ -192,11 +225,31 @@
                     }
                 },
                 success: function (msg) {
-//                    location.reload();
+                    location.reload();
                 }
             });
         }
-
+        //确认删除
+        function delCate(z) {
+            var formData = new FormData($('#del-form')[0]);
+            $.ajax({
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: "POST",
+                url: $("#del-form").attr('action'),
+                data:formData,
+                async: false,
+                error: function(msg) {
+                    layer.alert('删除失败', {icon: 5}, function () {
+                        location.reload();
+                    });
+                },
+                success: function (msg) {
+                    location.reload();
+                }
+            });
+        }
 
     </script>
 
