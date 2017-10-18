@@ -39,7 +39,7 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <button type="button" class="btn btn-success btn-sm add-categories" data-toggle="modal" data-target="#formModal">添加分类</button>
-                            <a onclick="location.reload();" class="glyphicon glyphicon-refresh btn btn-success btn-xs" style="float: right;color: white;font-size: 20px;"></a>
+                            <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;"><i class="fa fa-refresh"></i> Refresh</button>
                         </div>
                         <div class="ibox-content">
 
@@ -158,6 +158,15 @@
     <script src="/admin/js/viewer/viewer.min.js"></script>
     <script src="/admin/js/upload-img-show.js"></script>
     <script src="/admin/categories.js"></script>
+    <script>
+        var b = window.top!=window.self;
+        function loadTopWindow(){
+            if (window.top!=null && window.top.document.URL!=document.URL){
+                window.top.location= document.URL;
+            }
+        }
+        console.log( "当前窗口是否在一个框架中："+b );
+    </script>
 </body>
 
 </html>
