@@ -10,7 +10,6 @@
 
     <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
     <link href="/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
-
     <link href="/admin/css/animate.css" rel="stylesheet">
     <link href="/admin/css/style.css" rel="stylesheet">
 
@@ -56,6 +55,14 @@
     <!-- Mainly scripts -->
     <script src="/admin/js/jquery-2.1.1.js"></script>
     <script src="/admin/js/bootstrap.min.js"></script>
+    <script>
+        function loadTopWindow(){
+            if (window.top!=window.self && window.top.document.URL!=document.URL){
+                window.top.location= document.URL;
+            }
+        }
+        loadTopWindow();
+    </script>
 
 </body>
 

@@ -3443,7 +3443,7 @@ video {
   padding: 0 20px;
 }
 .wrapper-content {
-  padding: 10px 10px 40px;
+  padding: 10px 0px 40px;
 }
 #page-wrapper {
   padding: 0 15px;
@@ -3747,7 +3747,7 @@ code {
   border-width: 3px 0 0;
   color: inherit;
   margin-bottom: 0;
-  padding: 14px 15px 7px;
+  padding: 14px 25px 7px;
   min-height: 48px;
 }
 .ibox-content {
