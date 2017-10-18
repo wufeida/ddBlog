@@ -44,7 +44,16 @@ class CategoriesController extends Controller
     public function store(CategoriesRequest $request)
     {
         //
-        $res = $this->categories->store($request->all());
+        $file = $request->file('image');
+        if ($file && $file->isValid()) {
+            $path = app('App\Tools\ImgUpload')->imgUpload($file);
+            $data = array_merge($request->all(),[
+                'image_url' => $path,
+            ]);
+        } else {
+            $data = $request->all();
+        }
+        $res = $this->categories->store($data);
         return custom_json($res);
     }
 
@@ -82,7 +91,16 @@ class CategoriesController extends Controller
     public function update(CategoriesRequest $request, $id)
     {
         //
-        $res = $this->categories->update($id,$request->all());
+        $file = $request->file('image');
+        if ($file && $file->isValid()) {
+            $path = app('App\Tools\ImgUpload')->imgUpload($file);
+            $data = array_merge($request->all(),[
+                'image_url' => $path,
+            ]);
+        } else {
+            $data = $request->all();
+        }
+        $res = $this->categories->update($id, $data);
         return custom_json($res);
     }
 

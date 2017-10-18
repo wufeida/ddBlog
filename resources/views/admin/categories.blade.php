@@ -13,6 +13,7 @@
     <link href="/admin/css/plugins/iCheck/custom.css" rel="stylesheet">
     <link href="/admin/css/animate.css" rel="stylesheet">
     <link href="/admin/css/style.css" rel="stylesheet">
+    <link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">
 
 </head>
 <style>
@@ -34,11 +35,11 @@
         <div class="gray-bg">
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12" style="padding-left: 0;padding-right: 0">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <button type="button" class="btn btn-success btn-sm add-categories" data-toggle="modal" data-target="#formModal">添加分类</button>
-                            <a onclick="location.reload();" class="glyphicon glyphicon-refresh" style="float: right;color: green;font-size: 25px"></a>
+                            <a onclick="location.reload();" class="glyphicon glyphicon-refresh btn btn-success btn-xs" style="float: right;color: white;font-size: 20px;"></a>
                         </div>
                         <div class="ibox-content">
 
@@ -54,13 +55,13 @@
                                     <th>操作</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="dowebok">
                                 @foreach($data as $v)
                                 <tr>
                                     <td>{{$v->id}}</td>
                                     <td>{{$v->name}}</td>
                                     <td>{{$v->description}}</td>
-                                    <td>{{$v->image_url}}</td>
+                                    <td><img width="40" height="40" data-original="{{$v->image_url}}" src="{{$v->image_url}}" alt=""></td>
                                     <td>{{$v->created_at}}</td>
                                     <td>{{$v->updated_at}}</td>
                                     <td>
@@ -105,9 +106,14 @@
                             <input type="text" class="form-control" name="description" id="up_cdes" placeholder="描述">
                         </div>
                         <div class="form-group">
-                            <label for="InputFile">分类图片</label>
-                            <input type="file" id="InputFile" name="file">
-                            <p class="help-block">Example block-level help text here.</p>
+                            <label for="image">分类图片</label>
+                            <div class="upload-box">
+                                <input type="file" class="form-control" id="image" name="image" onchange="previewImage(this,'preview1','J_avatar1')">
+                                <div id="preview1" class="preview">
+                                <img width="100" height="100" class="image" id="J_avatar1">
+                                </div>
+                                <div class="mask"><i class="ion-upload"></i></div>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="up_cpath">分类地址</label>
@@ -147,112 +153,11 @@
     <script src="/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <!-- Peity -->
-    <script src="/admin/js/plugins/peity/jquery.peity.min.js"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="/admin/js/inspinia.js"></script>
-    <script src="/admin/js/plugins/pace/pace.min.js"></script>
-
-    <!-- iCheck -->
-    <script src="/admin/js/plugins/iCheck/icheck.min.js"></script>
-
-    <!-- Peity -->
-    <script src="/admin/js/demo/peity-demo.js"></script>
+    <!-- self -->
     <script src="/admin/js/layer/layer.js"></script>
-
-    <script>
-        $(document).ready(function(){
-            $('.i-checks').iCheck({
-                checkboxClass: 'icheckbox_square-green',
-                radioClass: 'iradio_square-green',
-            });
-        });
-        //点击编辑按钮
-        $(document).on("click", ".up-categories", function () {
-            $('#error').html('')
-            var id = $(this).parent().parent().children().eq(0).html();
-            var url = "/dd/categories/"+id+"/edit"
-            $.getJSON(url, function(msg){
-                $('#up_cname').val(msg.name)
-                $('#up_cdes').val(msg.description)
-                $('#up_cpath').val(msg.path)
-                var up_url = "/dd/categories/"+msg.id
-                $('#cate-form').attr('action',up_url)
-                var put = '<input id="put" type="hidden" name="_method" value="PUT">'
-                $('#cate-form').append(put)
-            })
-        })
-        //点击删除按钮
-        $(document).on("click", ".del-categories", function () {
-            var id = $(this).parent().parent().children().eq(0).html();
-            var url = "/dd/categories/"+id;
-            $('#del-form').attr('action',url)
-        })
-        //点击添加按钮
-        $(document).on("click", ".add-categories", function () {
-            $('#error').html('')
-            $('#up_cname').val('')
-            $('#up_cdes').val('')
-            $('#up_cpath').val('')
-            var add_url = "/dd/categories";
-            $('#cate-form').attr('action',add_url)
-            $('#put').remove()
-        })
-        //确认保存数据
-        function saveCate(z) {
-            var formData = new FormData($('#cate-form')[0]);
-            $.ajax({
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: "POST",
-                url: $("#cate-form").attr('action'),
-                data:formData,
-                async: false,
-                error: function(msg) {
-                    if(msg.responseJSON.errors) {
-                        var str = '';
-                        for (x in msg.responseJSON.errors) {
-                            str += "<div class='alert alert-danger'>";
-                            str += msg.responseJSON.errors[x];
-                            str += "</div>";
-                        }
-                        if (str) {
-                            $('#error').append(str)
-                            $('#error').css('display','block');
-                        }
-                    }
-                },
-                success: function (msg) {
-                    location.reload();
-                }
-            });
-        }
-        //确认删除
-        function delCate(z) {
-            var formData = new FormData($('#del-form')[0]);
-            $.ajax({
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: "POST",
-                url: $("#del-form").attr('action'),
-                data:formData,
-                async: false,
-                error: function(msg) {
-                    layer.alert('删除失败', {icon: 5}, function () {
-                        location.reload();
-                    });
-                },
-                success: function (msg) {
-                    location.reload();
-                }
-            });
-        }
-
-    </script>
-
+    <script src="/admin/js/viewer/viewer.min.js"></script>
+    <script src="/admin/js/upload-img-show.js"></script>
+    <script src="/admin/categories.js"></script>
 </body>
 
 </html>
