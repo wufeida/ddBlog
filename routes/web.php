@@ -24,7 +24,8 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
     Route::group(['middleware'=>'admincheck'],function (){
         Route::get('index','HomeController@index')->name('dd.index');
         Route::get('logout','LoginController@logout');
-        Route::resource('categories', 'CategoriesController');
+        Route::resource('category', 'CategoryController', ['except' => ['create', 'show']]);
+        Route::resource('tag', 'tagController', ['except' => ['create', 'show']]);
     });
 
 });

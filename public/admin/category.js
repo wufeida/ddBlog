@@ -6,52 +6,52 @@ function resetFileInput(file){
 //清空form表单
 function clearForm() {
     $('#error').html('');
-    $('#up_cname').val('');
-    $('#up_cdes').val('');
-    $('#up_cpath').val('');
+    $('#name').val('');
+    $('#description').val('');
+    $('#path').val('');
     $('#J_avatar1').removeAttr('src');
+    $('#put').remove();
     resetFileInput($('#image'))
 }
 //点击编辑按钮
-$(document).on("click", ".up-categories", function () {
+$(document).on("click", ".edit", function () {
     clearForm();
     var id = $(this).parent().parent().children().eq(0).html();
-    var url = "/dd/categories/"+id+"/edit"
+    var url = "/dd/category/"+id+"/edit"
     $.getJSON(url, function(msg){
-        $('#up_cname').val(msg.name)
-        $('#up_cdes').val(msg.description)
-        $('#up_cpath').val(msg.path)
+        $('#name').val(msg.name)
+        $('#description').val(msg.description)
+        $('#path').val(msg.path)
         $('#J_avatar1').attr('src',msg.image_url);
-        var up_url = "/dd/categories/"+msg.id
-        $('#cate-form').attr('action',up_url)
+        var up_url = "/dd/category/"+msg.id
+        $('#add-form').attr('action',up_url)
         var put = '<input id="put" type="hidden" name="_method" value="PUT">'
-        $('#cate-form').append(put)
+        $('#add-form').append(put)
     })
 })
 //点击删除按钮
-$(document).on("click", ".del-categories", function () {
+$(document).on("click", ".delete", function () {
     var id = $(this).parent().parent().children().eq(0).html();
-    var url = "/dd/categories/"+id;
+    var url = "/dd/category/"+id;
     $('#del-form').attr('action',url)
 })
 //点击添加按钮
-$(document).on("click", ".add-categories", function () {
+$(document).on("click", ".add", function () {
     clearForm();
-    var add_url = "/dd/categories";
-    $('#cate-form').attr('action',add_url)
-    $('#put').remove()
+    var add_url = "/dd/category";
+    $('#add-form').attr('action',add_url)
 })
 //确认保存数据
-function saveCate(z) {
+function save(z) {
     //清空错误提示
     $('#error').html('');
-    var formData = new FormData($('#cate-form')[0]);
+    var formData = new FormData($('#add-form')[0]);
     $.ajax({
         cache: false,
         contentType: false,
         processData: false,
         type: "POST",
-        url: $("#cate-form").attr('action'),
+        url: $("#add-form").attr('action'),
         data:formData,
         async: false,
         error: function(msg) {
@@ -84,7 +84,7 @@ function saveCate(z) {
     });
 }
 //确认删除
-function delCate(z) {
+function del(z) {
     var formData = new FormData($('#del-form')[0]);
     $.ajax({
         cache: false,

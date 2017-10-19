@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\CategoriesRequest;
+use App\Http\Requests\CategoryRequest;
 use App\Http\Controllers\Controller;
-use App\Repositories\CategoriesRepository;
+use App\Repositories\CategoryRepository;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
-    protected $categories;
-    public function __construct(CategoriesRepository $categories)
+    protected $category;
+
+    public function __construct(CategoryRepository $category)
     {
-        $this->categories = $categories;
+        $this->category = $category;
     }
     /**
      * Display a listing of the resource.
@@ -21,18 +22,8 @@ class CategoriesController extends Controller
     public function index()
     {
         //
-        $data = $this->categories->page(10,'desc','id');
-        return view('admin.categories')->with(compact('data'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $data = $this->category->page(10,'desc','id');
+        return view('admin.category')->with(compact('data'));
     }
 
     /**
@@ -41,7 +32,7 @@ class CategoriesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoriesRequest $request)
+    public function store(CategoryRequest $request)
     {
         //
         $file = $request->file('image');
@@ -53,19 +44,8 @@ class CategoriesController extends Controller
         } else {
             $data = $request->all();
         }
-        $res = $this->categories->store($data);
+        $res = $this->category->store($data);
         return custom_json($res);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**
@@ -77,7 +57,7 @@ class CategoriesController extends Controller
     public function edit($id)
     {
         //
-        $data = $this->categories->getById($id);
+        $data = $this->category->getById($id);
         return custom_json($data);
     }
 
@@ -88,7 +68,7 @@ class CategoriesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoriesRequest $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         //
         $file = $request->file('image');
@@ -100,7 +80,7 @@ class CategoriesController extends Controller
         } else {
             $data = $request->all();
         }
-        $res = $this->categories->update($id, $data);
+        $res = $this->category->update($id, $data);
         return custom_json($res);
     }
 
@@ -113,7 +93,7 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         //
-        $res = $this->categories->destroy($id);
+        $res = $this->category->destroy($id);
         return custom_json($res);
     }
 }
