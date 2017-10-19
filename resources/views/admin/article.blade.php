@@ -14,6 +14,7 @@
     <link href="/admin/css/animate.css" rel="stylesheet">
     <link href="/admin/css/style.css" rel="stylesheet">
     <link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">
+    <link href="/admin/css/plugins/markdown-edit/simplemde.min.css" rel="stylesheet">
 
 </head>
 <style>
@@ -61,7 +62,7 @@
                                     <td>{{$v->subtitle}}</td>
                                     <td>{{$v->published_at}}</td>
                                     <td class="text-center">
-                                        <button type="button" class="btn btn-info edit btn-circle" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-eye-open"></i></button>
+                                        <a target="_blank" class="btn btn-success edit btn-circle"><i class="glyphicon glyphicon-eye-open"></i></a>
                                         <button type="button" class="btn btn-info edit btn-circle" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-pencil"></i></button>
                                         <button type="button" class="btn btn-danger delete btn-circle" data-toggle="modal" data-target="#delModal"><i class="glyphicon glyphicon-trash"></i></button>
                                     </td>
@@ -89,22 +90,52 @@
                     </div>
                     <div id="error" style="display: none;margin-bottom:0px">
                     </div>
-                    <form method="post" id="add-form" action="{{ route('tag.store') }}" enctype="multipart/form-data">
+                    <form method="post" id="add-form" action="{{ route('article.store') }}" enctype="multipart/form-data">
                         {{csrf_field()}}
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="up_cname">标签</label>
-                            <input type="text" id="tag" name="tag" class="form-control" placeholder="标签">
+                            <label for="title">标题</label>
+                            <input type="text" id="title" name="title" class="form-control" placeholder="标题">
                         </div>
                         <div class="form-group">
-                            <label for="up_cdes">标题</label>
-                            <input type="text" class="form-control" name="title" id="title" placeholder="标题">
+                            <label for="subtitle">副标题</label>
+                            <input type="text" id="subtitle" name="subtitle" class="form-control" placeholder="副标题">
                         </div>
                         <div class="form-group">
-                            <label for="up_cdes">描述</label>
-                            <textarea name="meta_description" id="meta_description" class="form-control" placeholder="主要描述"></textarea>
+                            <label for="up_cdes">分类</label>
+                            <select name="category_id" class="form-control">
+                                <option value="1">1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
                         </div>
+                        <div class="form-group">
+                            <label for="image">页面图片</label>
+                            <div class="upload-box">
+                                <input type="file" class="form-control" id="page_image" name="page_image" onchange="previewImage(this,'preview1','J_avatar1')">
+                                <div id="preview1" class="preview">
+                                    <img width="100" height="100" class="image" id="J_avatar1">
+                                </div>
+                                <div class="mask"><i class="ion-upload"></i></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">内容</label>
+                            <textarea name="content" id="editor"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="up_cdes">标签</label>
+                            <input class="form-control" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="content">主要描述</label>
+                            <textarea class="form-control" name="meta_description"></textarea>
+                        </div>
+
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="button" onclick="save($(this))" class="btn btn-primary">保存</button>
@@ -142,7 +173,11 @@
     <script src="/admin/js/layer/layer.js"></script>
     <script src="/admin/js/viewer/viewer.min.js"></script>
     <script src="/admin/js/upload-img-show.js"></script>
-    <script src="/admin/tag.js"></script>
+    <script src="/admin/article.js"></script>
+    <script src="/admin/js/plugins/markdown-edit/simplemde.min.js"></script>
+    <script>
+        var simplemde = new SimpleMDE({ element: $("#editor")[0] });
+    </script>
 </body>
 
 </html>
