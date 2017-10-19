@@ -26,6 +26,7 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::get('logout','LoginController@logout');
         Route::resource('category', 'CategoryController', ['except' => ['create', 'show']]);
         Route::resource('tag', 'tagController', ['except' => ['create', 'show']]);
+        Route::resource('article', 'articleController', ['except' => ['create', 'show']]);
     });
 
 });

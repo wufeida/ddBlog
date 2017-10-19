@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>哒哒后台管理 | 分类管理</title>
+    <title>哒哒后台管理 | 文章管理</title>
 
     <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
     <link href="/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -38,20 +38,18 @@
                 <div class="col-lg-12" style="padding-left: 0;padding-right: 0">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <button type="button" class="btn btn-success btn-sm add" data-toggle="modal" data-target="#formModal">添加分类</button>
+                            <button type="button" class="btn btn-success btn-sm add" data-toggle="modal" data-target="#formModal">添加文章</button>
                             <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;"><i class="fa fa-refresh"></i> Refresh</button>
                         </div>
                         <div class="ibox-content">
 
-                            <table class="table table-hover">
+                            <table class="table table-hover table-striped">
                                 <thead>
                                 <tr>
                                     <th class="text-center">#</th>
-                                    <th>名称</th>
-                                    <th>描述</th>
-                                    <th>图片</th>
-                                    <th>添加时间</th>
-                                    <th>更新时间</th>
+                                    <th>标题</th>
+                                    <th>副标题</th>
+                                    <th>发布时间</th>
                                     <th class="text-center">操作</th>
                                 </tr>
                                 </thead>
@@ -59,21 +57,18 @@
                                 @foreach($data as $v)
                                 <tr>
                                     <td class="text-center">{{$v->id}}</td>
-                                    <td>{{$v->name}}</td>
-                                    <td>{{$v->description}}</td>
-                                    <td><img width="40" height="40" style="cursor: pointer" data-original="{{$v->image_url}}" src="{{$v->image_url}}" alt=""></td>
-                                    <td>{{$v->created_at}}</td>
-                                    <td>{{$v->updated_at}}</td>
+                                    <td>{{$v->title}}</td>
+                                    <td>{{$v->subtitle}}</td>
+                                    <td>{{$v->published_at}}</td>
                                     <td class="text-center">
+                                        <button type="button" class="btn btn-info edit btn-circle" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-eye-open"></i></button>
                                         <button type="button" class="btn btn-info edit btn-circle" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-pencil"></i></button>
                                         <button type="button" class="btn btn-danger delete btn-circle" data-toggle="modal" data-target="#delModal"><i class="glyphicon glyphicon-trash"></i></button>
                                     </td>
                                 </tr>
                                 @endforeach
                                 </tbody>
-
                             </table>
-
                         </div>
                         <div style="float: right;">
                             {{ $data->links() }}
@@ -90,34 +85,24 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="add-label">添加分类</h4>
+                        <h4 class="modal-title" id="add-label">添加文章</h4>
                     </div>
                     <div id="error" style="display: none;margin-bottom:0px">
                     </div>
-                    <form method="post" id="add-form" action="{{ route('category.store') }}" enctype="multipart/form-data">
+                    <form method="post" id="add-form" action="{{ route('tag.store') }}" enctype="multipart/form-data">
                         {{csrf_field()}}
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="up_cname">分类名称</label>
-                            <input type="text" id="name" name="name" class="form-control" placeholder="分类名称">
+                            <label for="up_cname">标签</label>
+                            <input type="text" id="tag" name="tag" class="form-control" placeholder="标签">
+                        </div>
+                        <div class="form-group">
+                            <label for="up_cdes">标题</label>
+                            <input type="text" class="form-control" name="title" id="title" placeholder="标题">
                         </div>
                         <div class="form-group">
                             <label for="up_cdes">描述</label>
-                            <input type="text" class="form-control" name="description" id="description" placeholder="描述">
-                        </div>
-                        <div class="form-group">
-                            <label for="image">分类图片</label>
-                            <div class="upload-box">
-                                <input type="file" class="form-control" id="image" name="image" onchange="previewImage(this,'preview1','J_avatar1')">
-                                <div id="preview1" class="preview">
-                                <img width="100" height="100" class="image" id="J_avatar1">
-                                </div>
-                                <div class="mask"><i class="ion-upload"></i></div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="up_cpath">分类地址</label>
-                            <input type="text" id="path" name="path" class="form-control">
+                            <textarea name="meta_description" id="meta_description" class="form-control" placeholder="主要描述"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -157,7 +142,7 @@
     <script src="/admin/js/layer/layer.js"></script>
     <script src="/admin/js/viewer/viewer.min.js"></script>
     <script src="/admin/js/upload-img-show.js"></script>
-    <script src="/admin/category.js"></script>
+    <script src="/admin/tag.js"></script>
 </body>
 
 </html>

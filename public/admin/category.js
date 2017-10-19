@@ -23,6 +23,7 @@ $(document).on("click", ".edit", function () {
         $('#description').val(msg.description)
         $('#path').val(msg.path)
         $('#J_avatar1').attr('src',msg.image_url);
+        $('#add-label').html('修改分类')
         var up_url = "/dd/category/"+msg.id
         $('#add-form').attr('action',up_url)
         var put = '<input id="put" type="hidden" name="_method" value="PUT">'
@@ -38,6 +39,7 @@ $(document).on("click", ".delete", function () {
 //点击添加按钮
 $(document).on("click", ".add", function () {
     clearForm();
+    $('#add-label').html('添加分类')
     var add_url = "/dd/category";
     $('#add-form').attr('action',add_url)
 })

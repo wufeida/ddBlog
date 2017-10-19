@@ -53,7 +53,7 @@
                 <ul class="nav nav-second-level" id="menuSideBar">
                     <li mid="tab2" funurl="{{url('dd/category')}}"><a>分类管理</a></li>
                     <li mid="tab3" funurl="{{url('dd/tag')}}"><a>标签管理</a></li>
-                    <li mid="tab4" funurl="dashboard_4_1.html"><a>Dashboard v.4</a></li>
+                    <li mid="tab4" funurl="{{url('dd/article')}}"><a>文章管理</a></li>
                     <li mid="tab5" funurl="dashboard_5.html"><a>Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>
                     <li mid="tab6" funurl="dashboard_5.html"><a>Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>
                     <li mid="tab7" funurl="dashboard_5.html"><a>Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>
