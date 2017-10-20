@@ -28,6 +28,16 @@ class TagController extends Controller
     }
 
     /**
+     * 获取全部标签
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getList()
+    {
+        return $this->tag->all();
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

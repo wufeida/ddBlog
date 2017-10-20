@@ -212,7 +212,7 @@
                     </div>
                 </div>
             </div>
-            @include('admin/layous/footer')
+            {{--@include('admin/layous/footer')--}}
         </div>
         </div>
 

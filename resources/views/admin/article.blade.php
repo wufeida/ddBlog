@@ -39,7 +39,7 @@
                 <div class="col-lg-12" style="padding-left: 0;padding-right: 0">
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
-                            <button type="button" class="btn btn-success btn-sm add" data-toggle="modal" data-target="#formModal">添加文章</button>
+                            <a href="{{url('dd/article/create')}}" class="btn btn-success btn-sm">添加文章</a>
                             <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;"><i class="fa fa-refresh"></i> Refresh</button>
                         </div>
                         <div class="ibox-content">
@@ -60,10 +60,10 @@
                                     <td class="text-center">{{$v->id}}</td>
                                     <td>{{$v->title}}</td>
                                     <td>{{$v->subtitle}}</td>
-                                    <td>{{$v->published_at}}</td>
+                                    <td>{{$v->created_at}}</td>
                                     <td class="text-center">
                                         <a target="_blank" class="btn btn-success edit btn-circle"><i class="glyphicon glyphicon-eye-open"></i></a>
-                                        <button type="button" class="btn btn-info edit btn-circle" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-pencil"></i></button>
+                                        <a href="{{url('dd/article/'.$v->id.'/edit')}}" class="btn btn-info edit btn-circle"><i class="glyphicon glyphicon-pencil"></i></a>
                                         <button type="button" class="btn btn-danger delete btn-circle" data-toggle="modal" data-target="#delModal"><i class="glyphicon glyphicon-trash"></i></button>
                                     </td>
                                 </tr>
@@ -82,7 +82,7 @@
         </div>
         <!--form Modal -->
         <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="add-label" aria-hidden="true" data-backdrop="static">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog" style="margin-bottom: 200px;" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

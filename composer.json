@@ -8,8 +8,10 @@
         "php": ">=7.0.0",
         "barryvdh/laravel-debugbar": "^3.1",
         "fideloper/proxy": "~3.3",
+        "jellybool/translug": "^2.0",
         "laravel/framework": "5.5.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "league/html-to-markdown": "^4.5"
     },
     "require-dev": {
         "filp/whoops": "~2.0",
