@@ -80,7 +80,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="content">内容</label>
-                                        <textarea name="content" id="editor"></textarea>
+                                        <textarea name="content" id="editor">{{ isset($data) ? $data->content['raw'] : '' }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="tag">标签:</label>
@@ -92,7 +92,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="meta_description">主要描述</label>
-                                        <textarea class="form-control" value="{{ isset($data) ? $data->meta_description : '' }}" name="meta_description"></textarea>
+                                        <textarea class="form-control" value="" name="meta_description">{{ isset($data) ? $data->meta_description : '' }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="content">日期时间</label>
