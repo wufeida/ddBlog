@@ -27,6 +27,7 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::resource('category', 'CategoryController', ['except' => ['create', 'show']]);
         Route::resource('tag', 'TagController', ['except' => ['create', 'show']]);
         Route::resource('article', 'ArticleController', ['except' => ['show']]);
+        Route::resource('link', 'LinkController', ['except' => ['create', 'show']]);
     });
 
 });

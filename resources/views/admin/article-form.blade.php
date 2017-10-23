@@ -116,14 +116,14 @@
                                         <label class="col-sm-1 control-label" style="padding-left: 0">
                                             是否原创
                                         </label>
-                                        <div class="switch switch-mini col-sm-2">
+                                        <div class="switch switch-mini col-sm-2" data-on-text="YES" data-off-text="NO">
                                             <input type="checkbox" name="is_original" @if(isset($data))@if($data['is_original']) checked @endif @endif />
                                         </div>
 
                                         <label class="col-sm-1 control-label" style="padding-left: 0">
                                             是否草稿
                                         </label>
-                                        <div class="switch bootstrap-switch-mini col-sm-2">
+                                        <div class="switch bootstrap-switch-mini col-sm-2" data-on-text="YES" data-off-text="NO">
                                             <input type="checkbox" name="is_draft"  @if(isset($data))@if($data['is_draft']) checked @endif @endif />
                                         </div>
                                     </div>
@@ -171,8 +171,16 @@
             showMeridian: 1
         });
         // 开关按钮
-        $("[name='is_original']").bootstrapSwitch();
-        $("[name='is_draft']").bootstrapSwitch();
+        $("[name='is_original']").bootstrapSwitch({
+            size:'small',
+            onText:'YES',
+            offText:'NO'
+        });
+        $("[name='is_draft']").bootstrapSwitch({
+            size:'small',
+            onText:'YES',
+            offText:'NO'
+        });
 
         function save(z) {
             var formData = new FormData($('#add-form')[0]);
