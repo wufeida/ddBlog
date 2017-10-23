@@ -54,15 +54,15 @@
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="title">标题</label>
-                                        <input type="text" id="title" value="{{ isset($data) ? $data->title : '' }}" name="title" class="form-control" placeholder="标题">
+                                        <input type="text" id="title" value="{{ isset($data) ? $data['title'] : '' }}" name="title" class="form-control" placeholder="标题">
                                     </div>
                                     <div class="form-group">
                                         <label for="subtitle">副标题</label>
-                                        <input type="text" id="subtitle" value="{{ isset($data) ? $data->subtitle : '' }}" name="subtitle" class="form-control" placeholder="副标题">
+                                        <input type="text" id="subtitle" value="{{ isset($data) ? $data['subtitle'] : '' }}" name="subtitle" class="form-control" placeholder="副标题">
                                     </div>
                                     <div class="form-group">
                                         <label for="category_id">分类</label>
-                                        <select name="category_id" value="{{ isset($data) ? $data->category_id : '' }}" class="form-control selectpicker" data-live-search="true">
+                                        <select id="cate" name="category_id" value="{{ isset($data) ? $data['category_id'] : '' }}" class="form-control selectpicker" data-live-search="true">
                                             @foreach($categories as $v)
                                             <option value="{{$v->id}}">{{$v->name}}</option>
                                             @endforeach
@@ -73,18 +73,30 @@
                                         <div class="upload-box">
                                             <input type="file" class="form-control" id="page_image" name="page_image" onchange="previewImage(this,'preview1','J_avatar1')">
                                             <div id="preview1" class="preview">
-                                                <img width="100" src="{{ isset($data) ? $data->page_image : '' }}" height="100" class="image" id="J_avatar1">
+                                                <img width="100" src="{{ isset($data) ? $data['page_image'] : '' }}" height="100" class="image" id="J_avatar1">
                                             </div>
                                             <div class="mask"><i class="ion-upload"></i></div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="content">内容</label>
-                                        <textarea name="content" id="editor">{{ isset($data) ? $data->content['raw'] : '' }}</textarea>
+                                        <textarea name="content" id="editor">{{ isset($data) ? $data['content']['raw'] : '' }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="tag">标签:</label>
-                                        <select id="tag" name="tag" class="form-control selectpicker" multiple data-live-search="true">
+                                        <?php
+                                            if (isset($data)) {
+                                                $tag = '';
+                                                foreach ($data['tags'] as $v) {
+                                                    $tag .= $v['id'].',';
+                                                }
+                                                $tag = trim($tag, ',');
+                                            } else {
+                                                $tag = '';
+                                            }
+
+                                        ?>
+                                        <select id="tag" name="tag" value="{{$tag}}" class="form-control selectpicker" multiple data-live-search="true">
                                             @foreach($tags as $v)
                                             <option value="{{$v->id}}">{{$v->tag}}</option>
                                             @endforeach
@@ -92,12 +104,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="meta_description">主要描述</label>
-                                        <textarea class="form-control" value="" name="meta_description">{{ isset($data) ? $data->meta_description : '' }}</textarea>
+                                        <textarea class="form-control" value="" name="meta_description">{{ isset($data) ? $data['meta_description'] : '' }}</textarea>
                                     </div>
                                     <div class="form-group">
                                         <label for="content">日期时间</label>
                                         <div class="input-group date col-md-5" data-link-field="dtp_input1">
-                                            <input name="published_at" class="form-control form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" size="16" type="text" value="{{ isset($data) ? $data->published_at : '' }}" readonly>
+                                            <input name="published_at" class="form-control form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" size="16" type="text" value="{{ isset($data) ? $data['published_at'] : '' }}" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group" style="margin-bottom: 30px;">
@@ -105,14 +117,14 @@
                                             是否原创
                                         </label>
                                         <div class="switch switch-mini col-sm-2">
-                                            <input type="checkbox" name="is_original" @if(isset($data))@if($data->is_draft) checked @endif @endif />
+                                            <input type="checkbox" name="is_original" @if(isset($data))@if($data['is_original']) checked @endif @endif />
                                         </div>
 
                                         <label class="col-sm-1 control-label" style="padding-left: 0">
                                             是否草稿
                                         </label>
                                         <div class="switch bootstrap-switch-mini col-sm-2">
-                                            <input type="checkbox" name="is_draft"  @if(isset($data))@if($data->is_draft) checked @endif @endif />
+                                            <input type="checkbox" name="is_draft"  @if(isset($data))@if($data['is_draft']) checked @endif @endif />
                                         </div>
                                     </div>
                                 </div>
@@ -163,8 +175,6 @@
         $("[name='is_draft']").bootstrapSwitch();
 
         function save(z) {
-            //清空错误提示
-            $('#error').html('');
             var formData = new FormData($('#add-form')[0]);
             formData.append('tag',$('#tag').val());
             formData.append('content',simplemde.value());
@@ -177,33 +187,33 @@
                 data:formData,
                 async: false,
                 error: function(msg) {
-                    console.log(msg)
                     if(msg.responseJSON.errors) {
                         var str = '';
                         for (x in msg.responseJSON.errors) {
-                            str += "<div class='alert alert-danger'>";
-                            str += msg.responseJSON.errors[x];
-                            str += "</div>";
+                            str = msg.responseJSON.errors[x][0];
                         }
+                        layer.alert(str, {icon: 5});
                     } else if(msg.responseJSON.message) {
-                        var str = '';
-                        str += "<div class='alert alert-danger'>";
-                        str += msg.responseJSON.message;
-                        str += "</div>";
+                        layer.alert(msg.responseJSON.message, {icon: 5});
                     } else {
-                        layer.alert('服务器错误', {icon: 5}, function () {
-                            location.reload();
-                        });
-                    }
-                    if (str) {
-                        $('#error').append(str)
-                        $('#error').css('display','block');
+                        layer.alert('服务器错误', {icon: 5});
                     }
                 },
                 success: function (msg) {
-                    // location.reload();
+                    location.href = '/dd/article';
                 }
             });
+        }
+
+        var cate = $('#cate').attr('value');
+        if (cate) {
+            $('#cate').val(cate);
+        }
+
+        var tag = $('#tag').attr('value')
+        if (tag) {
+            var s = tag.split(',');
+            $('#tag').val(s)
         }
     </script>
 </body>

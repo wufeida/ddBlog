@@ -175,9 +175,6 @@
     <script src="/admin/js/upload-img-show.js"></script>
     <script src="/admin/article.js"></script>
     <script src="/admin/js/plugins/markdown-edit/simplemde.min.js"></script>
-    <script>
-        var simplemde = new SimpleMDE({ element: $("#editor")[0] });
-    </script>
 </body>
 
 </html>

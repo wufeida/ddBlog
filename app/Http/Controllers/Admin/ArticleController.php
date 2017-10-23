@@ -43,6 +43,7 @@ class ArticleController extends Controller
      */
     public function store(ArticleRequest $request)
     {
+        if ($request->get('tag') == 'null') abort('422', '标签必填');
         $formData = $request->all();
         $file = $request->file('page_image');
         if ($file && $file->isValid()) {
@@ -58,6 +59,8 @@ class ArticleController extends Controller
         $data['is_original'] = isset($data['is_original']);
 
         $res = $this->article->store($data);
+        $tags = explode(',', $request->get('tag'));
+        $this->article->syncTag($tags);
         return custom_json($res);
     }
 
@@ -69,7 +72,7 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $data = $this->article->getById($id);
+        $data = $this->article->getByIdWith($id);
         $categories = app(CategoryController::class)->getList();
         $tags = app(TagController::class)->getList();
         return view('admin.article-form')->with(compact('data', 'categories', 'tags', 'id'));
@@ -84,14 +87,20 @@ class ArticleController extends Controller
      */
     public function update(ArticleRequest $request, $id)
     {
+        if ($request->get('tag') == 'null') abort('422', '标签必填');
         $data = array_merge($request->all(), [
             'last_user_id' => \Auth::id()
         ]);
-
         $data['is_draft']    = isset($data['is_draft']);
         $data['is_original'] = isset($data['is_original']);
-
+        $file = $request->file('page_image');
+        if ($file && $file->isValid()) {
+            $path = app('App\Tools\ImgUpload')->imgUpload($file);
+            $data['page_image'] = $path;
+        }
         $res = $this->article->update($id, $data);
+        $tags = explode(',', $request->get('tag'));
+        $this->article->syncTag($tags);
         return custom_json($res);
     }
 
@@ -103,6 +112,7 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $res = $this->article->destroy($id);
+        return custom_json($res);
     }
 }

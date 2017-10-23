@@ -29,6 +29,7 @@ class ArticleRequest extends FormRequest
             'content'       => 'required',
             'category_id'   => 'required',
             'published_at'  => 'required',
+            'tag'           => 'required',
         ];
     }
 
@@ -42,6 +43,7 @@ class ArticleRequest extends FormRequest
             'content.required'      => '内容必填',
             'category_id.required'  => '分类必填',
             'published_at.required' => '发布时间必填',
+            'tag.required'          => '标签必选',
         ];
     }
 }
