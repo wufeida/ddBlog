@@ -64,7 +64,7 @@
                                     <td><img width="40" height="40" style="cursor: pointer" data-original="{{$v->image}}" src="{{$v->image}}" alt=""></td>
                                     <td>{{$v->name}}</td>
                                     <td>{{$v->link}}</td>
-                                    <td>{{$v->status}}</td>
+                                    <td>{{$v->status ? '已启用' : '已禁用'}}</td>
                                     <td>{{$v->created_at}}</td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-info edit btn-circle" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-pencil"></i></button>
@@ -164,12 +164,16 @@
     <script src="/admin/link.js"></script>
     <script src="/admin/plugins/switch/js/bootstrap-switch.min.js"></script>
     <script>
-        // 开关按钮
-        $("[name='status']").bootstrapSwitch({
-            size:'small',
-            onText:'YES',
-            offText:'NO'
-        });
+        //初始化开关键
+        function initSwitch() {
+            $('#status').removeAttr('checked');
+            $("[name='status']").bootstrapSwitch({
+                size:'small',
+                onText:'YES',
+                offText:'NO',
+            });
+        }
+        initSwitch();
     </script>
 </body>
 

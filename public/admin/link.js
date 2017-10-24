@@ -11,6 +11,7 @@ function clearForm() {
     $('#J_avatar1').removeAttr('src');
     $('#put').remove();
     resetFileInput($('#image'))
+    $("[name='status']").bootstrapSwitch('destroy');
 }
 
 //点击编辑按钮
@@ -22,7 +23,16 @@ $(document).on("click", ".edit", function () {
         $('#name').val(msg.name);
         $('#link').val(msg.link);
         if (msg.status == 1) {
-            $('#status').attr('checked','checked')
+            // 开关按钮
+            $("[name='status']").bootstrapSwitch({
+                size:'small',
+                onText:'YES',
+                offText:'NO',
+                state:'true',
+            });
+        } else {
+            // 开关按钮
+            initSwitch();
         }
         $('#J_avatar1').attr('src',msg.image_url);
         $('#add-label').html('修改友链');
@@ -43,6 +53,7 @@ $(document).on("click", ".delete", function () {
 //点击添加按钮
 $(document).on("click", ".add", function () {
     clearForm();
+    initSwitch();
     $('#add-label').html('添加友链')
     var add_url = "/dd/link";
     $('#add-form').attr('action',add_url)
@@ -117,3 +128,4 @@ function del(z) {
 $('#dowebok').viewer({
     url: 'data-original',
 });
+
