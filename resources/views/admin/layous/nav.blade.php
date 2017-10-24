@@ -55,10 +55,7 @@
                     <li mid="tab3" funurl="{{url('dd/tag')}}"><a>标签管理</a></li>
                     <li mid="tab4" funurl="{{url('dd/article')}}"><a>文章管理</a></li>
                     <li mid="tab5" funurl="{{url('dd/link')}}"><a>友情链接</a></li>
-                    <li mid="tab6" funurl="dashboard_5.html"><a>Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>
-                    <li mid="tab7" funurl="dashboard_5.html"><a>Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>
-                    <li mid="tab8" funurl="dashboard_5.html"><a>Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>
-                    <li mid="tab9" funurl="dashboard_5.html"><a>Dashboard v.5 <span class="label label-primary pull-right">NEW</span></a></li>
+                    <li mid="tab6" funurl="{{url('dd/visitor')}}"><a>访问列表</a></li>
                 </ul>
             </li>
         </ul>
