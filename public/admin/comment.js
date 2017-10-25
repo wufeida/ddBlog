@@ -18,12 +18,17 @@ function del(z) {
         data:formData,
         async: false,
         error: function(msg) {
-            layer.alert('删除失败', {icon: 5}, function () {
-                location.reload();
-            });
+            toastr.error('删除失败');
         },
         success: function (msg) {
+            notice(parent.success, '删除成功');
             location.reload();
         }
     });
+}
+
+function notice(fname, msg) {
+    if (fname && typeof(fname) == 'function') {
+        fname(msg);
+    }
 }

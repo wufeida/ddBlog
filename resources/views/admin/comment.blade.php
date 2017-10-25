@@ -14,7 +14,7 @@
     <link href="/admin/css/animate.css" rel="stylesheet">
     <link href="/admin/css/style.css" rel="stylesheet">
     <link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">
-
+    <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
 </head>
 <style>
     .pagination {
@@ -107,6 +107,8 @@
     <script src="/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!-- self -->
+    <script src="/admin/plugins/toastr/toastr.min.js"></script>
+    <script src="/admin/plugins/toastr/toastr.config.js"></script>
     <script src="/admin/js/layer/layer.js"></script>
     <script src="/admin/comment.js"></script>
 </body>

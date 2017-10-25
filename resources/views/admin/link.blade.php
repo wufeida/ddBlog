@@ -15,6 +15,7 @@
     <link href="/admin/css/style.css" rel="stylesheet">
     <link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">
     <link href="/admin/plugins/switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
+    <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
 
 
 </head>
@@ -161,17 +162,15 @@
     <script src="/admin/js/layer/layer.js"></script>
     <script src="/admin/js/viewer/viewer.min.js"></script>
     <script src="/admin/js/upload-img-show.js"></script>
-    <script src="/admin/link.js"></script>
+    <script src="/admin/plugins/toastr/toastr.min.js"></script>
+    <script src="/admin/plugins/toastr/toastr.config.js"></script>
     <script src="/admin/plugins/switch/js/bootstrap-switch.min.js"></script>
+    <script src="/admin/link.js"></script>
     <script>
         //初始化开关键
         function initSwitch() {
             $('#status').removeAttr('checked');
-            $("[name='status']").bootstrapSwitch({
-                size:'small',
-                onText:'YES',
-                offText:'NO',
-            });
+            $("[name='status']").bootstrapSwitch();
         }
         initSwitch();
     </script>

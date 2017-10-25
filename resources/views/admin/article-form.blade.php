@@ -18,6 +18,7 @@
     <link href="/admin/css/plugins/date/bootstrap-datetimepicker.min.css" rel="stylesheet">
     <link href="/admin/plugins/switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
     <link href="/admin/plugins/select/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
 
 </head>
 <style>
@@ -155,6 +156,8 @@
     <script src="/admin/js/plugins/date/locales/bootstrap-datetimepicker.zh-CN.js" charset="UTF-8"></script>
     <script src="/admin/plugins/switch/js/bootstrap-switch.min.js"></script>
     <script src="/admin/plugins/select/js/bootstrap-select.js"></script>
+    <script src="/admin/plugins/toastr/toastr.min.js"></script>
+    <script src="/admin/plugins/toastr/toastr.config.js"></script>
     <script>
         //markdown编辑器
         var simplemde = new SimpleMDE({ element: $("#editor")[0] });
@@ -196,18 +199,17 @@
                 async: false,
                 error: function(msg) {
                     if(msg.responseJSON.errors) {
-                        var str = '';
                         for (x in msg.responseJSON.errors) {
-                            str = msg.responseJSON.errors[x][0];
+                            toastr.error(msg.responseJSON.errors[x]);
                         }
-                        layer.alert(str, {icon: 5});
                     } else if(msg.responseJSON.message) {
-                        layer.alert(msg.responseJSON.message, {icon: 5});
+                        toastr.error(msg.responseJSON.message);
                     } else {
-                        layer.alert('服务器错误', {icon: 5});
+                        toastr.error('服务器错误');
                     }
                 },
                 success: function (msg) {
+                    notice(parent.success,'成功');
                     location.href = '/dd/article';
                 }
             });
@@ -222,6 +224,12 @@
         if (tag) {
             var s = tag.split(',');
             $('#tag').val(s)
+        }
+
+        function notice(fname, msg) {
+            if (fname && typeof(fname) == 'function') {
+                fname(msg);
+            }
         }
     </script>
 </body>

@@ -35,6 +35,7 @@ $(document).on("click", ".delete", function () {
 //点击添加按钮
 $(document).on("click", ".add", function () {
     clearForm();
+    $('#tag').removeAttr('disabled');
     $('#add-label').html('添加标签')
     var add_url = "/dd/tag";
     $('#add-form').attr('action',add_url)
@@ -54,30 +55,18 @@ function save(z) {
         data:formData,
         async: false,
         error: function(msg) {
-            console.log(msg)
             if(msg.responseJSON.errors) {
-                var str = '';
                 for (x in msg.responseJSON.errors) {
-                    str += "<div class='alert alert-danger'>";
-                    str += msg.responseJSON.errors[x];
-                    str += "</div>";
+                    toastr.error(msg.responseJSON.errors[x]);
                 }
             } else if(msg.responseJSON.message) {
-                var str = '';
-                str += "<div class='alert alert-danger'>";
-                str += msg.responseJSON.message;
-                str += "</div>";
+                toastr.error(msg.responseJSON.message);
             } else {
-                layer.alert('服务器错误', {icon: 5}, function () {
-                    location.reload();
-                });
-            }
-            if (str) {
-                $('#error').append(str)
-                $('#error').css('display','block');
+                toastr.error('服务器错误');
             }
         },
         success: function (msg) {
+            notice(parent.success, '成功');
             location.reload();
         }
     });
@@ -95,12 +84,17 @@ function del(z) {
         data:formData,
         async: false,
         error: function(msg) {
-            layer.alert('删除失败', {icon: 5}, function () {
-                location.reload();
-            });
+            toastr.error('删除失败');
         },
         success: function (msg) {
+            notice(parent.success, '删除成功');
             location.reload();
         }
     });
+}
+
+function notice(fname, msg) {
+    if (fname && typeof(fname) == 'function') {
+        fname(msg);
+    }
 }

@@ -20,6 +20,7 @@
 
     <link href="/admin/css/animate.css" rel="stylesheet">
     <link href="/admin/css/style.css" rel="stylesheet">
+    <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
 
 </head>
 
@@ -239,5 +240,21 @@
     {{--<script src="/admin/js/plugins/toastr/toastr.min.js"></script>--}}
     <script src="/admin/js/b.tabs.js"></script>
     <script src="/admin/js/demo.js"></script>
+    <script src="/admin/plugins/toastr/toastr.min.js"></script>
+    <script src="/admin/plugins/toastr/toastr.config.js"></script>
+    <script>
+        function success(msg) {
+            toastr.success(msg)
+        }
+        function error(msg) {
+            toastr.error(msg)
+        }
+        function warning(msg) {
+            toastr.warning(msg)
+        }
+        function info(msg) {
+            toastr.info(msg)
+        }
+    </script>
 </body>
 </html>

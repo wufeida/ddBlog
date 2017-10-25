@@ -15,6 +15,7 @@
     <link href="/admin/css/style.css" rel="stylesheet">
     <link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">
     <link href="/admin/css/plugins/markdown-edit/simplemde.min.css" rel="stylesheet">
+    <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
 
 </head>
 <style>
@@ -173,8 +174,10 @@
     <script src="/admin/js/layer/layer.js"></script>
     <script src="/admin/js/viewer/viewer.min.js"></script>
     <script src="/admin/js/upload-img-show.js"></script>
-    <script src="/admin/article.js"></script>
     <script src="/admin/js/plugins/markdown-edit/simplemde.min.js"></script>
+    <script src="/admin/plugins/toastr/toastr.min.js"></script>
+    <script src="/admin/plugins/toastr/toastr.config.js"></script>
+    <script src="/admin/article.js"></script>
 </body>
 
 </html>

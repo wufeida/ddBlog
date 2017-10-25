@@ -72,7 +72,7 @@ class TagController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->get('title') == null) abort(422, '标题必填');
         $res = $this->tag->update($id, $request->except('tag'));
         return custom_json($res);
     }
