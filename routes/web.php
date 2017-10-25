@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
 Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
     Route::get('login','LoginController@login')->name('dd.login');
@@ -32,6 +29,11 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::resource('comment', 'CommentController', ['except' => ['create', 'show']]);
 
     });
+});
+
+Route::group(['namespace' => 'Home'], function () {
+    Route::get('/', 'ArticleController@index');
+    Route::get('{slug}', 'ArticleController@show');
 
 });
 
