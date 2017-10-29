@@ -288,7 +288,7 @@ a {
 }
 .blog-entry-article {
     margin:3rem 0;
-    padding-bottom: 3rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid #e5e5e5;
 }
 @media only screen and (max-width:640px) {
@@ -340,14 +340,14 @@ h1 span{
 .blog-continue {
     color:#000;
     border:0.2rem solid gray;
-    padding:0.5rem 1rem;
-    font-weight:bold;
-    display:none;
+    border-radius: 20px;
+    float: right;
+    padding:0 0.5rem;
 }
 .blog-continue:hover {
     background-color:#10D07A;
     color:#fff;
-    border:0.1rem #fff;
+    border:0.2rem solid #fff;
 }
 .blog-tag {
     background:#F3F3F3;

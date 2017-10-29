@@ -17,16 +17,15 @@ class ArticleController extends Controller
 
     public function index()
     {
-        $data = $this->article->getHomeData(10, 'desc', 'id');
-        dd($data);
-        return view('home.article', compact('data'));
+        $data = $this->article->getHomeData(2, 'desc', 'id');
+        return view('home.index', compact('data'));
     }
 
     public function show($slug)
     {
         $data = $this->article->getBySlug($slug);
-        $data->category;
-        dd($data);
-        return view('home.detail', compact('data'));
+        $prev_article = $this->article->getPrevArticle($data->id);
+        $next_article = $this->article->getNextArticle($data->id);
+        return view('home.article', compact('data', 'prev_article', 'next_article'));
     }
 }
