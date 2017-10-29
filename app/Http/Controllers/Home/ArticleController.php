@@ -28,4 +28,10 @@ class ArticleController extends Controller
         $next_article = $this->article->getNextArticle($data->id);
         return view('home.article', compact('data', 'prev_article', 'next_article'));
     }
+
+    public function category($id)
+    {
+        $data = $this->article->getListByCategoryId($id, 1, 'desc', 'id');
+        return view('home.category', compact('data', 'id'));
+    }
 }

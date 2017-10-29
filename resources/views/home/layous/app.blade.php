@@ -32,7 +32,7 @@
   <div class="am-collapse am-topbar-collapse" id="blog-collapse">
     <ul class="am-nav am-nav-pills am-topbar-nav">
         <li><a href="/" style="font-size: 30px;">飞达博客</a></li>
-      <li class="am-active"><a href="/">首页</a></li>
+      <li class="{{isset($id) ? '' : 'am-active'}}"><a href="/">首页</a></li>
       {{--<li class="am-dropdown" data-am-dropdown>--}}
         {{--<a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">--}}
           {{--首页布局 <span class="am-icon-caret-down"></span>--}}
@@ -45,7 +45,7 @@
         {{--</ul>--}}
       {{--</li>--}}
       @foreach($categories as $v)
-      <li><a href="lw-article.html">{{$v->name}}</a></li>
+      <li class="{{isset($id) ? $v->id == $id ? 'am-active' : '' : ''}}"><a href="{{url('category').'/'.$v->id}}">{{$v->name}}</a></li>
       @endforeach
     </ul>
     <form class="am-topbar-form am-topbar-right am-form-inline" role="search">

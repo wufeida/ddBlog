@@ -97,4 +97,18 @@ class ArticleRepository {
         }
         return null;
     }
+
+    /**
+     * 通过分类id获取文章
+     * @param $id
+     * @param int $number
+     * @param string $sort
+     * @param string $sortColumn
+     * @return mixed
+     */
+    public function getListByCategoryId($id, $number = 10, $sort = 'desc', $sortColumn = 'created_at')
+    {
+        $data = $this->model->where('category_id', $id)->with('category', 'tags', 'user')->orderBy($sortColumn, $sort)->paginate($number);
+        return $data;
+    }
 }
