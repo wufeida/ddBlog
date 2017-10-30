@@ -34,6 +34,10 @@ class Article extends Model
         'content'    =>    'array'
     ];
 
+    public function scopeDraft($query)
+    {
+        return $query->where('is_draft', '0');
+    }
     /**
      * Get the user for the blog article.
      *
