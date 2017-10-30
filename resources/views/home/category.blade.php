@@ -12,7 +12,7 @@
                 <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
                     <span><i class="fa fa-list-alt"></i><a href="" class="blog-color"> &nbsp;{{$v->category->name}} &nbsp;</a></span>
                     <span><i class="fa fa-user"></i> &nbsp;{{ $v->user->name }} &nbsp;</span>
-                    <span><i class="fa fa-calendar"></i> &nbsp;{{$v->created_at}}</span>
+                    <span><i class="fa fa-calendar"></i> &nbsp;{{$v->publish_at}}</span>
                     <h1><a href="{{url("/$v->slug")}}">{{$v->title}}</a></h1>
                     <p>
                         {{str_limit($v->meta_description, $limit = 100, $end = '...')}}

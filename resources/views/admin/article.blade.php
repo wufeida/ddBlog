@@ -52,6 +52,7 @@
                                     <th>标题</th>
                                     <th>副标题</th>
                                     <th>发布时间</th>
+                                    <th>创建时间</th>
                                     <th class="text-center">操作</th>
                                 </tr>
                                 </thead>
@@ -61,6 +62,7 @@
                                     <td class="text-center">{{$v->id}}</td>
                                     <td>{{$v->title}}</td>
                                     <td>{{$v->subtitle}}</td>
+                                    <td>{{$v->publish_at}}</td>
                                     <td>{{$v->created_at}}</td>
                                     <td class="text-center">
                                         <a target="_blank" class="btn btn-success edit btn-circle"><i class="glyphicon glyphicon-eye-open"></i></a>

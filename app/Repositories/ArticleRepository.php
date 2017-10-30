@@ -42,7 +42,7 @@ class ArticleRepository {
      */
     public function getHomeData($number = 10, $sort = 'desc', $sortColumn = 'created_at')
     {
-        $data = $this->model->draft()->with('category', 'tags', 'user')->orderBy($sortColumn, $sort)->paginate($number);
+        $data = $this->model->draft()->published()->with('category', 'tags', 'user')->orderBy($sortColumn, $sort)->paginate($number);
         return $data;
     }
 
@@ -62,7 +62,7 @@ class ArticleRepository {
      */
     public function getBySlug($slug)
     {
-        $article = $this->model->draft()->with('category', 'tags', 'user')->where('slug', $slug)->firstOrFail();
+        $article = $this->model->draft()->published()->with('category', 'tags', 'user')->where('slug', $slug)->firstOrFail();
 
         $article->increment('view_count');
 
@@ -75,9 +75,9 @@ class ArticleRepository {
      * @param $id
      * @return mixed
      */
-    public function getPrevArticle($id)
+    public function getNextArticle($id)
     {
-        $id = $this->model->draft()->where('id', '<', $id)->max('id');
+        $id = $this->model->draft()->published()->where('id', '<', $id)->max('id');
         if ($id) {
             return $this->getById($id);
         }
@@ -89,9 +89,9 @@ class ArticleRepository {
      * @param $id
      * @return mixed
      */
-    public function getNextArticle($id)
+    public function getPrevArticle($id)
     {
-        $id = $this->model->draft()->where('id', '>', $id)->min('id');
+        $id = $this->model->draft()->published()->where('id', '>', $id)->min('id');
         if ($id) {
             return $this->getById($id);
         }
@@ -108,7 +108,7 @@ class ArticleRepository {
      */
     public function getListByCategoryId($id, $number = 10, $sort = 'desc', $sortColumn = 'created_at')
     {
-        $data = $this->model->draft()->where('category_id', $id)->with('category', 'tags', 'user')->orderBy($sortColumn, $sort)->paginate($number);
+        $data = $this->model->draft()->published()->where('category_id', $id)->with('category', 'tags', 'user')->orderBy($sortColumn, $sort)->paginate($number);
         return $data;
     }
 
@@ -124,6 +124,7 @@ class ArticleRepository {
     {
         $data = $this->model->with('category', 'tags', 'user')
                             ->draft()
+                            ->published()
                             ->whereHas('tags', function ($q) use ($id) {
                                 $q->where('id', '=', $id);
                             })

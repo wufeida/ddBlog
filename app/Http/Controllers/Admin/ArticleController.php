@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ArticleRequest;
 use App\Repositories\ArticleRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -25,6 +26,11 @@ class ArticleController extends Controller
     public function index()
     {
         $data = $this->article->page('10', 'desc');
+        if ($data) {
+            foreach ($data as $v) {
+                $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
+            }
+        }
         return view('admin.article')->with(compact('data'));
     }
 

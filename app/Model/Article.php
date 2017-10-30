@@ -38,6 +38,11 @@ class Article extends Model
     {
         return $query->where('is_draft', '0');
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published_at', '<', Carbon::now());
+    }
     /**
      * Get the user for the blog article.
      *
