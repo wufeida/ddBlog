@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>哒哒后台管理 | 访问列表</title>
+    <title>后台管理 | 访问列表</title>
 
     <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
     <link href="/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
@@ -61,7 +61,7 @@
                                     <td>{{$v->article->title}}</td>
                                     <td>{{$v->ip}}</td>
                                     <td>{{$v->country}}</td>
-                                    <td>{{$v->click}}</td>
+                                    <td>{{$v->clicks}}</td>
                                     <td class="text-center">{{$v->created_at}}</td>
                                 </tr>
                                 @endforeach

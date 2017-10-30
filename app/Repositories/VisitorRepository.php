@@ -39,7 +39,12 @@ class VisitorRepository {
                 ->where('ip', $ip)
                 ->increment('clicks');
         } else {
-            $country = $this->ip->getSite();
+            $site = $this->ip->getSite();
+            if ($site) {
+                $country = $site['country'].' '.$site['province'].' '.$site['city'];
+            } else {
+                $country = null;
+            }
             $data = [
                 'ip'		    => $ip,
                 'article_id'    => $article_id,
