@@ -24,10 +24,10 @@
             <span class="am-icon-tags"> &nbsp;</span>
               @foreach($data->tags as $v)
                   @if (!$loop->last)
-                        <a href="#">{{$v->tag}}</a> ,
+                        <a href="{{url("tag").'/'.$v->id}}">{{$v->tag}}</a> ,
                   @endif
                   @if ($loop->last)
-                        <a href="#">{{$v->tag}}</a>
+                        <a href="{{url("tag").'/'.$v->id}}">{{$v->tag}}</a>
                   @endif
               @endforeach
             <hr>

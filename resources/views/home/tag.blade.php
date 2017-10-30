@@ -10,7 +10,7 @@
                     <a href="{{url("/$v->slug")}}"><img src="{{$v->page_image}}" alt="" class="am-u-sm-12"></a>
                 </div>
                 <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
-                    <span><i class="fa fa-list-alt"></i><a href="{{url("category").'/'.$v->category->id}}" class="blog-color"> &nbsp;{{$v->category->name}} &nbsp;</a></span>
+                    <span><i class="fa fa-list-alt"></i><a href="" class="blog-color"> &nbsp;{{$v->category->name}} &nbsp;</a></span>
                     <span><i class="fa fa-user"></i> &nbsp;{{ $v->user->name }} &nbsp;</span>
                     <span><i class="fa fa-calendar"></i> &nbsp;{{$v->created_at}}</span>
                     <h1><a href="{{url("/$v->slug")}}">{{$v->title}}</a></h1>
@@ -20,7 +20,7 @@
                     <p>
                         <i class="fa fa-tags"></i>
                         @foreach($v->tags as $val)
-                            &nbsp;<a href="{{url("tag").'/'.$val->id}}">{{$val->tag}}</a>&nbsp;
+                            &nbsp;<a href="">{{$val->tag}}</a>&nbsp;
                         @endforeach
                         <a href="{{url("/$v->slug")}}" class="blog-continue">阅读全文</a></p>
                 </div>

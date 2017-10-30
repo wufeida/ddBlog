@@ -85,7 +85,7 @@
             <h2 class="blog-title"><span>TAG cloud</span></h2>
             <div class="am-u-sm-12 blog-clear-padding">
             @foreach($tags as $v)
-            <a href="" class="blog-tag">{{$v->tag}}</a>
+            <a href="{{url("tag/$v->id")}}" class="blog-tag">{{$v->tag}}</a>
             @endforeach
             </div>
         </div>

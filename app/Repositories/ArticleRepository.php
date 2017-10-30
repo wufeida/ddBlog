@@ -111,4 +111,24 @@ class ArticleRepository {
         $data = $this->model->where('category_id', $id)->with('category', 'tags', 'user')->orderBy($sortColumn, $sort)->paginate($number);
         return $data;
     }
+
+    /**
+     * 通过标签id获取文章
+     * @param $id
+     * @param int $number
+     * @param string $sort
+     * @param string $sortColumn
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function getListByTagId($id, $number = 10, $sort = 'desc', $sortColumn = 'created_at')
+    {
+        $data = $this->model->with('category', 'tags', 'user')
+                            ->whereHas('tags', function ($q) use ($id) {
+                                $q->where('id', '=', $id);
+                            })
+                            ->orderBy($sortColumn, $sort)
+                            ->paginate($number);
+        return $data;
+
+    }
 }

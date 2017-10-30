@@ -37,6 +37,9 @@ Route::group(['namespace' => 'Home'], function () {
     Route::group(['prefix' => 'category'], function () {
         Route::get('/{id}', 'ArticleController@category');
     });
+    Route::group(['prefix' => 'tag'], function () {
+        Route::get('/{id}', 'ArticleController@tag');
+    });
 
 
 });

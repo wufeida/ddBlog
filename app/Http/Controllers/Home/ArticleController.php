@@ -15,12 +15,21 @@ class ArticleController extends Controller
         $this->article = $article;
     }
 
+    /**
+     * 首页文章列表显示
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index()
     {
         $data = $this->article->getHomeData(2, 'desc', 'id');
         return view('home.index', compact('data'));
     }
 
+    /**
+     * 文章页以及上一篇下一篇
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function show($slug)
     {
         $data = $this->article->getBySlug($slug);
@@ -29,9 +38,25 @@ class ArticleController extends Controller
         return view('home.article', compact('data', 'prev_article', 'next_article'));
     }
 
+    /**
+     * 分类对应的文章页
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function category($id)
     {
         $data = $this->article->getListByCategoryId($id, 1, 'desc', 'id');
         return view('home.category', compact('data', 'id'));
+    }
+
+    /**
+     * 标签对应的文章页
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function tag($id)
+    {
+        $data = $this->article->getListByTagId($id, 1, 'desc', 'id');
+        return view('home.tag', compact('data'));
     }
 }
