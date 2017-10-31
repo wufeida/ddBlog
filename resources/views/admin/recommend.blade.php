@@ -14,7 +14,6 @@
     <link href="/admin/css/animate.css" rel="stylesheet">
     <link href="/admin/css/style.css" rel="stylesheet">
     <link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">
-    <link href="/admin/plugins/switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
     <link href="/admin/css/plugins/markdown-edit/simplemde.min.css" rel="stylesheet">
     <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
 
@@ -54,23 +53,17 @@
                                     <th>副标题</th>
                                     <th>发布时间</th>
                                     <th>创建时间</th>
-                                    <th>是否推荐</th>
                                     <th class="text-center">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody id="dowebok">
                                 @foreach($data as $v)
                                 <tr>
-                                    <td class="text-center id">{{$v->id}}</td>
+                                    <td class="text-center">{{$v->id}}</td>
                                     <td>{{$v->title}}</td>
                                     <td>{{$v->subtitle}}</td>
                                     <td>{{$v->publish_at}}</td>
                                     <td>{{$v->created_at}}</td>
-                                    <td>
-                                        <div class="switch switch-small">
-                                            <input type="checkbox" @if(isset($data))@if($data['is_recommend']) checked @endif @endif  name="is_recommend"/>
-                                        </div>
-                                    </td>
                                     <td class="text-center">
                                         <a target="_blank" class="btn btn-success edit btn-circle"><i class="glyphicon glyphicon-eye-open"></i></a>
                                         <a href="{{url('dd/article/'.$v->id.'/edit')}}" class="btn btn-info edit btn-circle"><i class="glyphicon glyphicon-pencil"></i></a>
@@ -89,6 +82,70 @@
                 </div>
             </div>
         </div>
+        </div>
+        <!--form Modal -->
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="add-label" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog" style="margin-bottom: 200px;" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="add-label">添加文章</h4>
+                    </div>
+                    <div id="error" style="display: none;margin-bottom:0px">
+                    </div>
+                    <form method="post" id="add-form" action="{{ route('article.store') }}" enctype="multipart/form-data">
+                        {{csrf_field()}}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title">标题</label>
+                            <input type="text" id="title" name="title" class="form-control" placeholder="标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="subtitle">副标题</label>
+                            <input type="text" id="subtitle" name="subtitle" class="form-control" placeholder="副标题">
+                        </div>
+                        <div class="form-group">
+                            <label for="up_cdes">分类</label>
+                            <select name="category_id" class="form-control">
+                                <option value="1">1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="image">页面图片</label>
+                            <div class="upload-box">
+                                <input type="file" class="form-control" id="page_image" name="page_image" onchange="previewImage(this,'preview1','J_avatar1')">
+                                <div id="preview1" class="preview">
+                                    <img width="100" height="100" class="image" id="J_avatar1">
+                                </div>
+                                <div class="mask"><i class="ion-upload"></i></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content">内容</label>
+                            <textarea name="content" id="editor"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="up_cdes">标签</label>
+                            <input class="form-control" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="content">主要描述</label>
+                            <textarea class="form-control" name="meta_description"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" onclick="save($(this))" class="btn btn-primary">保存</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <!-- delete modal -->
         <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -122,21 +179,7 @@
     <script src="/admin/js/plugins/markdown-edit/simplemde.min.js"></script>
     <script src="/admin/plugins/toastr/toastr.min.js"></script>
     <script src="/admin/plugins/toastr/toastr.config.js"></script>
-    <script src="/admin/plugins/switch/js/bootstrap-switch.min.js"></script>
     <script src="/admin/article.js"></script>
-    <script>
-        // 开关按钮
-        $("[name='is_recommend']").bootstrapSwitch({
-            size:'small',
-            onText:'YES',
-            offText:'NO'
-        });
-
-        $("[name='is_recommend']").on('switchChange.bootstrapSwitch', function (event,state) {
-            var id = $(this).parents('tr').find('.id').html();
-
-        });
-    </script>
 </body>
 
 </html>

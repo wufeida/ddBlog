@@ -47,6 +47,19 @@ class ArticleRepository {
     }
 
     /**
+     * 获取推荐文章列表
+     * @param int $number
+     * @param string $sort
+     * @param string $sortColumn
+     * @return mixed
+     */
+    public function recommend($number = 10, $sort = 'desc', $sortColumn = 'sort')
+    {
+        $data = $this->model->recommend()->orderBy($sortColumn, $sort)->paginate($number);
+        return $data;
+    }
+
+    /**
      * 同步标签
      * @param array $tags
      */

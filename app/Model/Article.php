@@ -34,14 +34,34 @@ class Article extends Model
         'content'    =>    'array'
     ];
 
+    /**
+     * 不是草稿的文章
+     * @param $query
+     * @return mixed
+     */
     public function scopeDraft($query)
     {
         return $query->where('is_draft', '0');
     }
 
+    /**
+     * 已经发布的文章
+     * @param $query
+     * @return mixed
+     */
     public function scopePublished($query)
     {
         return $query->where('published_at', '<', Carbon::now());
+    }
+
+    /**
+     * 是推荐的文章
+     * @param $query
+     * @return mixed
+     */
+    public function scopeRecommend($query)
+    {
+        return $query->where('is_recommend', '1');
     }
     /**
      * Get the user for the blog article.

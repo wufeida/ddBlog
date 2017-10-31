@@ -34,6 +34,21 @@ class ArticleController extends Controller
         return view('admin.article')->with(compact('data'));
     }
 
+    /**
+     * 推荐文章列表
+     * @return $this
+     */
+    public function recommend()
+    {
+        $data = $this->article->recommend('10', 'desc', 'sort');
+        if ($data) {
+            foreach ($data as $v) {
+                $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
+            }
+        }
+        return view('admin.recommend')->with(compact('data'));
+    }
+
     public function create()
     {
         $categories = app(CategoryController::class)->getList();
