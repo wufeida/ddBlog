@@ -28,6 +28,7 @@ class Article extends Model
         'is_draft',
         'is_original',
         'published_at',
+        'is_recommend',
     ];
 
     protected $casts = [

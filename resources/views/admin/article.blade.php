@@ -68,7 +68,7 @@
                                     <td>{{$v->created_at}}</td>
                                     <td>
                                         <div class="switch switch-small">
-                                            <input type="checkbox" @if(isset($data))@if($data['is_recommend']) checked @endif @endif  name="is_recommend"/>
+                                            <input type="checkbox" @if($v['is_recommend']) checked @endif  name="is_recommend"/>
                                         </div>
                                     </td>
                                     <td class="text-center">
@@ -132,9 +132,41 @@
             offText:'NO'
         });
 
+        window.Laravel = {
+            csrfToken: "{{ csrf_token() }}"
+        }
+
         $("[name='is_recommend']").on('switchChange.bootstrapSwitch', function (event,state) {
             var id = $(this).parents('tr').find('.id').html();
-
+            var url = '/dd/recommend/'+id;
+            var is_recommend = state;
+            $.ajax({
+                type: "POST",
+                url: url,
+                headers:{
+                    'X-CSRF-TOKEN': window.Laravel.csrfToken,
+                },
+                data:{'is_recommend':is_recommend},
+                async: true,
+                error: function(msg) {
+                    if(msg.responseJSON.errors) {
+                        for (x in msg.responseJSON.errors) {
+                            toastr.error(msg.responseJSON.errors[x]);
+                        }
+                    } else if(msg.responseJSON.message) {
+                        toastr.error(msg.responseJSON.message);
+                    } else {
+                        toastr.error('服务器错误');
+                    }
+                },
+                success: function (msg) {
+                    if (state == true) {
+                        toastr.success('推荐成功');
+                    } else {
+                        toastr.success('关闭推荐');
+                    }
+                }
+            });
         });
     </script>
 </body>

@@ -210,7 +210,7 @@
                 },
                 success: function (msg) {
                     notice(parent.success,'成功');
-                    location.href = '/dd/article';
+                    window.location.href = document.referrer;
                 }
             });
         }

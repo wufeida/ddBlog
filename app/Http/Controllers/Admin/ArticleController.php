@@ -49,6 +49,23 @@ class ArticleController extends Controller
         return view('admin.recommend')->with(compact('data'));
     }
 
+    /**
+     * 是否推荐按钮
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function isRecommend(Request $request, $id)
+    {
+        if ($request->get('is_recommend') == 'true') {
+            $data['is_recommend'] = 1;
+        } else {
+            $data['is_recommend'] = 0;
+        }
+        $res = $this->article->update($id, $data);
+        return custom_json($res);
+    }
+
     public function create()
     {
         $categories = app(CategoryController::class)->getList();
