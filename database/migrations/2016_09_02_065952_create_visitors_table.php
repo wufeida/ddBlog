@@ -20,6 +20,7 @@ class CreateVisitorsTable extends Migration
             $table->string('ip', 32);
             $table->string('country')->nullable();
             $table->integer('clicks')->unsigned()->default(1);
+            $table->timestamp('viewed_at')->nullable();
             $table->timestamps();
         });
     }

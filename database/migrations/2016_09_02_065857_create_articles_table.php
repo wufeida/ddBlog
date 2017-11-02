@@ -27,6 +27,8 @@ class CreateArticlesTable extends Migration
             $table->string('meta_description')->nullable();
             $table->boolean('is_original')->default(false);
             $table->boolean('is_draft')->default(false);
+            $table->boolean('is_recommend')->default(false);
+            $table->integer('sort')->unsigned();
             $table->integer('view_count')->unsigned()->default(0)->index();
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
