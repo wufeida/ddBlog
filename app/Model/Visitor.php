@@ -9,8 +9,10 @@ class Visitor extends Model
     protected $table = 'visitors';
 
     protected $fillable = [
-        'ip', 'article_id', 'clicks', 'country'
+        'ip', 'article_id', 'clicks', 'country', 'viewed_at'
     ];
+
+    protected $dates = ['viewed_at'];
 
     /**
      * Get the article for visitor.

@@ -5,6 +5,7 @@ namespace App\Repositories;
 
 use App\Model\Visitor;
 use App\Tools\IP;
+use Carbon\Carbon;
 
 class VisitorRepository {
 
@@ -34,10 +35,21 @@ class VisitorRepository {
      */
     public function log($article_id) {
         $ip = $this->ip->get();
-        if ($this->hasArticleIp($article_id, $ip)) {
-            $this->model->where('article_id', $article_id)
-                ->where('ip', $ip)
-                ->increment('clicks');
+        $log = $this->hasArticleIp($article_id, $ip);
+        if ($log) {
+            if ($log->viewed_at->diffInSeconds(Carbon::now()) > 86400) {
+                $data = [
+                    'viewed_at'  => Carbon::now(),
+                    'clicks'     => $log->clicks + 1,
+                ];
+                $this->model->where('article_id', $article_id)
+                    ->where('ip', $ip)
+                    ->update($data);
+            } else {
+                $this->model->where('article_id', $article_id)
+                    ->where('ip', $ip)
+                    ->increment('clicks');
+            }
         } else {
             $site = $this->ip->getSite();
             if ($site) {
@@ -49,7 +61,8 @@ class VisitorRepository {
                 'ip'		    => $ip,
                 'article_id'    => $article_id,
                 'clicks' 	    => 1,
-                'country'       => $country
+                'country'       => $country,
+                'viewed_at'     => Carbon::now(),
             ];
             $this->model->firstOrCreate( $data );
         }
@@ -57,18 +70,51 @@ class VisitorRepository {
 
 
     /**
+     * 同一ip24小时访问同一文章 只加一次查看
+     *
+     * @param $article_id
+     * @return bool
+     */
+    public function isFirstLog($article_id)
+    {
+        $ip = $this->ip->get();
+        $log = $this->model
+            ->where('article_id', $article_id)
+            ->where('ip', $ip)
+            ->first();
+        if ($log) {
+            return $log->viewed_at->diffInSeconds(Carbon::now()) > 86400 ? true : false;
+        }
+        return true;
+    }
+
+    /**
+     * 获取当前文章日志
+     *
+     * @param $article_id
+     * @param $ip
+     * @return mixed
+     */
+    public function getLogByIp($article_id, $ip)
+    {
+        return $this->model
+            ->where('article_id', $article_id)
+            ->where('ip', $ip)
+            ->first();
+    }
+    /**
      * 检查同一个ip的文章是否存在
      *
      * @param $atricle_id
      * @param $ip
      * @return bool
      */
-    public function hasArticleIp($atricle_id, $ip)
+    public function hasArticleIp($article_id, $ip)
     {
         return $this->model
-            ->where('article_id', $atricle_id)
+            ->where('article_id', $article_id)
             ->where('ip', $ip)
-            ->count() ? true : false;
+            ->first();
     }
 
 

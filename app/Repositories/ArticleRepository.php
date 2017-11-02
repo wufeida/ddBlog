@@ -22,6 +22,7 @@ class ArticleRepository {
 
     /**
      * 指定id 关联分类和标签
+     *
      * @param $id
      * @return mixed
      */
@@ -35,6 +36,7 @@ class ArticleRepository {
 
     /**
      * 前台 获取首页文章
+     *
      * @param int $number
      * @param string $sort
      * @param string $sortColumn
@@ -48,6 +50,7 @@ class ArticleRepository {
 
     /**
      * 获取推荐文章列表
+     *
      * @param int $number
      * @param string $sort
      * @param string $sortColumn
@@ -61,6 +64,7 @@ class ArticleRepository {
 
     /**
      * 同步标签
+     *
      * @param array $tags
      */
     public function syncTag(array $tags)
@@ -70,21 +74,23 @@ class ArticleRepository {
 
     /**
      * 前台 通过slug获取文章
+     *
      * @param $slug
      * @return \Illuminate\Database\Eloquent\Model|static
      */
     public function getBySlug($slug)
     {
         $article = $this->model->draft()->published()->with('category', 'tags', 'user')->where('slug', $slug)->firstOrFail();
-
-        $article->increment('view_count');
-
+        if ($this->visitor->isFirstLog($article->id)) {
+            $article->increment('view_count');
+        }
         $this->visitor->log($article->id);
         return $article;
     }
 
     /**
      * 前台 获取上一篇文章
+     *
      * @param $id
      * @return mixed
      */
@@ -99,6 +105,7 @@ class ArticleRepository {
 
     /**
      * 前台 获取下一篇文章
+     *
      * @param $id
      * @return mixed
      */
@@ -113,6 +120,7 @@ class ArticleRepository {
 
     /**
      * 前台 通过分类id获取文章
+     *
      * @param $id
      * @param int $number
      * @param string $sort
@@ -127,6 +135,7 @@ class ArticleRepository {
 
     /**
      * 前台 通过标签id获取文章
+     *
      * @param $id
      * @param int $number
      * @param string $sort

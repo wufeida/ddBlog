@@ -11,7 +11,8 @@
           <p class="am-article-meta blog-text-center">
               <span><i class="fa fa-list-alt"></i>&nbsp;<a href="#" class="blog-color">{{$data->category->name}} &nbsp;</a></span>-
               <span><i class="fa fa-user"></i> &nbsp;{{$data->user->name}} </span>-
-              <span><i class="fa fa-calendar"></i> &nbsp;{{$data->publish_at}}</span>
+              <span><i class="fa fa-calendar"></i> &nbsp;{{$data->publish_at}}&nbsp;</span>
+              <span><i class="fa fa-eye"></i> &nbsp;{{$data->view_count}}</span>
           </p>
         </div>        
         <div class="am-article-bd">
