@@ -82,9 +82,7 @@
                         </table>
                     </div>
                     <div style="float: right;">
-                        {{ $data->links() }}
                     </div>
-
                 </div>
             </div>
         </div>

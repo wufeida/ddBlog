@@ -49,6 +49,17 @@ class ArticleRepository {
     }
 
     /**
+     * 前台 获取推荐文章列表
+     *
+     * @return mixed
+     */
+    public function getRecommend()
+    {
+        $data = $this->model->recommend()->draft()->published()->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
+        return $data;
+    }
+
+    /**
      * 获取推荐文章列表
      *
      * @param int $number
@@ -56,9 +67,9 @@ class ArticleRepository {
      * @param string $sortColumn
      * @return mixed
      */
-    public function recommend($number = 10, $sort = 'desc', $sortColumn = 'sort')
+    public function recommend($sort = 'desc', $sortColumn = 'sort')
     {
-        $data = $this->model->recommend()->orderBy($sortColumn, $sort)->paginate($number);
+        $data = $this->model->recommend()->orderBy($sortColumn, $sort)->orderBy('id', 'desc')->get();
         return $data;
     }
 

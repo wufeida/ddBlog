@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Model\Article;
+use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\TagRepository;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -23,7 +24,8 @@ class AppServiceProvider extends ServiceProvider
         ]);
         $categories = app(CategoryRepository::class)->all();
         $tags = app(TagRepository::class)->all();
-        view()->share(compact('categories','tags'));
+        $recommend = app(ArticleRepository::class)->getRecommend();
+        view()->share(compact('categories','tags', 'recommend'));
     }
 
     /**

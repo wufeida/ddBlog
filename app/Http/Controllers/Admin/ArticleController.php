@@ -40,7 +40,7 @@ class ArticleController extends Controller
      */
     public function recommend()
     {
-        $data = $this->article->recommend('10', 'desc', 'sort');
+        $data = $this->article->recommend('desc', 'sort');
         if ($data) {
             foreach ($data as $v) {
                 $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
