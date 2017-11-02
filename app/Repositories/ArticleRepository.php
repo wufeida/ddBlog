@@ -55,7 +55,7 @@ class ArticleRepository {
      */
     public function getRecommend()
     {
-        $data = $this->model->recommend()->draft()->published()->orderBy('sort', 'desc')->orderBy('id', 'desc')->get();
+        $data = $this->model->recommend()->draft()->published()->orderBy('sort', 'asc')->orderBy('id', 'desc')->get();
         return $data;
     }
 
@@ -67,7 +67,7 @@ class ArticleRepository {
      * @param string $sortColumn
      * @return mixed
      */
-    public function recommend($sort = 'desc', $sortColumn = 'sort')
+    public function recommend($sort = 'asc', $sortColumn = 'sort')
     {
         $data = $this->model->recommend()->orderBy($sortColumn, $sort)->orderBy('id', 'desc')->get();
         return $data;

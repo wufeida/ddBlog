@@ -26,6 +26,7 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::resource('article', 'ArticleController', ['except' => ['show']]);
         Route::get('recommend', 'ArticleController@recommend');
         Route::post('recommend/{id}', 'ArticleController@isRecommend');
+        Route::post('sort', 'ArticleController@sort');
         Route::resource('link', 'LinkController', ['except' => ['create', 'show']]);
         Route::get('visitor','VisitorController@index');
         Route::resource('comment', 'CommentController', ['except' => ['create', 'show']]);

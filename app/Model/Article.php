@@ -29,6 +29,7 @@ class Article extends Model
         'is_original',
         'published_at',
         'is_recommend',
+        'sort',
     ];
 
     protected $casts = [

@@ -33,6 +33,10 @@
     .del-h4 {
         text-align: center;
     }
+    .highlight{
+        color: #1a1a1a;
+        background-color: #4472C4;
+    }
 </style>
 <body class="gray-bg">
 <div class="gray-bg">
@@ -45,8 +49,7 @@
                         <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;"><i class="fa fa-refresh"></i> Refresh</button>
                     </div>
                     <div class="ibox-content">
-
-                        <table class="table table-hover table-striped">
+                        <table class="table table-hover ">
                             <thead>
                             <tr>
                                 <th class="text-center">#</th>
@@ -58,9 +61,9 @@
                                 <th class="text-center">操作</th>
                             </tr>
                             </thead>
-                            <tbody id="dowebok">
+                            <tbody id="table" id="dowebok">
                             @foreach($data as $v)
-                                <tr>
+                                <tr id="{{$v->id}}" class="sort">
                                     <td class="text-center id">{{$v->id}}</td>
                                     <td>{{$v->title}}</td>
                                     <td>{{$v->subtitle}}</td>
@@ -117,6 +120,7 @@
 <script src="/admin/js/layer/layer.js"></script>
 <script src="/admin/js/viewer/viewer.min.js"></script>
 <script src="/admin/js/upload-img-show.js"></script>
+<script src="/admin/js/jquery.tablednd-0.5.js"></script>
 <script src="/admin/js/plugins/markdown-edit/simplemde.min.js"></script>
 <script src="/admin/plugins/toastr/toastr.min.js"></script>
 <script src="/admin/plugins/toastr/toastr.config.js"></script>
@@ -133,6 +137,55 @@
     window.Laravel = {
         csrfToken: "{{ csrf_token() }}"
     }
+
+    $(document).ready(function() {
+        $("#table").tableDnD({
+            scrollAmount:1,
+            onDragClass:'highlight',
+            //当拖动排序完成后
+            onDrop: function(table,row) {
+                //获取id为table的元素
+                var table = document.getElementById("table");
+                //获取table元素所包含的tr元素集合
+                var tr = table.getElementsByClassName("sort");
+                var arr = [];
+                //遍历所有的tr
+                for (var i = 0; i < tr.length; i++) {
+                    //获取拖动排序结束后新表格中，row id的结果
+                    var rowid = tr[i].getAttribute("id");
+                    arr[rowid] = i+1;
+                    //console.log("排序完成后表格的第 " + (i+1) + " 行id为 : " + rowid);
+                }
+                if (arr) {
+                    var url = '/dd/sort';
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        headers:{
+                            'X-CSRF-TOKEN': window.Laravel.csrfToken,
+                        },
+                        data:{'data':arr},
+                        async: true,
+                        error: function(msg) {
+                            if(msg.responseJSON.errors) {
+                                for (x in msg.responseJSON.errors) {
+                                    toastr.error(msg.responseJSON.errors[x]);
+                                }
+                            } else if(msg.responseJSON.message) {
+                                toastr.error(msg.responseJSON.message);
+                            } else {
+                                toastr.error('服务器错误');
+                            }
+                        },
+                        success: function (msg) {
+                            toastr.success('排序成功');
+//                          location.reload();
+                        }
+                    });
+                }
+            },
+        });
+    });
 
     $("[name='is_recommend']").on('switchChange.bootstrapSwitch', function (event,state) {
         var id = $(this).parents('tr').find('.id').html();

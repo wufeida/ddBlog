@@ -40,7 +40,7 @@ class ArticleController extends Controller
      */
     public function recommend()
     {
-        $data = $this->article->recommend('desc', 'sort');
+        $data = $this->article->recommend('asc', 'sort');
         if ($data) {
             foreach ($data as $v) {
                 $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
@@ -64,6 +64,23 @@ class ArticleController extends Controller
         }
         $res = $this->article->update($id, $data);
         return custom_json($res);
+    }
+
+    /**
+     * 推荐文章排序
+     *
+     * @param Request $request
+     * @return int
+     */
+    public function sort(Request $request)
+    {
+        //去除数组中的空值
+        $info = array_filter($request->get('data'));
+        foreach ($info as $k=>$v) {
+            $data['sort'] = $v;
+            $res = $this->article->update($k, $data);
+        }
+        if ($res) return 1;
     }
 
     public function create()
