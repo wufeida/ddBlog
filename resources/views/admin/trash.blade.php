@@ -85,6 +85,9 @@
                                                     <br/>
                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                     <div style="float: right">
+                                                        <a class="btn btn-white btn-xs btn-bitbucket" title="还原">
+                                                            <i class="fa fa-undo"></i>
+                                                        </a>
                                                         <a class="btn btn-white btn-xs btn-bitbucket" title="永久删除？">
                                                             <i class="glyphicon glyphicon-trash"></i>
                                                         </a>
@@ -113,6 +116,9 @@
                                                     <br/>
                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                     <div style="float: right">
+                                                        <a class="btn btn-white btn-xs btn-bitbucket" title="还原">
+                                                            <i class="fa fa-undo"></i>
+                                                        </a>
                                                         <a class="btn btn-white btn-xs btn-bitbucket" title="永久删除？">
                                                             <i class="glyphicon glyphicon-trash"></i>
                                                         </a>
@@ -136,6 +142,9 @@
                                                     <br/>
                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                     <div style="float: right">
+                                                        <a class="btn btn-white btn-xs btn-bitbucket" title="还原">
+                                                            <i class="fa fa-undo"></i>
+                                                        </a>
                                                         <a class="btn btn-white btn-xs btn-bitbucket" title="永久删除？">
                                                             <i class="glyphicon glyphicon-trash"></i>
                                                         </a>
@@ -159,6 +168,9 @@
                                                     <br/>
                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                     <div style="float: right">
+                                                        <a class="btn btn-white btn-xs btn-bitbucket" title="还原">
+                                                            <i class="fa fa-undo"></i>
+                                                        </a>
                                                         <a class="btn btn-white btn-xs btn-bitbucket" title="永久删除？">
                                                             <i class="glyphicon glyphicon-trash"></i>
                                                         </a>
@@ -182,6 +194,9 @@
                                                     <br/>
                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                     <div style="float: right">
+                                                        <a class="btn btn-white btn-xs btn-bitbucket" title="还原">
+                                                            <i class="fa fa-undo"></i>
+                                                        </a>
                                                         <a class="btn btn-white btn-xs btn-bitbucket" title="永久删除？">
                                                             <i class="glyphicon glyphicon-trash"></i>
                                                         </a>
