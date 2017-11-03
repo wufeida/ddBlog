@@ -13,7 +13,7 @@ class Tag extends Model
 
     protected $primaryKey = "id";
 
-    protected $dates = ['delete_at'];
+    protected $dates = ['deleted_at'];
 
     protected $fillable = [
         'tag', 'title', 'subtitle', 'meta_description'

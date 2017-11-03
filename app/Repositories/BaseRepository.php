@@ -115,4 +115,9 @@ trait BaseRepository {
 
         return $model;
     }
+
+    public function getTrash()
+    {
+       return $this->model->onlyTrashed()->get();
+    }
 }

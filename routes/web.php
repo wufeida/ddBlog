@@ -30,7 +30,7 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::resource('link', 'LinkController', ['except' => ['create', 'show']]);
         Route::get('visitor','VisitorController@index');
         Route::resource('comment', 'CommentController', ['except' => ['create', 'show']]);
-
+        Route::get('trash', 'TrashController@index');
     });
 });
 
