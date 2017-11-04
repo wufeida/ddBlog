@@ -420,7 +420,7 @@
                 },
                 success: function (msg) {
                     notice(parent.success, '删除成功');
-//                    location.reload();
+                    location.reload();
                 }
             });
         }
