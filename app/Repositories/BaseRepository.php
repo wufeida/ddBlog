@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 trait BaseRepository {
     /**
-     * Get number of records
+     * 获取总数
      *
      * @return array
      */
@@ -14,7 +14,7 @@ trait BaseRepository {
     }
 
     /**
-     * Update columns in the record by id.
+     * 更新某一字段
      *
      * @param $id
      * @param $input
@@ -32,7 +32,7 @@ trait BaseRepository {
     }
 
     /**
-     * Destroy a model.
+     * 删除指定id数据
      *
      * @param  $id
      * @return mixed
@@ -43,7 +43,7 @@ trait BaseRepository {
     }
 
     /**
-     * Get model by id.
+     * 获取指定id数据
      *
      * @return App\Model
      */
@@ -53,7 +53,7 @@ trait BaseRepository {
     }
 
     /**
-     * Get all the records
+     * 获取全部数据
      *
      * @return array User
      */
@@ -63,7 +63,7 @@ trait BaseRepository {
     }
 
     /**
-     * Get number of the records
+     * 获取分页数据
      *
      * @param  int $number
      * @param  string $sort
@@ -76,7 +76,7 @@ trait BaseRepository {
     }
 
     /**
-     * Store a new record.
+     * 保存数据
      *
      * @param  $input
      * @return User
@@ -87,7 +87,7 @@ trait BaseRepository {
     }
 
     /**
-     * Update a record by id.
+     * 更新数据
      *
      * @param  $id
      * @param  $input
@@ -101,7 +101,7 @@ trait BaseRepository {
     }
 
     /**
-     * Save the input's data.
+     * 保存数据
      *
      * @param  $model
      * @param  $input
@@ -116,8 +116,29 @@ trait BaseRepository {
         return $model;
     }
 
+    /**
+     * 获取全部已删除内容
+     *
+     * @return mixed
+     */
     public function getTrash()
     {
        return $this->model->onlyTrashed()->get();
+    }
+
+    /**
+     * 删除单一数据
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function forceDelById($id)
+    {
+        return $this->model->where('id', $id)->forceDelete();
+    }
+
+    public function forceDelAll()
+    {
+        return $this->model->onlyTrashed()->forceDelete();
     }
 }

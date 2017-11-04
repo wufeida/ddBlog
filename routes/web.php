@@ -31,6 +31,8 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::get('visitor','VisitorController@index');
         Route::resource('comment', 'CommentController', ['except' => ['create', 'show']]);
         Route::get('trash', 'TrashController@index');
+        Route::get('del/{type}/{id}', 'TrashController@onlyDel');
+        Route::get('empty', 'TrashController@allDel');
     });
 });
 
