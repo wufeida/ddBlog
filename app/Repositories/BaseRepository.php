@@ -137,8 +137,34 @@ trait BaseRepository {
         return $this->model->where('id', $id)->forceDelete();
     }
 
+    /**
+     * 强制删除所有
+     *
+     * @return mixed
+     */
     public function forceDelAll()
     {
         return $this->model->onlyTrashed()->forceDelete();
+    }
+
+    /**
+     * 撤销单个数据
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function undoById($id)
+    {
+        return $this->model->where('id', $id)->restore();
+    }
+
+    /**
+     * 撤销所有删除的数据
+     *
+     * @return mixed
+     */
+    public function undoAll()
+    {
+        return $this->model->onlyTrashed()->restore();
     }
 }

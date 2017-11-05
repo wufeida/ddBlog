@@ -21,7 +21,8 @@
                 <div class="ibox-title">
                     <h2 style="display: inline-block">回收站</h2>
                     <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;margin-left: 5px;"><i class="fa fa-refresh"></i> Refresh</button>
-                    <button type="button" data-toggle="modal" data-target="#delModal" id="loading-example-btn" class="btn btn-danger btn-sm" style="float: right;"><i class="glyphicon glyphicon-trash"></i> 清空回收站</button>
+                    <button type="button" data-toggle="modal" data-target="#delModal" id="loading-example-btn" class="btn btn-danger btn-sm" style="float: right;margin-left: 5px;"><i class="glyphicon glyphicon-trash"></i> 清空回收站</button>
+                    <button type="button" data-toggle="modal" data-target="#resetModal" id="loading-example-btn" class="btn btn-info btn-sm" style="float: right;"><i class="fa fa-undo"></i> 还原所有</button>
                 </div>
                 <div class="row m-t-lg" style="margin-top: 0">
                     <div class="col-lg-12">
@@ -360,12 +361,27 @@
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title del-h4" id="del-label">确认清空回收站？</h4>
-                        <span>清空后不可恢复</span>
+                        <span style="color: red;">警告：清空后不可恢复！！！</span>
                     </div>
                     <div class="modal-footer del-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
                         <button type="button" onclick="del($(this))" class="btn btn-danger">确认</button>
                     </div>
+            </div>
+        </div>
+    </div>
+    <!-- reset modal -->
+    <div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title del-h4" id="del-label">确认还原所有数据？</h4>
+                </div>
+                <div class="modal-footer del-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                    <button type="button" onclick="undo($(this))" class="btn btn-danger">确认</button>
+                </div>
             </div>
         </div>
     </div>
@@ -385,7 +401,7 @@
                 animationHover(this, 'pulse');
             });
         });
-
+        //删除单个
         $(document).on('click', '.del', function () {
             var type = $(this).parent().attr('data-type');
             var id = $(this).parent().attr('data-id');
@@ -406,6 +422,47 @@
                 }
             });
         });
+        //撤销单个删除
+        $(document).on('click', '.reset', function () {
+            var type = $(this).parent().attr('data-type');
+            var id = $(this).parent().attr('data-id');
+            var url = "/dd/undo/"+type+"/"+id;
+            $.ajax({
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: "GET",
+                url: url,
+                async: false,
+                error: function(msg) {
+                    toastr.error('删除失败');
+                },
+                success: function (msg) {
+                    notice(parent.success, '删除成功');
+                    location.reload();
+                }
+            });
+        });
+        //还原所有数据
+        function undo(z) {
+            var url = "/dd/undo/all";
+            $.ajax({
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: "GET",
+                url: url,
+                async: false,
+                error: function(msg) {
+                    toastr.error('还原失败');
+                },
+                success: function (msg) {
+                    notice(parent.success, '还原成功');
+                    location.reload();
+                }
+            });
+        }
+        //清空回收站
         function del(z) {
             var url = "/dd/empty";
             $.ajax({

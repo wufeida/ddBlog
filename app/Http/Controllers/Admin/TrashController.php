@@ -121,4 +121,50 @@ class TrashController extends Controller
         $this->comment->forceDelAll();
         return 1;
     }
+
+    /**
+     * 撤销单个删除
+     *
+     * @param $type
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function undo($type, $id)
+    {
+        switch ($type) {
+            case 'article':
+                $res = $this->article->undoById($id);
+                return custom_json($res);
+                break;
+            case 'tag':
+                $res = $this->tag->undoById($id);
+                return custom_json($res);
+                break;
+            case 'link':
+                $res = $this->link->undoById($id);
+                return custom_json($res);
+                break;
+            case 'category':
+                $res = $this->category->undoById($id);
+                return custom_json($res);
+                break;
+            case 'comment':
+                $res = $this->comment->undoById($id);
+                return custom_json($res);
+                break;
+        }
+    }
+
+    /**
+     * 还原回收站所有数据
+     */
+    public function undoAll()
+    {
+        $this->article->undoAll();
+        $this->category->undoAll();
+        $this->tag->undoAll();
+        $this->link->undoAll();
+        $this->comment->undoAll();
+        return 1;
+    }
 }
