@@ -46,6 +46,7 @@
                             <a href="{{url('dd/article')}}" class="btn btn-success btn-sm">返回</a>
                             <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;"><i class="fa fa-refresh"></i> Refresh</button>
                         </div>
+                        <fieldset class="form-horizontal">
                         <div class="ibox-content">
                             <form method="post" id="add-form" action="{{ isset($id) ? url('dd/article').'/'.$id : route('article.store') }}" enctype="multipart/form-data">
                                 {{csrf_field()}}
@@ -54,23 +55,30 @@
                                 @endif
                                 <div class="modal-body">
                                     <div class="form-group">
-                                        <label for="title">标题</label>
-                                        <input type="text" id="title" value="{{ isset($data) ? $data['title'] : '' }}" name="title" class="form-control" placeholder="标题">
+                                        <label class="col-sm-1 control-label" for="title">标题：</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" id="title" value="{{ isset($data) ? $data['title'] : '' }}" name="title" class="form-control" placeholder="标题">
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="subtitle">副标题</label>
-                                        <input type="text" id="subtitle" value="{{ isset($data) ? $data['subtitle'] : '' }}" name="subtitle" class="form-control" placeholder="副标题">
+                                        <label class="col-sm-1 control-label" for="subtitle">副标题：</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" id="subtitle" value="{{ isset($data) ? $data['subtitle'] : '' }}" name="subtitle" class="form-control" placeholder="副标题">
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="category_id">分类</label>
-                                        <select id="cate" name="category_id" value="{{ isset($data) ? $data['category_id'] : '' }}" class="form-control selectpicker" data-live-search="true">
+                                        <label class="col-sm-1 control-label" for="category_id">分类：</label>
+                                        <div class="col-sm-11">
+                                            <select id="cate" name="category_id" value="{{ isset($data) ? $data['category_id'] : '' }}" class="form-control selectpicker" data-live-search="true">
                                             @foreach($categories as $v)
                                             <option value="{{$v->id}}">{{$v->name}}</option>
                                             @endforeach
                                         </select>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="image">页面图片</label>
+                                        <label class="col-sm-1 control-label" for="image">页面图片：</label>
+                                        <div class="col-sm-11">
                                         <div class="upload-box">
                                             <input type="file" class="form-control" id="page_image" name="page_image" onchange="previewImage(this,'preview1','J_avatar1')">
                                             <div id="preview1" class="preview">
@@ -78,13 +86,16 @@
                                             </div>
                                             <div class="mask"><i class="ion-upload"></i></div>
                                         </div>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="content">内容</label>
+                                        <label class="col-sm-1 control-label" for="content">内容：</label>
+                                        <div class="col-sm-11">
                                         <textarea name="content" id="editor">{{ isset($data) ? $data['content']['raw'] : '' }}</textarea>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="tag">标签:</label>
+                                        <label class="col-sm-1 control-label" for="tag">标签：</label>
                                         <?php
                                             if (isset($data)) {
                                                 $tag = '';
@@ -97,44 +108,56 @@
                                             }
 
                                         ?>
+                                        <div class="col-sm-11">
                                         <select id="tag" name="tag" value="{{$tag}}" class="form-control selectpicker" multiple data-live-search="true">
                                             @foreach($tags as $v)
                                             <option value="{{$v->id}}">{{$v->tag}}</option>
                                             @endforeach
                                         </select>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="meta_description">主要描述</label>
+                                        <label class="col-sm-1 control-label" for="meta_description">主要描述：</label>
+                                        <div class="col-sm-11">
                                         <textarea class="form-control" value="" name="meta_description">{{ isset($data) ? $data['meta_description'] : '' }}</textarea>
+                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="content">日期时间</label>
+                                        <label class="col-sm-1 control-label" for="content">日期时间：</label>
+                                        <div class="col-sm-11">
                                         <div class="input-group date col-md-5" data-link-field="dtp_input1">
                                             <input name="published_at" class="form-control form_datetime" data-date="" data-date-format="yyyy-mm-dd hh:ii:ss" size="16" type="text" value="{{ isset($data) ? $data['published_at'] : '' }}" readonly>
                                         </div>
+                                        </div>
                                     </div>
                                     <div class="form-group" style="margin-bottom: 30px;">
-                                        <label class="col-sm-1 control-label" style="padding-left: 0">
-                                            是否原创
+                                        <label class="col-sm-1 control-label">
+                                            是否原创：
                                         </label>
-                                        <div class="switch switch-mini col-sm-2" data-on-text="YES" data-off-text="NO">
+                                        <div class="col-sm-1">
+                                        <div class="switch switch-mini" data-on-text="YES" data-off-text="NO">
                                             <input type="checkbox" name="is_original" @if(isset($data))@if($data['is_original']) checked @endif @endif />
                                         </div>
+                                        </div>
 
-                                        <label class="col-sm-1 control-label" style="padding-left: 0">
-                                            是否草稿
+                                        <label class="col-sm-1 control-label">
+                                            是否草稿：
                                         </label>
-                                        <div class="switch bootstrap-switch-mini col-sm-2" data-on-text="YES" data-off-text="NO">
+                                        <div class="col-sm-1">
+                                        <div class="switch bootstrap-switch-mini" data-on-text="YES" data-off-text="NO">
                                             <input type="checkbox" name="is_draft"  @if(isset($data))@if($data['is_draft']) checked @endif @endif />
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                                 <div class="modal-footer">
                                     <button type="button" onclick="save($(this))" class="btn btn-primary">保存</button>
                                 </div>
                             </form>
                         </div>
-
+                        </fieldset>
                     </div>
                 </div>
             </div>

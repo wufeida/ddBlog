@@ -122,6 +122,12 @@ class Article extends Model
      */
     public function setTitleAttribute($value)
     {
+        if ($this->attributes['id']) {
+            $info = $this->where('id', $this->attributes['id'])->first();
+            if ($info->title == $value) {
+                return;
+            }
+        }
         $this->attributes['title'] = $value;
         if (!config('services.youdao.appKey') || !config('services.youdao.appSecret')) {
             $this->setUniqueSlug($value, str_random(5));
