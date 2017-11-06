@@ -9,6 +9,7 @@
             </form>
         </div>
         <ul class="nav navbar-top-links navbar-right">
+            <a href="/" target="_blank" class="btn btn-primary"><i class="fa fa-home"></i>&nbsp;去前台</a>
             <li>
                 <span class="m-r-sm text-muted welcome-message">欢迎来到哒哒后台管理.</span>
             </li>
