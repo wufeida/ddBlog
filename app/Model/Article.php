@@ -30,6 +30,7 @@ class Article extends Model
         'published_at',
         'is_recommend',
         'sort',
+        'flag',
     ];
 
     protected $casts = [
@@ -122,7 +123,7 @@ class Article extends Model
      */
     public function setTitleAttribute($value)
     {
-        if ($this->attributes['id']) {
+        if (isset($this->attributes['id'])) {
             $info = $this->where('id', $this->attributes['id'])->first();
             if ($info->title == $value) {
                 return;
@@ -157,12 +158,12 @@ class Article extends Model
      *
      * @param $value
      */
-    public function setContentAttribute($value)
-    {
-        $data = [
-            'raw'  => $value,
-            'html' => (new Markdowner)->convertMarkdownToHtml($value)
-        ];
-        $this->attributes['content'] = json_encode($data);
-    }
+//    public function setContentAttribute($value)
+//    {
+//        $data = [
+//            'raw'  => $value,
+//            'html' => (new Markdowner)->convertMarkdownToHtml($value)
+//        ];
+//        $this->attributes['content'] = json_encode($data);
+//    }
 }

@@ -163,14 +163,13 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                                 <div class="modal-footer">
                                     <button type="button" onclick="save($(this))" class="btn btn-primary">保存</button>
                                 </div>
                             </form>
                         </div>
                         </fieldset>
+                        <input type="hidden" id="flag" value="1">
                     </div>
                 </div>
             </div>
@@ -198,25 +197,32 @@
     <script src="/admin/plugins/summernote/lang/summernote-zh-CN.js"></script>
 
     <script>
-        //sumernote富文本编辑器
-        $(document).ready(function() {
-            $('#summernote').summernote({
-                lang: 'zh-CN',
-                minHeight: 300,
-                maxHeight: null,
-                focus: true,
-                toolbar: [
-                    ['paragraph style', ['style']],
-                    ['font style', ['bold', 'italic', 'underline', 'fontname', 'fontsize', 'color', 'strikethrough', 'superscript', 'subscript', 'clear']],
-                    ['insert', ['picture', 'link', 'video', 'table', 'hr']],
-                    ['paragraph style', ['ol', 'ul', 'paragraph', 'height']],
-                    ['misc', ['redo', 'undo', 'codeview', 'fullscreen', 'help']],
-                ]
+        $(function(){
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                // 获取已激活的标签页的名称
+                var activeTab = $(e.target).text();
+                if (activeTab == '富文本') {
+                    $('#flag').val('0');
+                } else {
+                    $('#flag').val('1');
+                }
             });
         });
-        //获取富文本里面的值
-        var markupStr = $('#summernote').summernote('code');
-        //markdown编辑器
+        //sumernote富文本编辑器
+        $('#summernote').summernote({
+            lang: 'zh-CN',
+            minHeight: 300,
+            maxHeight: null,
+            focus: true,
+            toolbar: [
+                ['paragraph style', ['style']],
+                ['font style', ['bold', 'italic', 'underline', 'fontname', 'fontsize', 'color', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+                ['paragraph style', ['ol', 'ul', 'paragraph', 'height']],
+                ['misc', ['redo', 'undo', 'codeview', 'fullscreen', 'help']],
+            ]
+        });
+
         var simplemde = new SimpleMDE({ element: $("#editor")[0] });
 
         //日期选择器
@@ -243,9 +249,16 @@
         });
 
         function save(z) {
+            var content = $('#summernote').summernote('code');
             var formData = new FormData($('#add-form')[0]);
             formData.append('tag',$('#tag').val());
-            formData.append('content',simplemde.value());
+            var flag = $('#flag').val();
+            formData.append('flag',flag);
+            if (flag == 1) {
+                formData.append('content',simplemde.value());
+            } else {
+                formData.append('content',content);
+            }
             $.ajax({
                 cache: false,
                 contentType: false,
@@ -267,7 +280,7 @@
                 },
                 success: function (msg) {
                     notice(parent.success,'成功');
-                    window.location.href = document.referrer;
+//                    window.location.href = document.referrer;
                 }
             });
         }

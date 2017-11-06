@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ArticleRequest;
 use App\Repositories\ArticleRepository;
+use App\Tools\Markdowner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -105,14 +106,25 @@ class ArticleController extends Controller
             $path = app('App\Tools\ImgUpload')->imgUpload($file);
             $formData['page_image'] = $path;
         }
-        //
         $data = array_merge($formData, [
             'user_id'      => \Auth::id(),
             'last_user_id' => \Auth::id()
         ]);
         $data['is_draft']    = isset($data['is_draft']);
         $data['is_original'] = isset($data['is_original']);
-
+//        if ($data['flag'] == 1) {
+//            $content = [
+//                'raw'  => $data['content'],
+//                'html' => (new Markdowner)->convertMarkdownToHtml($data['content'])
+//            ];
+//            $data['content'] = json_encode($content);
+//        } else {
+//            $content = [
+//                'raw'  => $data['content'],
+//                'html' => $data['content']
+//            ];
+//            $data['content'] = json_encode($content);
+//        }
         $res = $this->article->store($data);
         $tags = explode(',', $request->get('tag'));
         $this->article->syncTag($tags);
