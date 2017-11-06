@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         \JellyBool\Translug\TranslugServiceProvider::class,
+        Stevenyangecho\UEditor\UEditorServiceProvider::class,
     ],
 
     /*

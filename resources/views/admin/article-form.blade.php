@@ -19,6 +19,8 @@
     <link href="/admin/plugins/switch/css/bootstrap3/bootstrap-switch.min.css" rel="stylesheet">
     <link href="/admin/plugins/select/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
+    <link href="/admin/plugins/summernote/summernote.css" rel="stylesheet">
+
 
 </head>
 <style>
@@ -90,8 +92,19 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-sm-1 control-label" for="content">内容：</label>
-                                        <div class="col-sm-11">
-                                        <textarea name="content" id="editor">{{ isset($data) ? $data['content']['raw'] : '' }}</textarea>
+                                        <div class="tabs-container col-sm-11">
+                                            <ul class="nav nav-tabs ">
+                                                <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-file-archive-o"></i>markdown</a></li>
+                                                <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-file-word-o"></i>富文本</a></li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div id="tab-1" class="tab-pane active">
+                                                    <textarea name="content" id="editor">{{ isset($data) ? $data['content']['raw'] : '' }}</textarea>
+                                                </div>
+                                                <div id="tab-2" class="tab-pane">
+                                                    <div id="summernote">{!! isset($data) ? $data['content']['html'] : '' !!}</div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -181,7 +194,28 @@
     <script src="/admin/plugins/select/js/bootstrap-select.js"></script>
     <script src="/admin/plugins/toastr/toastr.min.js"></script>
     <script src="/admin/plugins/toastr/toastr.config.js"></script>
+    <script src="/admin/plugins/summernote/summernote.min.js"></script>
+    <script src="/admin/plugins/summernote/lang/summernote-zh-CN.js"></script>
+
     <script>
+        //sumernote富文本编辑器
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                lang: 'zh-CN',
+                minHeight: 300,
+                maxHeight: null,
+                focus: true,
+                toolbar: [
+                    ['paragraph style', ['style']],
+                    ['font style', ['bold', 'italic', 'underline', 'fontname', 'fontsize', 'color', 'strikethrough', 'superscript', 'subscript', 'clear']],
+                    ['insert', ['picture', 'link', 'video', 'table', 'hr']],
+                    ['paragraph style', ['ol', 'ul', 'paragraph', 'height']],
+                    ['misc', ['redo', 'undo', 'codeview', 'fullscreen', 'help']],
+                ]
+            });
+        });
+        //获取富文本里面的值
+        var markupStr = $('#summernote').summernote('code');
         //markdown编辑器
         var simplemde = new SimpleMDE({ element: $("#editor")[0] });
 
