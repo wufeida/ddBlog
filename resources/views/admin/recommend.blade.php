@@ -128,9 +128,18 @@
 <script src="/admin/plugins/switch/js/bootstrap-switch.min.js"></script>
 <script src="/admin/article.js"></script>
 <script>
+    var fixHelper = function(e, ui) {
+        //console.log(ui)
+        ui.children().each(function() {
+            $(this).width($(this).width());  //在拖动时，拖动行的cell（单元格）宽度会发生改变。在这里做了处理就没问题了
+        });
+        return ui;
+    };
     //排序功能
     $(document).ready(function(){
         $("#dowebok").sortable({
+            cursor: "move",
+            helper: fixHelper,
             update: function( event, ui ) {
                 var arr = $( "#dowebok" ).sortable( "toArray" );
                 var url = '/dd/sort';
