@@ -49,7 +49,7 @@
                         <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;"><i class="fa fa-refresh"></i> Refresh</button>
                     </div>
                     <div class="ibox-content">
-                        <table class="table table-hover ">
+                        <table class="table table-hover " >
                             <thead>
                             <tr>
                                 <th class="text-center">#</th>
@@ -61,7 +61,7 @@
                                 <th class="text-center">操作</th>
                             </tr>
                             </thead>
-                            <tbody id="table" id="dowebok">
+                            <tbody id="dowebok">
                             @foreach($data as $v)
                                 <tr id="{{$v->id}}" class="sort">
                                     <td class="text-center id">{{$v->id}}</td>
@@ -112,6 +112,7 @@
 </div>
 <!-- Mainly scripts -->
 <script src="/admin/js/jquery-2.1.1.js"></script>
+<script src="/admin/js/jquery-ui-1.10.4.min.js"></script>
 <script src="/admin/js/bootstrap.min.js"></script>
 <script src="/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
 <script src="/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
@@ -127,38 +128,14 @@
 <script src="/admin/plugins/switch/js/bootstrap-switch.min.js"></script>
 <script src="/admin/article.js"></script>
 <script>
-    // 开关按钮
-    $("[name='is_recommend']").bootstrapSwitch({
-        size:'small',
-        onText:'YES',
-        offText:'NO'
-    });
-
-    window.Laravel = {
-        csrfToken: "{{ csrf_token() }}"
-    }
-
-    $(document).ready(function() {
-        $("#table").tableDnD({
-            scrollAmount:1,
-            onDragClass:'highlight',
-            //当拖动排序完成后
-            onDrop: function(table,row) {
-                //获取id为table的元素
-                var table = document.getElementById("table");
-                //获取table元素所包含的tr元素集合
-                var tr = table.getElementsByClassName("sort");
-                var arr = [];
-                //遍历所有的tr
-                for (var i = 0; i < tr.length; i++) {
-                    //获取拖动排序结束后新表格中，row id的结果
-                    var rowid = tr[i].getAttribute("id");
-                    arr[rowid] = i+1;
-                    //console.log("排序完成后表格的第 " + (i+1) + " 行id为 : " + rowid);
-                }
-                if (arr) {
-                    var url = '/dd/sort';
-                    $.ajax({
+    //排序功能
+    $(document).ready(function(){
+        $("#dowebok").sortable({
+            update: function( event, ui ) {
+                var arr = $( "#dowebok" ).sortable( "toArray" );
+                var url = '/dd/sort';
+                console.log(arr)
+                $.ajax({
                         type: "POST",
                         url: url,
                         headers:{
@@ -182,11 +159,21 @@
 //                          location.reload();
                         }
                     });
-                }
-            },
-        });
+            }
+        }).disableSelection();
+
+    });
+    // 开关按钮
+    $("[name='is_recommend']").bootstrapSwitch({
+        size:'small',
+        onText:'YES',
+        offText:'NO'
     });
 
+    window.Laravel = {
+        csrfToken: "{{ csrf_token() }}"
+    }
+    //是否推荐按钮
     $("[name='is_recommend']").on('switchChange.bootstrapSwitch', function (event,state) {
         var id = $(this).parents('tr').find('.id').html();
         var url = '/dd/recommend/'+id;

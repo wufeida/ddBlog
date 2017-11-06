@@ -77,8 +77,8 @@ class ArticleController extends Controller
         //去除数组中的空值
         $info = array_filter($request->get('data'));
         foreach ($info as $k=>$v) {
-            $data['sort'] = $v;
-            $res = $this->article->update($k, $data);
+            $data['sort'] = $k;
+            $res = $this->article->update($v, $data);
         }
         if ($res) return 1;
     }
