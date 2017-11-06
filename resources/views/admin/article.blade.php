@@ -72,7 +72,7 @@
                                         </div>
                                     </td>
                                     <td class="text-center">
-                                        <a target="_blank" class="btn btn-success edit btn-circle"><i class="glyphicon glyphicon-eye-open"></i></a>
+                                        <a href="{{url("/$v->slug")}}" target="_blank" class="btn btn-success edit btn-circle"><i class="glyphicon glyphicon-eye-open"></i></a>
                                         <a href="{{url('dd/article/'.$v->id.'/edit')}}" class="btn btn-info edit btn-circle"><i class="glyphicon glyphicon-pencil"></i></a>
                                         <button type="button" class="btn btn-danger delete btn-circle" data-toggle="modal" data-target="#delModal"><i class="glyphicon glyphicon-trash"></i></button>
                                     </td>
