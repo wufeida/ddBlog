@@ -31,6 +31,7 @@ class CreateArticlesTable extends Migration
             $table->integer('sort')->unsigned();
             $table->integer('view_count')->unsigned()->default(0)->index();
             $table->timestamp('published_at')->nullable();
+            $table->boolean('flag')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -158,12 +158,8 @@ class Article extends Model
      *
      * @param $value
      */
-//    public function setContentAttribute($value)
-//    {
-//        $data = [
-//            'raw'  => $value,
-//            'html' => (new Markdowner)->convertMarkdownToHtml($value)
-//        ];
-//        $this->attributes['content'] = json_encode($data);
-//    }
+    public function setContentAttribute($value)
+    {
+        $this->attributes['content'] = json_encode($value);
+    }
 }

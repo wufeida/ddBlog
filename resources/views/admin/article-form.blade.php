@@ -280,7 +280,7 @@
                 },
                 success: function (msg) {
                     notice(parent.success,'成功');
-//                    window.location.href = document.referrer;
+                    window.location.href = document.referrer;
                 }
             });
         }

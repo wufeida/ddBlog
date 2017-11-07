@@ -112,19 +112,9 @@ class ArticleController extends Controller
         ]);
         $data['is_draft']    = isset($data['is_draft']);
         $data['is_original'] = isset($data['is_original']);
-//        if ($data['flag'] == 1) {
-//            $content = [
-//                'raw'  => $data['content'],
-//                'html' => (new Markdowner)->convertMarkdownToHtml($data['content'])
-//            ];
-//            $data['content'] = json_encode($content);
-//        } else {
-//            $content = [
-//                'raw'  => $data['content'],
-//                'html' => $data['content']
-//            ];
-//            $data['content'] = json_encode($content);
-//        }
+        $content['raw'] = $data['content'];
+        $content['html'] = $data['flag'] == 1 ? (new Markdowner)->convertMarkdownToHtml($data['content']) : $data['content'];
+        $data['content'] = $content;
         $res = $this->article->store($data);
         $tags = explode(',', $request->get('tag'));
         $this->article->syncTag($tags);
@@ -165,6 +155,9 @@ class ArticleController extends Controller
             $path = app('App\Tools\ImgUpload')->imgUpload($file);
             $data['page_image'] = $path;
         }
+        $content['raw'] = $data['content'];
+        $content['html'] = $data['flag'] == 1 ? (new Markdowner)->convertMarkdownToHtml($data['content']) : $data['content'];
+        $data['content'] = $content;
         $res = $this->article->update($id, $data);
         $tags = explode(',', $request->get('tag'));
         $this->article->syncTag($tags);
