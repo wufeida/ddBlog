@@ -9,7 +9,12 @@
         <div class="am-article-hd">
           <h1 class="am-article-title blog-text-center">{{$data->title}}</h1>
           <p class="am-article-meta blog-text-center">
-              <span><i class="fa fa-list-alt"></i>&nbsp;<a href="#" class="blog-color">{{$data->category->name}} &nbsp;</a></span>-
+              <span><i class="fa fa-list-alt"></i>&nbsp;
+                  @if($data->category)
+                      <a href="{{url("category").'/'.$data->category->id}}" class="blog-color"> &nbsp;{{$data->category->name}} &nbsp;</a>
+                  @else
+                      <a> &nbsp;暂无分类 &nbsp;</a>
+                  @endif</span>-
               <span><i class="fa fa-user"></i> &nbsp;{{$data->user->name}} </span>-
               <span><i class="fa fa-calendar"></i> &nbsp;{{$data->publish_at}}&nbsp;</span>
               <span><i class="fa fa-eye"></i> &nbsp;{{$data->view_count}}</span>
