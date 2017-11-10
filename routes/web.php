@@ -36,7 +36,9 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::get('undo/{type}/{id}', 'TrashController@undo');
         Route::get('undo/all', 'TrashController@undoAll');
         Route::get('file', 'FileController@index');
+        Route::get('file/delete', 'FileController@deleteFile');
         Route::post('folder', 'FileController@createFolder');
+        Route::delete('folder', 'FileController@deleteFolder');
     });
 });
 

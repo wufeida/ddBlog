@@ -207,7 +207,7 @@ class BaseManager
         $this->cleanFolder($folder);
 
         if ($this->checkFolder($folder)) {
-            throw new UploadException("The Folder exists.");
+            throw new UploadException("文件夹已存在");
         }
 
         return $this->disk->makeDirectory($folder);
