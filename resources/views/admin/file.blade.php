@@ -15,6 +15,8 @@
     <link href="/admin/css/style.css" rel="stylesheet">
     <link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">
     <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
+    <link href="/admin/css/plugins/dropzone/basic.css" rel="stylesheet">
+    <link href="/admin/css/plugins/dropzone/dropzone.css" rel="stylesheet">
 
 </head>
 
@@ -48,7 +50,7 @@
                         <div class="ibox-content">
                             <div class="file-manager">
                                 <div class="hr-line-dashed"></div>
-                                <button class="btn btn-primary btn-block">上传文件</button>
+                                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#uploadModal">上传文件</button>
                                 <div class="hr-line-dashed"></div>
 
                                 <h5 style="display: inline-block">文件夹</h5>
@@ -137,6 +139,35 @@
             </div>
         </div>
     </div>
+
+    <!--form Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="add-label" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="add-label">上传文件</h4>
+                </div>
+                {{--<form method="post" id="add-form" action="{{ url('dd/folder') }}" enctype="multipart/form-data">--}}
+                    {{--{{csrf_field()}}--}}
+                    {{--<div class="modal-body">--}}
+                        {{--<div class="form-group">--}}
+                            {{--<label for="up_cname">文件夹名称</label>--}}
+                            {{--<input type="text" id="folder" name="name" class="form-control" placeholder="文件夹名称">--}}
+                        {{--</div>--}}
+                    {{--</div>--}}
+                    {{--<div class="modal-footer">--}}
+                        {{--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--}}
+                        {{--<button type="button" onclick="save($(this))" data-folder="{{$data['folder']}}" class="btn btn-primary">保存</button>--}}
+                    {{--</div>--}}
+                {{--</form>--}}
+                <form id="my-awesome-dropzone" class="dropzone" action="form_file_upload.html#">
+                    <div class="dropzone-previews"></div>
+                    <button type="submit" class="btn btn-primary pull-right">Submit this form!</button>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- delete modal -->
     <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
         <div class="modal-dialog modal-sm" role="document">
@@ -168,8 +199,40 @@
     <script src="/admin/plugins/toastr/toastr.min.js"></script>
     <script src="/admin/plugins/toastr/toastr.config.js"></script>
     <script src="/admin/js/plugins/pace/pace.min.js"></script>
+    <script src="/admin/js/plugins/dropzone/dropzone.js"></script>
+
 
     <script>
+        $(document).ready(function(){
+
+            Dropzone.options.myAwesomeDropzone = {
+
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                parallelUploads: 100,
+                maxFiles: 100,
+
+                // Dropzone settings
+                init: function() {
+                    var myDropzone = this;
+
+                    this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue();
+                    });
+                    this.on("sendingmultiple", function() {
+                    });
+                    this.on("successmultiple", function(files, response) {
+                    });
+                    this.on("errormultiple", function(files, response) {
+                    });
+                }
+
+            }
+
+        });
+
         $(document).ready(function(){
             $('.file-box').each(function() {
                 animationHover(this, 'pulse');
