@@ -94,7 +94,7 @@
                                         </div>
                                     @endif
                                     <div class="file-name">
-                                        {{$v['name']}}
+                                        {{str_limit($v['name'], $limit = 18, $end = '...')}}
                                         <br/>
                                         <small>{{$v['size']}}</small>
                                         <div style="float: right">
@@ -148,20 +148,9 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="add-label">上传文件</h4>
                 </div>
-                {{--<form method="post" id="add-form" action="{{ url('dd/folder') }}" enctype="multipart/form-data">--}}
-                    {{--{{csrf_field()}}--}}
-                    {{--<div class="modal-body">--}}
-                        {{--<div class="form-group">--}}
-                            {{--<label for="up_cname">文件夹名称</label>--}}
-                            {{--<input type="text" id="folder" name="name" class="form-control" placeholder="文件夹名称">--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="modal-footer">--}}
-                        {{--<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>--}}
-                        {{--<button type="button" onclick="save($(this))" data-folder="{{$data['folder']}}" class="btn btn-primary">保存</button>--}}
-                    {{--</div>--}}
-                {{--</form>--}}
-                <form id="my-awesome-dropzone" class="dropzone" action="form_file_upload.html#">
+                <form id="my-awesome-dropzone" class="dropzone" action="{{url('dd/upload')}}" enctype="multipart/form-data">
+                    {{csrf_field()}}
+                    <input type="hidden" name="folder" value="{{$data['folder']}}">
                     <div class="dropzone-previews"></div>
                     <button type="submit" class="btn btn-primary pull-right">Submit this form!</button>
                 </form>
@@ -203,15 +192,13 @@
 
 
     <script>
+        // 拖拽上传设置
         $(document).ready(function(){
-
             Dropzone.options.myAwesomeDropzone = {
-
                 autoProcessQueue: false,
                 uploadMultiple: true,
                 parallelUploads: 100,
                 maxFiles: 100,
-
                 // Dropzone settings
                 init: function() {
                     var myDropzone = this;
@@ -224,13 +211,21 @@
                     this.on("sendingmultiple", function() {
                     });
                     this.on("successmultiple", function(files, response) {
+                        console.log(response)
+                        var le = response.length;
+                        for (var i=0; i<le; i++) {
+                            if (!response[i].success) {
+                                toastr.error(response[i]);
+                            } else {
+                                toastr.success(response[i].filename+'上传成功');
+                            }
+                        }
                     });
                     this.on("errormultiple", function(files, response) {
+                        toastr.error(response.message);
                     });
                 }
-
             }
-
         });
 
         $(document).ready(function(){

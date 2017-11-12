@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Tools\BaseManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
@@ -15,12 +14,45 @@ class FileController extends Controller
         $this->manager = $manager;
     }
 
+    /**
+     * 首页显示文件夹及文件所有信息
+     *
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function index(Request $request)
     {
         $data = $this->manager->folderInfo($request->get('folder'));
         return view('admin.file', compact('data'));
     }
 
+    /**
+     * 上传文件
+     *
+     * @param Request $request
+     * @return mixed
+     *
+     */
+    public function uploadForManager(Request $request)
+    {
+        $files = $request->file('file');
+        foreach ($files as $file) {
+            $fileName = $request->get('name')
+                ? $request->get('name').'.'.explode('/', $file->getClientMimeType())[1]
+                : $file->getClientOriginalName();
+
+            $path = str_finish($request->get('folder'), '/');
+
+            if ($this->manager->checkFile($path.$fileName)) {
+                $result[] = $fileName.'文件已存在';
+                continue;
+            }
+
+            $result[] = $this->manager->store($file, $path, $fileName);
+        }
+
+        return custom_json($result);
+    }
     /**
      * 创建文件夹
      *
