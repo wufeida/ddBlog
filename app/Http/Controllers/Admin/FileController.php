@@ -27,7 +27,7 @@ class FileController extends Controller
     }
 
     /**
-     * 上传文件
+     * 上传文件到管理文件
      *
      * @param Request $request
      * @return mixed
@@ -52,6 +52,27 @@ class FileController extends Controller
         }
 
         return custom_json($result);
+    }
+
+    /**
+     * 上传文件
+     *
+     * @param ImageRequest $request
+     * @return mixed
+     */
+    public function fileUpload(ImageRequest $request)
+    {
+        $strategy = $request->get('strategy', 'images');
+
+        if (!$request->hasFile('image')) {
+            abort('422', '请上传图片');
+        }
+
+        $path = $strategy . '/' . date('Y') . '/' . date('m') . '/' . date('d');
+
+        $result = $this->manager->store($request->file('image'), $path);
+
+        return $this->response->json($result);
     }
     /**
      * 创建文件夹
