@@ -31,6 +31,34 @@
     .del-h4 {
         text-align: center;
     }
+    .file {
+        position: relative;
+        display: inline-block;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        padding: 6px 12px;
+        overflow: hidden;
+        color: #1E88C7;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+        margin: 0;
+        width: 20%;
+        text-align: center;
+    }
+    .file input {
+        position: absolute;
+        font-size: 100px;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+    .file:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
 </style>
 <body class="gray-bg">
         <div class="gray-bg">
@@ -109,7 +137,14 @@
                         <div class="form-group">
                             <label for="image">分类图片</label>
                             <div class="upload-box">
-                                <input type="file" class="form-control" id="image" name="image" onchange="previewImage(this,'preview1','J_avatar1')">
+                                <div class="col-lg-12" style="float: left;padding: 0;width: 80%">
+                                    <input type="text" class="form-control" name="image">
+                                </div>
+                                <a href="javascript:;" class="file">选择文件
+                                    <input type="file" name="" id="" id="image" name="image" onchange="previewImage(this,'preview1','J_avatar1')">
+                                </a>
+
+                                {{--<input type="file" class="form-control" id="image" name="image" onchange="previewImage(this,'preview1','J_avatar1')">--}}
                                 <div id="preview1" class="preview">
                                 <img width="100" height="100" class="image" id="J_avatar1">
                                 </div>
