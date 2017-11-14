@@ -6,6 +6,7 @@ function previewImage(file,a,b)
     var div = document.getElementById(a);
     if (file.files && file.files[0])
     {
+        console.log(file.files[0])
         div.innerHTML ='<img id="'+b+'">';
         var img = document.getElementById(''+b+'');
         img.onload = function(){
@@ -18,6 +19,19 @@ function previewImage(file,a,b)
         var reader = new FileReader();
         reader.onload = function(evt){img.src = evt.target.result;}
         reader.readAsDataURL(file.files[0]);
+    } else if (file.name) {
+        div.innerHTML ='<img id="'+b+'">';
+        var img = document.getElementById(''+b+'');
+        img.onload = function(){
+            var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+            img.width  =  rect.width;
+            img.height =  rect.height;
+            // img.style.marginLeft = rect.left+'px';
+            // img.style.marginTop = rect.top+'px';
+        }
+        var reader = new FileReader();
+        reader.onload = function(evt){img.src = evt.target.result;}
+        reader.readAsDataURL(file);
     }
     else //兼容IE
     {

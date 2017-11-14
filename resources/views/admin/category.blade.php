@@ -45,10 +45,12 @@
         margin: 0;
         width: 20%;
         text-align: center;
+        height: 34px;
     }
     .file input {
         position: absolute;
-        font-size: 100px;
+        width: 100%;
+        height: 100%;
         right: 0;
         top: 0;
         opacity: 0;
@@ -58,6 +60,11 @@
         border-color: #78C3F3;
         color: #004974;
         text-decoration: none;
+    }
+    @media only screen and (min-width: 100px) and (max-width: 640px) {
+        .file {
+            padding: 6px 0px;
+        }
     }
 </style>
 <body class="gray-bg">
@@ -138,10 +145,10 @@
                             <label for="image">分类图片</label>
                             <div class="upload-box">
                                 <div class="col-lg-12" style="float: left;padding: 0;width: 80%">
-                                    <input type="text" class="form-control" name="image">
+                                    <input type="text" class="form-control" id="image_url" name="image_url">
                                 </div>
                                 <a href="javascript:;" class="file">选择文件
-                                    <input type="file" name="" id="" id="image" name="image" onchange="previewImage(this,'preview1','J_avatar1')">
+                                    <input type="file" name="" id="" id="image">
                                 </a>
 
                                 {{--<input type="file" class="form-control" id="image" name="image" onchange="previewImage(this,'preview1','J_avatar1')">--}}
@@ -188,7 +195,7 @@
     <script src="/admin/js/bootstrap.min.js"></script>
     <script src="/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-
+    <script type="text/javascript" src="/admin/plugins/webuploader/webuploader.js"></script>
     <!-- self -->
     <script src="/admin/js/layer/layer.js"></script>
     <script src="/admin/js/viewer/viewer.min.js"></script>
@@ -196,6 +203,43 @@
     <script src="/admin/plugins/toastr/toastr.min.js"></script>
     <script src="/admin/plugins/toastr/toastr.config.js"></script>
     <script src="/admin/category.js"></script>
+    <script>
+        $("#formModal").on("shown.bs.modal",function(){
+            var uploader = WebUploader.create({
+
+                // 选完文件后，是否自动上传。
+                auto: true,
+
+                // swf文件路径
+                swf: '/admin/plugins/webuploader/js/Uploader.swf',
+
+                // 文件接收服务端。
+                server: '/dd/file/upload',
+
+                // 选择文件的按钮。可选。
+                // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+                pick: '.file',
+
+                // 只允许选择图片文件。
+                accept: {
+                    title: 'Images',
+                    extensions: 'gif,jpg,jpeg,bmp,png',
+                    mimeTypes: 'image/*'
+                }
+            });
+            uploader.on('beforeFileQueued', function (file) {
+                uploader.reset();
+                previewImage(file.source.source,'preview1','J_avatar1');
+            });
+            uploader.on('uploadSuccess', function (file,response) {
+                if (response.success) {
+                    $('#image_url').val(response.url);
+                } else {
+                    toastr.error('上传失败');
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

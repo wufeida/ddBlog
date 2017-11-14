@@ -60,19 +60,19 @@ class FileController extends Controller
      * @param ImageRequest $request
      * @return mixed
      */
-    public function fileUpload(ImageRequest $request)
+    public function fileUpload(Request $request)
     {
         $strategy = $request->get('strategy', 'images');
 
-        if (!$request->hasFile('image')) {
+        if (!$request->hasFile('file')) {
             abort('422', '请上传图片');
         }
 
         $path = $strategy . '/' . date('Y') . '/' . date('m') . '/' . date('d');
 
-        $result = $this->manager->store($request->file('image'), $path);
+        $result = $this->manager->store($request->file('file'), $path);
 
-        return $this->response->json($result);
+        return custom_json($result);
     }
     /**
      * 创建文件夹

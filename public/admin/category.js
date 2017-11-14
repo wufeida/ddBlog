@@ -22,6 +22,7 @@ $(document).on("click", ".edit", function () {
         $('#name').val(msg.name)
         $('#description').val(msg.description)
         $('#path').val(msg.path)
+        $('#image_url').val(msg.image_url);
         $('#J_avatar1').attr('src',msg.image_url);
         $('#add-label').html('修改分类')
         var up_url = "/dd/category/"+msg.id

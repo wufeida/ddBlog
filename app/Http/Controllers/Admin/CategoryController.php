@@ -21,7 +21,6 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
         $data = $this->category->page(10,'desc','id');
         return view('admin.category')->with(compact('data'));
     }
@@ -44,16 +43,7 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        //
-        $file = $request->file('image');
-        if ($file && $file->isValid()) {
-            $path = app('App\Tools\ImgUpload')->imgUpload($file);
-            $data = array_merge($request->all(),[
-                'image_url' => $path,
-            ]);
-        } else {
-            $data = $request->all();
-        }
+        $data = $request->all();
         $res = $this->category->store($data);
         return custom_json($res);
     }
@@ -66,7 +56,6 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        //
         $data = $this->category->getById($id);
         return custom_json($data);
     }
@@ -80,16 +69,7 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        //
-        $file = $request->file('image');
-        if ($file && $file->isValid()) {
-            $path = app('App\Tools\ImgUpload')->imgUpload($file);
-            $data = array_merge($request->all(),[
-                'image_url' => $path,
-            ]);
-        } else {
-            $data = $request->all();
-        }
+        $data = $request->all();
         $res = $this->category->update($id, $data);
         return custom_json($res);
     }
@@ -102,7 +82,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        //
         $res = $this->category->destroy($id);
         return custom_json($res);
     }
