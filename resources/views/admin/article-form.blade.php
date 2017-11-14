@@ -232,7 +232,6 @@
             var data = new FormData();
             data.append("file", files[0]);
             data.append('folder', 'summernote');
-            console.log(data);
             $.ajax({
                 data : data,
                 type : "POST",
