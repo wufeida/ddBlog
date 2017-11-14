@@ -62,7 +62,7 @@ class FileController extends Controller
      */
     public function fileUpload(Request $request)
     {
-        $strategy = $request->get('strategy', 'images');
+        $strategy = $request->get('folder', 'images');
 
         if (!$request->hasFile('file')) {
             abort('422', '请上传图片');

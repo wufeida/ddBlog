@@ -220,8 +220,35 @@
                 ['insert', ['picture', 'link', 'video', 'table', 'hr']],
                 ['paragraph style', ['ol', 'ul', 'paragraph', 'height']],
                 ['misc', ['redo', 'undo', 'codeview', 'fullscreen', 'help']],
-            ]
+            ],
+            callbacks: {
+                onImageUpload: function(files, editor, $editable) {
+                    sendFile(files);
+                }
+            }
         });
+
+        function sendFile(files, editor, $editable) {
+            var data = new FormData();
+            data.append("file", files[0]);
+            data.append('folder', 'summernote');
+            console.log(data);
+            $.ajax({
+                data : data,
+                type : "POST",
+                url : "/dd/file/upload",
+                cache : false,
+                contentType : false,
+                processData : false,
+                dataType : "json",
+                success: function(data) {
+                    $('#summernote').summernote('insertImage', data.url);
+                },
+                error:function(){
+                    alert("上传失败");
+                }
+            });
+        }
 
         var simplemde = new SimpleMDE({ element: $("#editor")[0] });
 
