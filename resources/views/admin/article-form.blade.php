@@ -37,6 +37,41 @@
     .del-h4 {
         text-align: center;
     }
+    .file {
+        position: relative;
+        display: inline-block;
+        background: #D0EEFF;
+        border: 1px solid #99D3F5;
+        padding: 6px 12px;
+        overflow: hidden;
+        color: #1E88C7;
+        text-decoration: none;
+        text-indent: 0;
+        line-height: 20px;
+        margin: 0;
+        width: 20%;
+        text-align: center;
+        height: 34px;
+    }
+    .file input {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        right: 0;
+        top: 0;
+        opacity: 0;
+    }
+    .file:hover {
+        background: #AADFFD;
+        border-color: #78C3F3;
+        color: #004974;
+        text-decoration: none;
+    }
+    @media only screen and (min-width: 100px) and (max-width: 640px) {
+        .file {
+            padding: 6px 0px;
+        }
+    }
 </style>
 <body class="gray-bg">
         <div class="gray-bg">
@@ -81,13 +116,18 @@
                                     <div class="form-group">
                                         <label class="col-sm-1 control-label" for="image">页面图片：</label>
                                         <div class="col-sm-11">
-                                        <div class="upload-box">
-                                            <input type="file" class="form-control" id="page_image" name="page_image" onchange="previewImage(this,'preview1','J_avatar1')">
-                                            <div id="preview1" class="preview">
-                                                <img width="100" src="{{ isset($data) ? $data['page_image'] : '' }}" height="100" class="image" id="J_avatar1">
+                                            <div class="upload-box">
+                                                <div class="col-lg-12" style="float: left;padding: 0;width: 80%">
+                                                    <input type="text" value="{{isset($data) ? $data['page_image'] : ''}}" class="form-control" id="image_url" name="page_image">
+                                                </div>
+                                                <a href="javascript:;" class="file">选择文件
+                                                    <input type="file" name="" id="" id="image">
+                                                </a>
+                                                <div id="preview1" class="preview">
+                                                    <img width="100" height="100" class="image" id="J_avatar1" src="{{isset($data) ? $data['page_image'] : ''}}">
+                                                </div>
+                                                <div class="mask"><i class="ion-upload"></i></div>
                                             </div>
-                                            <div class="mask"><i class="ion-upload"></i></div>
-                                        </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -195,8 +235,42 @@
     <script src="/admin/plugins/toastr/toastr.config.js"></script>
     <script src="/admin/plugins/summernote/summernote.min.js"></script>
     <script src="/admin/plugins/summernote/lang/summernote-zh-CN.js"></script>
+    <script type="text/javascript" src="/admin/plugins/webuploader/webuploader.js"></script>
 
     <script>
+        var uploader = WebUploader.create({
+
+            // 选完文件后，是否自动上传。
+            auto: true,
+
+            // swf文件路径
+            swf: '/admin/plugins/webuploader/js/Uploader.swf',
+
+            // 文件接收服务端。
+            server: '/dd/file/upload',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '.file',
+
+            // 只允许选择图片文件。
+            accept: {
+                title: 'Images',
+                extensions: 'gif,jpg,jpeg,bmp,png',
+                mimeTypes: 'image/*'
+            }
+        });
+        uploader.on('beforeFileQueued', function (file) {
+            uploader.reset();
+            previewImage(file.source.source,'preview1','J_avatar1');
+        });
+        uploader.on('uploadSuccess', function (file,response) {
+            if (response.success) {
+                $('#image_url').val(response.url);
+            } else {
+                toastr.error('上传失败');
+            }
+        });
         $(function(){
             $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
                 // 获取已激活的标签页的名称

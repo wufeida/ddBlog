@@ -150,8 +150,6 @@
                                 <a href="javascript:;" class="file">选择文件
                                     <input type="file" name="" id="" id="image">
                                 </a>
-
-                                {{--<input type="file" class="form-control" id="image" name="image" onchange="previewImage(this,'preview1','J_avatar1')">--}}
                                 <div id="preview1" class="preview">
                                 <img width="100" height="100" class="image" id="J_avatar1">
                                 </div>

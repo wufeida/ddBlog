@@ -34,15 +34,7 @@ class LinkController extends Controller
      */
     public function store(LinkRequest $request)
     {
-        $file = $request->file('image');
-        if ($file && $file->isValid()) {
-            $path = app('App\Tools\ImgUpload')->imgUpload($file);
-            $data = array_merge($request->all(),[
-                'image' => $path,
-            ]);
-        } else {
-            $data = $request->all();
-        }
+        $data = $request->all();
         $data['status'] = isset($data['status']);
         $res = $this->link->store($data);
         return custom_json($res);
@@ -69,15 +61,7 @@ class LinkController extends Controller
      */
     public function update(LinkRequest $request, $id)
     {
-        $file = $request->file('image');
-        if ($file && $file->isValid()) {
-            $path = app('App\Tools\ImgUpload')->imgUpload($file);
-            $data = array_merge($request->all(),[
-                'image' => $path,
-            ]);
-        } else {
-            $data = $request->all();
-        }
+        $data = $request->all();
         $data['status'] = isset($data['status']);
         $res = $this->link->update($id, $data);
         return custom_json($res);

@@ -10,6 +10,7 @@ function clearForm() {
     $('#link').val('');
     $('#J_avatar1').removeAttr('src');
     $('#put').remove();
+    $('#image_url').val('');
     resetFileInput($('#image'))
     $("[name='status']").bootstrapSwitch('destroy');
 }
@@ -30,7 +31,8 @@ $(document).on("click", ".edit", function () {
             // 开关按钮
             initSwitch();
         }
-        $('#J_avatar1').attr('src',msg.image_url);
+        $('#image_url').val(msg.image);
+        $('#J_avatar1').attr('src',msg.image);
         $('#add-label').html('修改友链');
         var up_url = "/dd/link/"+msg.id;
         $('#add-form').attr('action',up_url);

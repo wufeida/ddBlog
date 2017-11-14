@@ -101,11 +101,6 @@ class ArticleController extends Controller
     {
         if ($request->get('tag') == 'null') abort('422', '标签必填');
         $formData = $request->all();
-        $file = $request->file('page_image');
-        if ($file && $file->isValid()) {
-            $path = app('App\Tools\ImgUpload')->imgUpload($file);
-            $formData['page_image'] = $path;
-        }
         $data = array_merge($formData, [
             'user_id'      => \Auth::id(),
             'last_user_id' => \Auth::id()
@@ -150,11 +145,6 @@ class ArticleController extends Controller
         ]);
         $data['is_draft']    = isset($data['is_draft']);
         $data['is_original'] = isset($data['is_original']);
-        $file = $request->file('page_image');
-        if ($file && $file->isValid()) {
-            $path = app('App\Tools\ImgUpload')->imgUpload($file);
-            $data['page_image'] = $path;
-        }
         $content['raw'] = $data['content'];
         $content['html'] = $data['flag'] == 1 ? (new Markdowner)->convertMarkdownToHtml($data['content']) : $data['content'];
         $data['content'] = $content;

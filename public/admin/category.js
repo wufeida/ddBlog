@@ -10,6 +10,7 @@ function clearForm() {
     $('#description').val('');
     $('#path').val('');
     $('#J_avatar1').removeAttr('src');
+    $('#image_url').val('');
     $('#put').remove();
     resetFileInput($('#image'))
 }
