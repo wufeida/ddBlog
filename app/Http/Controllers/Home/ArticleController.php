@@ -22,7 +22,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $data = $this->article->getHomeData(2, 'desc', 'id');
+        $data = $this->article->getHomeData(config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
         if ($data) {
             foreach ($data as $v) {
                 $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
@@ -52,7 +52,7 @@ class ArticleController extends Controller
      */
     public function category($id)
     {
-        $data = $this->article->getListByCategoryId($id, 1, 'desc', 'id');
+        $data = $this->article->getListByCategoryId($id, config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
         if ($data) {
             foreach ($data as $v) {
                 $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
@@ -68,7 +68,7 @@ class ArticleController extends Controller
      */
     public function tag($id)
     {
-        $data = $this->article->getListByTagId($id, 1, 'desc', 'id');
+        $data = $this->article->getListByTagId($id, config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
         if ($data) {
             foreach ($data as $v) {
                 $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();

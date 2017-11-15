@@ -1,6 +1,8 @@
 @extends('home.layous.app')
 
-@section('title', $data->title)
+@section('title', $data->title.config('blog.article.title'))
+@section('keywords', $data->subtitle)
+@section('description', config('blog.article.description'))
 
 @section('content')
 <!-- content srart -->
@@ -42,22 +44,8 @@
                   @endif
               @endforeach
             <hr>
-            {{--<a href=""><span class="am-icon-qq am-icon-fw am-primary blog-icon"></span></a>--}}
-            {{--<a href=""><span class="am-icon-wechat am-icon-fw blog-icon"></span></a>--}}
-            {{--<a href=""><span class="am-icon-weibo am-icon-fw blog-icon"></span></a>--}}
           </div>
         </div>
-
-        {{--<hr>--}}
-        {{--<div class="am-g blog-author blog-article-margin">--}}
-          {{--<div class="am-u-sm-3 am-u-md-3 am-u-lg-2">--}}
-            {{--<img src="assets/i/f15.jpg" alt="" class="blog-author-img am-circle">--}}
-          {{--</div>--}}
-          {{--<div class="am-u-sm-9 am-u-md-9 am-u-lg-10">--}}
-          {{--<h3><span>作者 &nbsp;: &nbsp;</span><span class="blog-color">amazeui</span></h3>--}}
-            {{--<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>--}}
-          {{--</div>--}}
-        {{--</div>--}}
         <hr>
         <ul class="am-pagination blog-article-margin">
             @if($prev_article)
