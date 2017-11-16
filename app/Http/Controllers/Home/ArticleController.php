@@ -6,6 +6,7 @@ use App\Repositories\ArticleRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleController extends Controller
 {
@@ -22,7 +23,12 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $data = $this->article->getHomeData(config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
+        if (Cache::has('homeArticle')) {
+            $data = Cache::get('homeArticle');
+        } else {
+            $data = $this->article->getHomeData(config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
+            Cache::put('homeArticle', $data, 86400);
+        }
         if ($data) {
             foreach ($data as $v) {
                 $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
