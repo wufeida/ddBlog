@@ -78,10 +78,7 @@ class VisitorRepository {
     public function isFirstLog($article_id)
     {
         $ip = $this->ip->get();
-        $log = $this->model
-            ->where('article_id', $article_id)
-            ->where('ip', $ip)
-            ->first();
+        $log = $this->hasArticleIp($article_id, $ip);
         if ($log) {
             return $log->viewed_at->diffInSeconds(Carbon::now()) > 86400 ? true : false;
         }

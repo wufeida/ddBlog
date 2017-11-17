@@ -20,6 +20,7 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
 
     Route::group(['middleware'=>'admincheck'],function (){
         Route::get('index','HomeController@index')->name('dd.index');
+        Route::get('cache','HomeController@cache');
         Route::get('logout','LoginController@logout');
         Route::resource('category', 'CategoryController', ['except' => ['create', 'show']]);
         Route::resource('tag', 'TagController', ['except' => ['create', 'show']]);

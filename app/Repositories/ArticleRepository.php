@@ -92,11 +92,19 @@ class ArticleRepository {
     public function getBySlug($slug)
     {
         $article = $this->model->draft()->published()->with('category', 'tags', 'user')->where('slug', $slug)->firstOrFail();
-        if ($this->visitor->isFirstLog($article->id)) {
-            $article->increment('view_count');
-        }
-        $this->visitor->log($article->id);
+
         return $article;
+    }
+
+    /**
+     * 前台 通过slug获取文章id
+     *
+     * @param $slug
+     * @return mixed
+     */
+    public function getIdBySlug($slug)
+    {
+        return $this->model->where('slug', $slug)->select('id')->first();
     }
 
     /**

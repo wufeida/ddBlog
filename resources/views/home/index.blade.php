@@ -20,7 +20,7 @@
                         @endif
                     </span>
                     <span><i class="fa fa-user"></i> &nbsp;{{ $v->user->name }} &nbsp;</span>
-                    <span><i class="fa fa-calendar"></i> &nbsp;{{$v->publish_at}} &nbsp;</span>
+                    <span><i class="fa fa-calendar"></i> &nbsp;{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans() }} &nbsp;</span>
                     <span><i class="fa fa-eye"></i> &nbsp;{{$v->view_count}}</span>
                     <h1><a href="{{url("/$v->slug")}}">{{$v->title}}</a></h1>
                     <p>

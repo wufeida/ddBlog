@@ -9,10 +9,6 @@
             </form>
         </div>
         <ul class="nav navbar-top-links navbar-right">
-            <a href="/" target="_blank" class="btn btn-primary"><i class="fa fa-home"></i>&nbsp;去前台</a>
-            <li>
-                <span class="m-r-sm text-muted welcome-message">欢迎来到哒哒后台管理.</span>
-            </li>
             <li class="dropdown">
                 <a class="dropdown-toggle count-info" data-toggle="dropdown" href="widgets.html#">
                     <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
@@ -109,7 +105,12 @@
                 </ul>
             </li>
 
-
+            <li>
+                <a data-toggle="modal" data-target="#delModal" ><i class="glyphicon glyphicon-trash"></i>&nbsp;清除缓存</a>
+            </li>
+            <li>
+                <a href="/" target="_blank" ><i class="fa fa-home"></i>&nbsp;去前台</a>
+            </li>
             <li>
                 <a href="{{url('dd/logout')}}">
                     <i class="fa fa-sign-out"></i> Log out
@@ -119,3 +120,35 @@
 
     </nav>
 </div>
+<!-- delete modal -->
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title del-h4" id="del-label">确认删除？</h4>
+            </div>
+            <div class="modal-footer del-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                <button type="button" onclick="delCache($(this))" class="btn btn-danger">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //确认删除
+    function delCache(z) {
+        $.ajax({
+            type: "GET",
+            url: '/dd/cache',
+            async: false,
+            error: function(msg) {
+                toastr.error('删除失败');
+            },
+            success: function (msg) {
+                toastr.success('删除成功');
+                $('#delModal').modal('hide');
+            }
+        });
+    }
+</script>

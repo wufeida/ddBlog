@@ -3,18 +3,21 @@
 namespace App\Http\Controllers\Home;
 
 use App\Repositories\ArticleRepository;
+use App\Repositories\VisitorRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Input;
 
 class ArticleController extends Controller
 {
     protected $article;
-
-    public function __construct(ArticleRepository $article)
+    protected $visitor;
+    public function __construct(ArticleRepository $article,VisitorRepository $visitor)
     {
         $this->article = $article;
+        $this->visitor = $visitor;
     }
 
     /**
@@ -23,16 +26,16 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        if (Cache::has('homeArticle')) {
-            $data = Cache::get('homeArticle');
+        if (Input::get('page')) {
+            $key = 'homeArticle-'.Input::get('page');
+        } else {
+            $key = 'homeArticle';
+        }
+        if (Cache::has($key)) {
+            $data = Cache::get($key);
         } else {
             $data = $this->article->getHomeData(config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
-            Cache::put('homeArticle', $data, 86400);
-        }
-        if ($data) {
-            foreach ($data as $v) {
-                $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
-            }
+            Cache::forever($key, $data);
         }
         return view('home.index', compact('data'));
     }
@@ -44,10 +47,31 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
-        $data = $this->article->getBySlug($slug);
-        $data->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $data->published_at)->diffForHumans();
-        $prev_article = $this->article->getPrevArticle($data->id);
-        $next_article = $this->article->getNextArticle($data->id);
+        $id = $this->article->getIdBySlug($slug)->id;
+        $key = 'article-'.$id;
+        if (Cache::has($key)) {
+            $data = Cache::get($key);
+        } else {
+            $data = $this->article->getBySlug($slug);
+            Cache::forever($key, $data);
+        }
+
+        $prevNext = 'articlePrevNext-'.$id;
+        if (Cache::has($prevNext)) {
+            $arr = Cache::get($prevNext);
+            $prev_article = $arr['prev'];
+            $next_article = $arr['next'];
+        } else {
+            $prev_article = $this->article->getPrevArticle($data->id);
+            $next_article = $this->article->getNextArticle($data->id);
+            $arr = ['prev' => $prev_article, 'next' => $next_article];
+            Cache::forever($prevNext, $arr);
+        }
+        //添加点击次数和查看日志
+        if ($this->visitor->isFirstLog($id)) {
+            $data->increment('view_count');
+        }
+        $this->visitor->log($id);
         return view('home.article', compact('data', 'prev_article', 'next_article'));
     }
 
@@ -58,11 +82,12 @@ class ArticleController extends Controller
      */
     public function category($id)
     {
-        $data = $this->article->getListByCategoryId($id, config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
-        if ($data) {
-            foreach ($data as $v) {
-                $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
-            }
+        $key = 'category-'.$id;
+        if (Cache::has($key)) {
+            $data = Cache::get($key);
+        } else {
+            $data = $this->article->getListByCategoryId($id, config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
+            Cache::forever($key, $data);
         }
         return view('home.category', compact('data', 'id'));
     }
@@ -74,11 +99,12 @@ class ArticleController extends Controller
      */
     public function tag($id)
     {
-        $data = $this->article->getListByTagId($id, config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
-        if ($data) {
-            foreach ($data as $v) {
-                $v->publish_at = Carbon::createFromFormat('Y-m-d H:i:s', $v->published_at)->diffForHumans();
-            }
+        $key = 'tag-'.$id;
+        if (Cache::has($key)) {
+            $data = Cache::get($key);
+        } else {
+            $data = $this->article->getListByTagId($id, config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
+            Cache::forever($key, $data);
         }
         return view('home.tag', compact('data'));
     }

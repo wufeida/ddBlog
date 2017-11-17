@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
-    //
+    //后台首页显示
     public function index()
     {
         $pdo     = \DB::connection()->getPdo();
@@ -27,5 +28,16 @@ class HomeController extends Controller
         ];
 //        dd($data);
         return view('admin/index')->with(compact('data'));
+    }
+
+    /**
+     * 清除所有缓存
+     */
+    public function cache()
+    {
+        if(Cache::flush()) {
+            return 1;
+        }
+        return 0;
     }
 }
