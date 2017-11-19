@@ -10,6 +10,35 @@
     .am-article-bd blockquote p {
         overflow: auto;
     }
+    .media {
+        float: right;
+    }
+    .media .media-left {
+        padding-right: 10px;
+    }
+    .media .media-left .media-object {
+        width: 64px;
+        height: 64px;
+    }
+    .media .media-body {
+        border: 1px solid #ECF0F1;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #7F8C8D;
+    }
+    .media .media-body .heading {
+        padding: 10px 20px;
+        background: #ECF0F1;
+    }
+    .media .comment-body {
+        padding: 10px 10px;
+        color: #34495e;
+    }
+    .dada-media-child {
+        width: 90%;
+        float: right;
+        margin-top: 5px;
+    }
 </style>
     <div class="am-u-md-8 am-u-sm-12">
       <article class="am-article blog-article-p">
@@ -74,43 +103,54 @@
           </fieldset>
         </form>
         <hr>
-        <ul class="nav nav-second-level collapse in">
+        <div class="nav nav-second-level collapse in">
             @foreach($comments as $v)
                 <div class="media">
-                    <div class="media-left" style="padding-right: 10px">
-                        <a href="/user/12465"><img width="64px" height="64px" src="http://rmdd.com/storage/1.jpg" class="media-object img-circle"></a>
+                    <div class="media-left">
+                        <img src="http://rmdd.com/storage/1.jpg" class="media-object img-circle">
                     </div>
-                    <div class="media-body box-body" style="border: 1px solid #ECF0F1;border-radius: 5px; background-color: #fff;color: #7F8C8D;">
-                        <div class="heading" style="padding: 10px 20px;background: #ECF0F1;">
-                            <i class="ion-person"></i><a href="/user/12465">12465</a>
+                    <div class="media-body box-body">
+                        <div class="heading">
+                            <i class="fa fa-user"></i>&nbsp;{{$v['user'] ? $v['user']['name'] : '无'}}
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                            <i class="ion-clock"></i>1个月前
+                            <i class="fa fa-clock-o"></i>&nbsp;1个月前
                             <span class="pull-right operate">
-                                <span class="vote-button">
-                                    <a href="javascript:;">
-                                        <i class="ion-happy-outline"></i>
-                                    </a>
-                                    <a href="javascript:;">
-                                        <i class="ion-sad-outline"></i>
-                                    </a></span>
-                                <a href="javascript:;"><i class="ion-ios-undo"></i></a>
+                                <a href="javascript:;">
+                                    <i class="fa fa-comment"></i>
+                                </a>
                             </span>
                         </div>
-                        <div class="comment-body markdown" style="padding: 30px 50px;
-    color: #34495e;">
-                            <p>hao</p>
+                        <div class="comment-body markdown">
+                            {!! $v['content']['html'] !!}
                         </div>
                     </div>
                 </div>
-            {{--<li><img width="50px" height="50px" src="http://rmdd.com/storage/1.jpg" alt="">{!! $v['content']['html'] !!}</li>--}}
-            {{--<ul class="nav nav-third-level collapse in" style="width: 95%; float: right">--}}
-                {{--@foreach($v['child'] as $val)--}}
-                {{--<li><img width="50px" height="50px" src="http://rmdd.com/storage/1.jpg" alt="">{!! $val['content']['html'] !!}</li>--}}
-                {{--@endforeach--}}
-            {{--</ul>--}}
+                @if($v['child'])
+                    @foreach($v['child'] as $val)
+                <div class="media dada-media-child">
+                    <div class="media-left">
+                        <img src="http://rmdd.com/storage/1.jpg" class="media-object img-circle">
+                    </div>
+                    <div class="media-body box-body">
+                        <div class="heading">
+                            <i class="fa fa-user"></i>&nbsp;{{$val['user'] ? $val['user']['name'] : '无'}}
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-clock-o"></i>&nbsp;1个月前
+                            <span class="pull-right operate">
+                                <a href="javascript:;">
+                                    <i class="fa fa-comment"></i>
+                                </a>
+                            </span>
+                        </div>
+                        <div class="comment-body markdown">
+                            {!! $val['content']['html'] !!}
+                        </div>
+                    </div>
+                </div>
+                    @endforeach
+                @endif
             @endforeach
-        </ul>
-
+        </div>
     </div>
 @endsection
 <!-- content end -->
