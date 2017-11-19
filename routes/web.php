@@ -54,8 +54,9 @@ Route::group(['namespace' => 'Home'], function () {
     Route::group(['prefix' => 'tag'], function () {
         Route::get('/{id}', 'ArticleController@tag');
     });
-
-
+    Route::group(['prefix' => 'home'], function () {
+        Route::post('comment', 'CommentController@store');
+    });
 });
 
 

@@ -50,6 +50,7 @@
                                     <th width="300">文章标题</th>
                                     <th>用户名</th>
                                     <th>评论类型</th>
+                                    <th>评论内容</th>
                                     <th>创建时间</th>
                                     <th class="text-center">操作</th>
                                 </tr>
@@ -59,8 +60,9 @@
                                 <tr>
                                     <td class="text-center">{{$v->id}}</td>
                                     <td>{{$v->commentable ? $v->commentable->title: '无'}}</td>
-                                    <td>{{$v->user->name}}</td>
+                                    <td>{{$v->user ? $v->user->name: '无'}}</td>
                                     <td>{{$v->commentable_type}}</td>
+                                    <td>{{$v->content['raw'] }}</td>
                                     <td>{{$v->created_at}}</td>
                                     <td class="text-center">
                                         <button type="button" class="btn btn-danger delete btn-circle" data-toggle="modal" data-target="#delModal"><i class="glyphicon glyphicon-trash"></i></button>

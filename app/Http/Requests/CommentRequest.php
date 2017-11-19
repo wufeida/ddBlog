@@ -27,4 +27,10 @@ class CommentRequest extends FormRequest
             'content' => 'required'
         ];
     }
+
+    public function messages(){
+        return [
+            'content.required' => '请填写评论内容',
+        ];
+    }
 }

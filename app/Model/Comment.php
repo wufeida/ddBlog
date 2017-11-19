@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Tools\Markdowner;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -12,11 +13,14 @@ class Comment extends Model
     protected $table = 'comments';
 
     protected $fillable = [
-        'user_id', 'commentable_id', 'commentable_type', 'content'
+        'user_id', 'commentable_id', 'commentable_type', 'content', 'pid'
     ];
 
     protected $dates = ['deleted_at'];
 
+    protected $casts = [
+        'content'    =>    'array'
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

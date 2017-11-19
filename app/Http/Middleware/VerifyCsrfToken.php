@@ -11,7 +11,9 @@ class VerifyCsrfToken extends Middleware
      *
      * @var array
      */
+    //TODO:暂时关闭评论csrf
     protected $except = [
         '/dd/file/upload',
+        '/home/comment'
     ];
 }
