@@ -16,15 +16,6 @@ class CommentController extends Controller
     {
         $this->comment = $comment;
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -36,8 +27,6 @@ class CommentController extends Controller
     {
         $data = $request->all();
         $data['user_id'] = 1;
-        $data['commentable_type'] = 'articles';
-        $data['commentable_id'] = 5;
         $res = $this->comment->store($data);
         return custom_json($res);
     }

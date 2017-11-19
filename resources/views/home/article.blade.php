@@ -62,29 +62,85 @@
         
         <hr>
 
-        <form class="am-form am-g">
+        <form class="am-form am-g" id="add-form">
             <h3 class="blog-comment">评论</h3>
           <fieldset>
-            <div class="am-form-group am-u-sm-4 blog-clear-left">
-              <input type="text" class="" placeholder="名字">
-            </div>
-            <div class="am-form-group am-u-sm-4">
-              <input type="email" class="" placeholder="邮箱">
-            </div>
-
-            <div class="am-form-group am-u-sm-4 blog-clear-right">
-              <input type="password" class="" placeholder="网站">
-            </div>
-        
             <div class="am-form-group">
-              <textarea class="" rows="5" placeholder="一字千金"></textarea>
+              <textarea name="content" class="" rows="5" placeholder="markdown"></textarea>
             </div>
-        
-            <p><button type="submit" class="am-btn am-btn-default">发表评论</button></p>
+              <input type="hidden" name="commentable_id" value="{{$data->id}}">
+              <input type="hidden" name="commentable_type" value="articles">
+            <p><button type="button" onclick="comment($(this))" class="am-btn am-btn-default">发表评论</button></p>
           </fieldset>
         </form>
-
         <hr>
+        <ul class="nav nav-second-level collapse in">
+            @foreach($comments as $v)
+                <div class="media">
+                    <div class="media-left" style="padding-right: 10px">
+                        <a href="/user/12465"><img width="64px" height="64px" src="http://rmdd.com/storage/1.jpg" class="media-object img-circle"></a>
+                    </div>
+                    <div class="media-body box-body" style="border: 1px solid #ECF0F1;border-radius: 5px; background-color: #fff;color: #7F8C8D;">
+                        <div class="heading" style="padding: 10px 20px;background: #ECF0F1;">
+                            <i class="ion-person"></i><a href="/user/12465">12465</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <i class="ion-clock"></i>1个月前
+                            <span class="pull-right operate">
+                                <span class="vote-button">
+                                    <a href="javascript:;">
+                                        <i class="ion-happy-outline"></i>
+                                    </a>
+                                    <a href="javascript:;">
+                                        <i class="ion-sad-outline"></i>
+                                    </a></span>
+                                <a href="javascript:;"><i class="ion-ios-undo"></i></a>
+                            </span>
+                        </div>
+                        <div class="comment-body markdown" style="padding: 30px 50px;
+    color: #34495e;">
+                            <p>hao</p>
+                        </div>
+                    </div>
+                </div>
+            {{--<li><img width="50px" height="50px" src="http://rmdd.com/storage/1.jpg" alt="">{!! $v['content']['html'] !!}</li>--}}
+            {{--<ul class="nav nav-third-level collapse in" style="width: 95%; float: right">--}}
+                {{--@foreach($v['child'] as $val)--}}
+                {{--<li><img width="50px" height="50px" src="http://rmdd.com/storage/1.jpg" alt="">{!! $val['content']['html'] !!}</li>--}}
+                {{--@endforeach--}}
+            {{--</ul>--}}
+            @endforeach
+        </ul>
+
     </div>
 @endsection
 <!-- content end -->
+<script>
+    function comment(z) {
+        var formData = new FormData($('#add-form')[0]);
+        $.ajax({
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: "POST",
+            url: '/home/comment',
+            data:formData,
+            async: false,
+            error: function(msg) {
+                console.log(msg)
+                if(msg.responseJSON.errors) {
+                    for (x in msg.responseJSON.errors) {
+                        toastr.error(msg.responseJSON.errors[x]);
+                    }
+                } else if(msg.responseJSON.message) {
+                    toastr.error(msg.responseJSON.message);
+                } else {
+                    toastr.error('服务器错误');
+                }
+            },
+            success: function (msg) {
+                toastr.success('评论成功');
+//                location.reload();
+            }
+        });
+    }
+</script>

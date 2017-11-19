@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Home;
 
 use App\Repositories\ArticleRepository;
+use App\Repositories\CommentRepository;
 use App\Repositories\VisitorRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -14,10 +15,12 @@ class ArticleController extends Controller
 {
     protected $article;
     protected $visitor;
-    public function __construct(ArticleRepository $article,VisitorRepository $visitor)
+    protected $comment;
+    public function __construct(ArticleRepository $article,VisitorRepository $visitor,CommentRepository $comment)
     {
         $this->article = $article;
         $this->visitor = $visitor;
+        $this->comment = $comment;
     }
 
     /**
@@ -48,6 +51,7 @@ class ArticleController extends Controller
     public function show($slug)
     {
         $id = $this->article->getIdBySlug($slug)->id;
+        $comments = $this->comment->getByArticleId($id);
         $key = 'article-'.$id;
         if (Cache::has($key)) {
             $data = Cache::get($key);
@@ -72,7 +76,7 @@ class ArticleController extends Controller
             $data->increment('view_count');
         }
         $this->visitor->log($id);
-        return view('home.article', compact('data', 'prev_article', 'next_article'));
+        return view('home.article', compact('data', 'prev_article', 'next_article','comments'));
     }
 
     /**

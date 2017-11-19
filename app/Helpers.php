@@ -194,30 +194,7 @@ if(!function_exists('page')) {
         return $rr;
     }
 }
-/**
- * 无限极分类
- * note:主键是id 父级键是parent_id
- * @param object $data 需要分类的数据
- * @param string $pid  父级id 默认从0开始
- * @param string $level  级别 默认从0开始
- * @return array
- */
-if(!function_exists('tree')) {
-    function tree($data,$pid='0',$level='0')
-    {
-        $tree = array();
-        foreach ($data as $v)
-        {
-            if ($v->parent_id==$pid)
-            {
-                $v->level = $level;
-                $v->child = tree($data,$v->id,$level+1);
-                $tree[] = $v;
-            }
-        }
-        return $tree;
-    }
-}
+
 /**
  * 检测PC Mobile
  */
