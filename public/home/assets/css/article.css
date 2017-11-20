@@ -1,0 +1,59 @@
+.am-article-bd blockquote p {
+    overflow: auto;
+}
+.media {
+    float: right;
+    width: 100%;
+}
+.media:first-child {
+    margin-top: 10px;
+}
+.media .media-left {
+    padding-right: 10px;
+}
+.media .media-left .media-object {
+    width: 64px;
+    height: 64px;
+}
+.media .media-body {
+    border: 1px solid #ECF0F1;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #7F8C8D;
+    width: 100%;
+    max-width: 0px;
+}
+.media .media-body .heading {
+    padding: 10px 20px;
+    background: #ECF0F1;
+}
+.media .comment-body {
+    padding: 10px 10px;
+    color: #34495e;
+}
+.dada-media-child {
+    width: 90%;
+    float: right;
+    margin-top: 5px;
+}
+.dada-media-child .child-user {
+    color: #ee542a;
+}
+.dada-media-child .re-black {
+    color: black;
+}
+.media .comment-body p {
+    overflow: auto;
+}
+.dd-comment-box {
+    padding-right: 0;
+    clear: both;
+}
+.dd-comment-box textarea {
+    width: 91%;
+    border-radius: 5px;
+    float: right;
+}
+.dd-comment-box button {
+    float: right;
+}

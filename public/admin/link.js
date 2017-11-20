@@ -71,7 +71,6 @@ function save(z) {
         data:formData,
         async: false,
         error: function(msg) {
-            console.log(msg)
             if(msg.responseJSON.errors) {
                 for (x in msg.responseJSON.errors) {
                     toastr.error(msg.responseJSON.errors[x]);

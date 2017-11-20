@@ -26,7 +26,7 @@ class CommentController extends Controller
     public function store(CommentRequest $request)
     {
         $data = $request->all();
-        $data['user_id'] = 1;
+        $data['user_id'] = 2;
         $res = $this->comment->store($data);
         return custom_json($res);
     }

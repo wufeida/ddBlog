@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="/home/assets/css/amazeui.min.css">
   <link rel="stylesheet" href="/home/assets/css/app.css">
   <link href="/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
-  <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
+    @yield('css')
 </head>
 
 <body id="blog">
@@ -93,8 +93,7 @@
 <script src="/home/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
 <script src="/home/assets/js/amazeui.min.js"></script>
-<script src="/admin/plugins/toastr/toastr.min.js"></script>
-<script src="/admin/plugins/toastr/toastr.config.js"></script>
+@yield('js')
 <!-- <script src="/home/assets/js/app.js"></script> -->
 </body>
 </html>
