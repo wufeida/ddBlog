@@ -21,6 +21,8 @@ class CreateCommentsTable extends Migration
             // $table->json('content');
             $table->text('content');
             $table->integer('pid')->unsigned()->default(0);
+            $table->string('ip', 32);
+            $table->string('country')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
