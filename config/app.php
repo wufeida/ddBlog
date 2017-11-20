@@ -178,6 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         \JellyBool\Translug\TranslugServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 //        Stevenyangecho\UEditor\UEditorServiceProvider::class,
     ],
 
@@ -229,6 +230,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Translug' => \JellyBool\Translug\TranslugFacade::class,
+        'Image' => Intervention\Image\Facades\Image::class,
     ],
 
 ];
