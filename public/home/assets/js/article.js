@@ -35,8 +35,13 @@ function comment(z) {
             }
         },
         success: function (msg) {
-            toastr.success('评论成功');
-            location.reload();
+            if (msg.code == 'error') {
+                toastr.error(msg.msg);
+            } else {
+                toastr.success('评论成功');
+                location.reload();
+            }
+
         }
     });
 }

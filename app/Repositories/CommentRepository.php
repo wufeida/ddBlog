@@ -78,4 +78,26 @@ class CommentRepository
         }
     }
 
+    /**
+     * 获取用户最近评论数据
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getNewByUid($id)
+    {
+        return $this->model->where('user_id', $id)->orderBy('id', 'desc')->first();
+    }
+
+    /**
+     * 获取用户一天内评论总数
+     *
+     * @param $id
+     * @return mixed
+     */
+    public function getOneDayUserCount($id)
+    {
+        $time = date('Y-m-d');
+        return $this->model->where('user_id', $id)->whereBetween('created_at',[$time.' 00:00:00', $time.' 23:59:59'])->count();
+    }
 }
