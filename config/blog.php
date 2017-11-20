@@ -2,6 +2,7 @@
 
 return [
 
+    'name' => '博客',
     // Default Icon
     'default_icon' => '/favicon.ico',
 

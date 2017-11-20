@@ -19,7 +19,7 @@
   <link rel="stylesheet" href="/home/assets/css/amazeui.min.css">
   <link rel="stylesheet" href="/home/assets/css/app.css">
   <link href="/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
-
+  <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
 </head>
 
 <body id="blog">
@@ -28,7 +28,7 @@
 
   <div class="am-collapse am-topbar-collapse" id="blog-collapse">
     <ul class="am-nav am-nav-pills am-topbar-nav">
-        <li><a href="/" style="font-size: 30px;">博客</a></li>
+        <li><a href="/" style="font-size: 30px;">{{config('blog.name')}}</a></li>
       <li class="{{isset($id) ? '' : 'am-active'}}"><a href="/">首页</a></li>
       @foreach($categories as $v)
       <li class="{{isset($id) ? $v->id == $id ? 'am-active' : '' : ''}}"><a href="{{url('category').'/'.$v->id}}">{{$v->name}}</a></li>
@@ -93,6 +93,8 @@
 <script src="/home/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
 <script src="/home/assets/js/amazeui.min.js"></script>
+<script src="/admin/plugins/toastr/toastr.min.js"></script>
+<script src="/admin/plugins/toastr/toastr.config.js"></script>
 <!-- <script src="/home/assets/js/app.js"></script> -->
 </body>
 </html>

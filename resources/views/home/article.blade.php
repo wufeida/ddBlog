@@ -12,6 +12,7 @@
     }
     .media {
         float: right;
+        width: 100%;
     }
     .media .media-left {
         padding-right: 10px;
@@ -25,6 +26,8 @@
         border-radius: 5px;
         background-color: #fff;
         color: #7F8C8D;
+        width: 100%;
+        max-width: 0px;
     }
     .media .media-body .heading {
         padding: 10px 20px;
@@ -38,6 +41,9 @@
         width: 90%;
         float: right;
         margin-top: 5px;
+    }
+    .media .comment-body p {
+        overflow: auto;
     }
 </style>
     <div class="am-u-md-8 am-u-sm-12">
@@ -134,7 +140,6 @@
                     <div class="media-body box-body">
                         <div class="heading">
                             <i class="fa fa-user"></i>&nbsp;{{$val['user'] ? $val['user']['name'] : '无'}}
-                            &nbsp;&nbsp;&nbsp;&nbsp;
                             <i class="fa fa-clock-o"></i>&nbsp;1个月前
                             <span class="pull-right operate">
                                 <a href="javascript:;">
@@ -179,7 +184,7 @@
             },
             success: function (msg) {
                 toastr.success('评论成功');
-//                location.reload();
+                location.reload();
             }
         });
     }
