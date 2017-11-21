@@ -84,7 +84,11 @@
                 <div class="dd-comment">
                     <div class="media">
                         <div class="media-left">
-                            <img src="http://rmdd.com/storage/1.jpg" class="media-object img-circle">
+                            @if($v['user']['avatar'])
+                                <img src="{{$v['user']['avatar']}}" class="media-object img-circle">
+                            @else
+                                <img src="/home/images/default_avatar.jpg" class="media-object img-circle">
+                            @endif
                         </div>
                         <div class="media-body box-body">
                             <div class="heading">
@@ -107,7 +111,11 @@
                         @foreach($v['child'] as $val)
                     <div class="media dada-media-child">
                         <div class="media-left">
-                            <img src="http://rmdd.com/storage/1.jpg" class="media-object img-circle">
+                            @if($val['user']['avatar'])
+                                <img src="{{$val['user']['avatar']}}" class="media-object img-circle">
+                            @else
+                                <img src="/home/images/default_avatar.jpg" class="media-object img-circle">
+                            @endif
                         </div>
                         <div class="media-body box-body">
                             <div class="heading">

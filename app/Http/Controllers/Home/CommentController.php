@@ -27,12 +27,16 @@ class CommentController extends Controller
     public function store(CommentRequest $request)
     {
         $data = $request->all();
-        $uid = 1;
+        $uid = session('user.id');
+        if ($uid == false) return custom_json('error', '请登录后评论');
+        $is_admin = session('user.is_admin');
         $data['user_id'] = $uid;
-        $new = $this->comment->getNewByUid($uid);
-        if ($new && $new->created_at->diffInSeconds(Carbon::now()) < 60) return custom_json('error', '评论频繁，稍后重试');
-        $count = $this->comment->getOneDayUserCount($uid);
-        if ($count >= 10) return custom_json('error', '一天内只能评论10次');
+        if ($is_admin !== 1) {
+            $new = $this->comment->getNewByUid($uid);
+            if ($new && $new->created_at->diffInSeconds(Carbon::now()) < 60) return custom_json('error', '评论频繁，稍后重试');
+            $count = $this->comment->getOneDayUserCount($uid);
+            if ($count >= 10) return custom_json('error', '一天内只能评论10次');
+        }
         $res = $this->comment->store($data);
         return custom_json($res);
     }

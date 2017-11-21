@@ -34,6 +34,15 @@
       <li class="{{isset($id) ? $v->id == $id ? 'am-active' : '' : ''}}"><a href="{{url('category').'/'.$v->id}}">{{$v->name}}</a></li>
       @endforeach
     </ul>
+      <div style="float: right;padding: 0 10px;margin-top: 8px">
+          @if(session('user.id'))
+              <img width="30" height="30" src="{{session('user.avatar')}}" alt="">
+              <span>{{session('user.name')}}</span>
+              &nbsp;<a style="color: #10D07A" href="{{url('auth/home/logout')}}">退出</a>
+          @else
+              <a style="color: #10D07A" href="{{url('auth/github')}}">登录</a>
+          @endif
+      </div>
     <form class="am-topbar-form am-topbar-right am-form-inline" role="search">
       <div class="am-form-group">
         <input type="text" class="am-form-field am-input-sm" placeholder="搜索">
