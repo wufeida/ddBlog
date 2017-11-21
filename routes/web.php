@@ -59,4 +59,13 @@ Route::group(['namespace' => 'Home'], function () {
     });
 });
 
+Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
+    // 重定向
+    Route::get('redirect/{service}', 'OAuthController@redirectToProvider');
+    // 获取用户资料并登录
+    Route::get('callback/{service}', 'OAuthController@handleProviderCallback');
+    // 退出登录
+    Route::get('logout', 'OAuthController@logout');
+});
+
 

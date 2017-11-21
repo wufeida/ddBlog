@@ -1,7 +1,15 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "wufeida/ddBlog",
+    "description": "The Laravel Blog.",
+    "keywords": ["framework", "laravel", "ddBlog"],
+    "authors": [
+        {
+            "name": "wufeida",
+            "email": "1106541135@qq.com",
+            "homepage": "http://wufeida.com",
+            "role": "Developer"
+        }
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -15,7 +23,9 @@
         "laravel/tinker": "~1.0",
         "league/fractal": "^0.17.0",
         "league/html-to-markdown": "^4.5",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+        "socialiteproviders/qq": "^3.0",
+        "socialiteproviders/weibo": "^3.0"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

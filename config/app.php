@@ -179,6 +179,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         \JellyBool\Translug\TranslugServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        SocialiteProviders\Manager\ServiceProvider::class,
 //        Stevenyangecho\UEditor\UEditorServiceProvider::class,
     ],
 
@@ -231,6 +232,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Translug' => \JellyBool\Translug\TranslugFacade::class,
         'Image' => Intervention\Image\Facades\Image::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
     ],
 
 ];
