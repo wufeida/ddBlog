@@ -7,6 +7,7 @@ use App\Repositories\CommentRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
@@ -27,9 +28,9 @@ class CommentController extends Controller
     public function store(CommentRequest $request)
     {
         $data = $request->all();
-        $uid = session('user.id');
+        $uid = Auth::user()->id;
         if ($uid == false) return custom_json('error', '请登录后评论');
-        $is_admin = session('user.is_admin');
+        $is_admin = Auth::user()->is_admin;
         $data['user_id'] = $uid;
         if ($is_admin !== 1) {
             $new = $this->comment->getNewByUid($uid);

@@ -50,7 +50,9 @@ class ArticleController extends Controller
      */
     public function show($slug)
     {
-        $id = $this->article->getIdBySlug($slug)->id;
+        $article_id = $this->article->getIdBySlug($slug);
+        if ($article_id == false) return view('404');
+        $id = $article_id->id;
         $comments = $this->comment->getByArticleId($id);
         $key = 'article-'.$id;
         if (Cache::has($key)) {

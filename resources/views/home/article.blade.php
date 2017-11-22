@@ -27,7 +27,7 @@
                   @else
                       <a> &nbsp;暂无分类 &nbsp;</a>
                   @endif</span>-
-              <span><i class="fa fa-user"></i> &nbsp;{{$data->user->name}} </span>-
+              <span><i class="fa fa-user"></i> &nbsp;{{ $data->user ? $data->user->name : '无' }} </span>-
               <span><i class="fa fa-calendar"></i> &nbsp;{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data->published_at)->diffForHumans() }}&nbsp;</span>
               <span><i class="fa fa-eye"></i> &nbsp;{{$data->view_count}}</span>
           </p>

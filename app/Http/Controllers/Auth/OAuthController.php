@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends Controller
@@ -44,19 +45,14 @@ class OAuthController extends Controller
         if ($oldUser) {
             $data['login_times'] = $oldUser->login_times + 1;
             $this->user->update($oldUser->id, $data);
-            $session['user']['id'] = $oldUser->id;
-            $session['user']['is_admin'] = $oldUser->is_admin;
+            Auth::loginUsingId($oldUser->id);
         } else {
             $data['type']        = $type[$service];
             $data['openid']      = $uid;
             $data['login_times'] = 1;
             $res = $this->user->store($data);
-            $session['user']['id'] = $res->id;
-            $session['user']['is_admin'] = 0;
+            Auth::loginUsingId($res->id);
         }
-        $session['user']['name'] = $user->nickname;
-        $session['user']['avatar'] = $user->avatar;
-        session($session);
         return redirect(session('ref_url', url('/')));
     }
 
@@ -67,7 +63,7 @@ class OAuthController extends Controller
      */
     public function logout()
     {
-        session()->forget('user');
+        Auth::logout();
         session()->forget('ref_url');
         return redirect()->back();
     }
@@ -79,9 +75,9 @@ class OAuthController extends Controller
      */
     public function checkLog()
     {
-        if (!session('user')) {
-            return 0;
+        if (Auth::check()) {
+            return 1;
         }
-        return 1;
+        return 0;
     }
 }

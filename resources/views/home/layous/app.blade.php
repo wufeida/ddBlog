@@ -35,9 +35,21 @@
       @endforeach
     </ul>
       <div style="float: right;padding: 0 10px;margin-top: 8px">
-          @if(session('user.id'))
-              <img width="30" height="30" src="{{session('user.avatar')}}" alt="">
-              <span>{{session('user.name')}}</span>
+          @if(Auth::check())
+              @if(Auth::user()->is_admin)
+                  <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
+                  <div class="am-dropdown" data-am-dropdown>
+                  <a href="{{url('dd/index')}}" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                  {{Auth::user()->name}}&nbsp;<span class="am-icon-caret-down"></span>
+                  </a>
+                      <ul class="am-dropdown-content">
+                          <li><a href="{{url('dd/index')}}" target="_blank">我的后台</a></li>
+                      </ul>
+                  </div>
+              @else
+                  <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
+                  <span>{{Auth::user()->name}}</span>
+              @endif
               &nbsp;<a style="color: #10D07A" href="{{url('auth/home/logout')}}">退出</a>
           @else
               <a style="color: #10D07A;cursor: pointer" data-toggle="modal" data-target="#loginModal">登录</a>
@@ -87,7 +99,7 @@
             <a href="{{ config('blog.footer.github.url') }}" target="_blank"><span class="am-icon-github am-icon-fw blog-icon blog-icon"></span></a>
             @endif
         </p>
-    </div>    
+    </div>
     <div class="blog-text-center">{!! config('blog.license') !!}<a target="_blank" href="http://www.miitbeian.gov.cn/">{{env('ICP')}}</a></div>
   </footer>
 
@@ -134,8 +146,8 @@
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="/home/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
-<script src="/home/assets/js/amazeui.min.js"></script>
 <script src="/home/assets/js/bootstrap.min.js"></script>
+<script src="/home/assets/js/amazeui.min.js"></script>
 @yield('js')
 <!-- <script src="/home/assets/js/app.js"></script> -->
 </body>

@@ -38,38 +38,38 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-        $this->guard()->logout();
-
-        $request->session()->invalidate();
-
+        Auth::logout();
         return redirect('/dd/login');
     }
 
     public function check()
     {
-        dd(Auth::user());
+        if (Auth::check()) {
+            return 1;
+        }
+        return 0;
     }
 
     /**
      * 注册一个管理员
      * @param Request $request
      */
-    public function reg(Request $request)
-    {
-        $data = [
-            'name' => 'admin',
-            'email' => '1106541135@qq.com',
-            'password' => '123456',
-        ];
-        $this->create($data);
-    }
-
-    protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
-    }
+//    public function reg(Request $request)
+//    {
+//        $data = [
+//            'name' => 'admin',
+//            'email' => '1106541135@qq.com',
+//            'password' => '123456',
+//        ];
+//        $this->create($data);
+//    }
+//
+//    protected function create(array $data)
+//    {
+//        return User::create([
+//            'name' => $data['name'],
+//            'email' => $data['email'],
+//            'password' => bcrypt($data['password']),
+//        ]);
+//    }
 }
