@@ -13,12 +13,12 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Amaze UI"/>
+  <meta name="apple-mobile-web-app-title" content="@yield('title')"/>
   <meta name="msapplication-TileColor" content="#0e90d2">
-  <link href="/admin/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/css/bootstrap.min.css">
   <link rel="stylesheet" href="/home/assets/css/amazeui.min.css">
   <link rel="stylesheet" href="/home/assets/css/app.css">
-  <link href="/admin/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link rel="stylesheet" href="/admin/font-awesome/css/font-awesome.min.css">
     @yield('css')
 </head>
 

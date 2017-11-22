@@ -5,7 +5,7 @@
 @section('description', config('blog.article.description'))
 
 @section('css')
-    <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
+    <link href="/admin/plugins/toastr/toastr.min.css" rel="stylesheet">
     <link href="/home/assets/css/article.css" rel="stylesheet">
 @endsection
 
