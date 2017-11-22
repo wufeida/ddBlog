@@ -52,7 +52,7 @@
               @endif
               &nbsp;<a style="color: #10D07A" href="{{url('auth/home/logout')}}">退出</a>
           @else
-              <a style="color: #10D07A;cursor: pointer" data-toggle="modal" data-target="#loginModal">登录</a>
+              <a style="color: #10D07A;cursor: pointer" data-am-modal="{target: '#loginModal'}">登录</a>
           @endif
       </div>
     <form class="am-topbar-form am-topbar-right am-form-inline" role="search">
@@ -102,12 +102,11 @@
     </div>
     <div class="blog-text-center">{!! config('blog.license') !!}<a target="_blank" href="http://www.miitbeian.gov.cn/">{{env('ICP')}}</a></div>
   </footer>
-
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="add-label">
-    <div class="modal-dialog" role="document">
+{{--登录模态--}}
+<div class="am-modal-actions" id="loginModal">
+    <div class="am-modal-actions-group">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="add-label">选择登录方式</h4>
             </div>
 
@@ -133,8 +132,10 @@
             </div>
         </div>
     </div>
+    <div class="am-modal-actions-group">
+        <button class="am-btn am-btn-secondary am-btn-block" data-am-modal-close>取消</button>
+    </div>
 </div>
-
 </div>
 
 
@@ -146,7 +147,6 @@
 <script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
 <script src="/home/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
-<script src="/home/assets/js/bootstrap.min.js"></script>
 <script src="/home/assets/js/amazeui.min.js"></script>
 @yield('js')
 <!-- <script src="/home/assets/js/app.js"></script> -->

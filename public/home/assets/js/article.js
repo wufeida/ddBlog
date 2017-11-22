@@ -46,7 +46,7 @@ function comment(z) {
                 }
             });
         } else {
-            $('#loginModal').modal('show');
+            $('#loginModal').modal('open');
         }
     });
 
