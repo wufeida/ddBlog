@@ -31,12 +31,12 @@
               <span><i class="fa fa-calendar"></i> &nbsp;{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $data->published_at)->diffForHumans() }}&nbsp;</span>
               <span><i class="fa fa-eye"></i> &nbsp;{{$data->view_count}}</span>
           </p>
-        </div>        
+        </div>
         <div class="am-article-bd">
         {!! $data->content['html'] !!}
         </div>
       </article>
-        
+
         <div class="am-g blog-article-widget blog-article-margin">
           <div class="am-u-lg-4 am-u-md-5 am-u-sm-7 am-u-sm-centered blog-text-center">
             <span class="am-icon-tags"> &nbsp;</span>
@@ -64,7 +64,7 @@
                 <li class="am-pagination-next"><span>没有了 &raquo;</span></li>
             @endif
         </ul>
-        
+
         <hr>
 
         <form class="am-form am-g add-form">

@@ -60,10 +60,28 @@ class OAuthController extends Controller
         return redirect(session('ref_url', url('/')));
     }
 
+    /**
+     * 退出登录
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function logout()
     {
         session()->forget('user');
         session()->forget('ref_url');
         return redirect()->back();
+    }
+
+    /**
+     * 检测登录
+     *
+     * @return int
+     */
+    public function checkLog()
+    {
+        if (!session('user')) {
+            return 0;
+        }
+        return 1;
     }
 }

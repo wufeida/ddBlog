@@ -66,6 +66,8 @@ Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
     Route::get('callback/{service}', 'OAuthController@handleProviderCallback');
     // 退出登录
     Route::get('/home/logout', 'OAuthController@logout');
+    //检测登录
+    Route::get('/home/check', 'OAuthController@checkLog');
 });
 
 

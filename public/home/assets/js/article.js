@@ -14,36 +14,42 @@ toastr.options=
         "hideMethod":"fadeOut"//消失时的动画方式
     };
 function comment(z) {
-    var formData = new FormData(z.parents('.add-form').eq(0)[0]);
-    $.ajax({
-        cache: false,
-        contentType: false,
-        processData: false,
-        type: "POST",
-        url: '/home/comment',
-        data:formData,
-        async: false,
-        error: function(msg) {
-            if(msg.responseJSON.errors) {
-                for (x in msg.responseJSON.errors) {
-                    toastr.error(msg.responseJSON.errors[x]);
+    $.get('/auth/home/check',function (msg) {
+        if (msg == 1) {
+            var formData = new FormData(z.parents('.add-form').eq(0)[0]);
+            $.ajax({
+                cache: false,
+                contentType: false,
+                processData: false,
+                type: "POST",
+                url: '/home/comment',
+                data:formData,
+                async: false,
+                error: function(msg) {
+                    if(msg.responseJSON.errors) {
+                        for (x in msg.responseJSON.errors) {
+                            toastr.error(msg.responseJSON.errors[x]);
+                        }
+                    } else if(msg.responseJSON.message) {
+                        toastr.error(msg.responseJSON.message);
+                    } else {
+                        toastr.error('服务器错误');
+                    }
+                },
+                success: function (msg) {
+                    if (msg.code == 'error') {
+                        toastr.error(msg.msg);
+                    } else {
+                        toastr.success('评论成功');
+                        location.reload();
+                    }
                 }
-            } else if(msg.responseJSON.message) {
-                toastr.error(msg.responseJSON.message);
-            } else {
-                toastr.error('服务器错误');
-            }
-        },
-        success: function (msg) {
-            if (msg.code == 'error') {
-                toastr.error(msg.msg);
-            } else {
-                toastr.success('评论成功');
-                location.reload();
-            }
-
+            });
+        } else {
+            $('#loginModal').modal('show');
         }
     });
+
 }
 
 function reply(z) {
@@ -54,6 +60,7 @@ function reply(z) {
     if(boxTextarea.length >= 1){
         boxTextarea.remove();
     }
-    var str = '<fieldset class="dd-comment-box"><form class="add-form"><div class="am-form-group"><textarea name="content" rows="5" placeholder="回复'+username+'的评论"></textarea></div><input type="hidden" name="commentable_id" value="'+aid+'"><input type="hidden" name="pid" value="'+pid+'"><input type="hidden" name="commentable_type" value="articles"><p><button type="button" onclick="comment($(this))" class="am-btn am-btn-default">发表评论</button></p></form></fieldset>';
+    var str = '<fieldset class="dd-comment-box"><form class="add-form"><div class="am-form-group"><textarea name="content" rows="5" placeholder="回复'+username+'的评论"></textarea></div><input type="hidden" name="commentable_id" value="'+aid+'"><input type="hidden" name="pid" value="'+pid+'"><input type="hidden" name="commentable_type" value="articles"><p><button type="button" data-user="'+username+'" onclick="comment($(this))" class="am-btn am-btn-default">发表评论</button></p></form></fieldset>';
     z.parents('.dd-comment').eq(0).append(str);
+    $('.dd-comment-box textarea').focus();
 }

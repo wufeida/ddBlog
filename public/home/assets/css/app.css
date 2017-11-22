@@ -486,3 +486,9 @@ h1 span{
 .timeline-span {
     border-left:2px solid #10D07A;
 }
+.dd-login-ico {
+    width: 10rem;
+    height: 10rem;
+    font-size: 4rem;
+    border-radius: 5px;
+}

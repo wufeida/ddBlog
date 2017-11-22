@@ -40,7 +40,7 @@
               <span>{{session('user.name')}}</span>
               &nbsp;<a style="color: #10D07A" href="{{url('auth/home/logout')}}">退出</a>
           @else
-              <a style="color: #10D07A" href="{{url('auth/github')}}">登录</a>
+              <a style="color: #10D07A;cursor: pointer" data-toggle="modal" data-target="#loginModal">登录</a>
           @endif
       </div>
     <form class="am-topbar-form am-topbar-right am-form-inline" role="search">
@@ -91,6 +91,39 @@
     <div class="blog-text-center">{!! config('blog.license') !!}<a target="_blank" href="http://www.miitbeian.gov.cn/">{{env('ICP')}}</a></div>
   </footer>
 
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="add-label">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="add-label">选择登录方式</h4>
+            </div>
+
+            <div class="am-g am-g-fixed blog-fixed am-u-sm-centered blog-footer-padding" style="text-align: center;padding: 2rem 0">
+                <div class="am-u-sm-12 am-u-md-4- am-u-lg-4">
+                    <h3>QQ登录</h3>
+                    <p class="am-text-sm">
+                        <a href="{{url('auth/qq')}}"><span class="am-icon-qq am-icon-lg am-primary blog-icon dd-login-ico"></span></a>
+                    </p>
+                </div>
+                <div class="am-u-sm-12 am-u-md-4- am-u-lg-4">
+                    <h3>微博登录</h3>
+                    <p>
+                        <a href="{{url('auth/weibo')}}"><span class="am-icon-weibo am-icon-lg blog-icon dd-login-ico"></span></a>
+                    </p>
+                </div>
+                <div class="am-u-sm-12 am-u-md-4- am-u-lg-4">
+                    <h3>github登录</h3>
+                    <p>
+                        <a href="{{url('auth/github')}}"><span class="am-icon-github am-icon-lg blog-icon dd-login-ico"></span></a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
 
 
 <!--[if (gte IE 9)|!(IE)]><!-->
@@ -102,6 +135,7 @@
 <script src="/home/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
 <script src="/home/assets/js/amazeui.min.js"></script>
+<script src="/home/assets/js/bootstrap.min.js"></script>
 @yield('js')
 <!-- <script src="/home/assets/js/app.js"></script> -->
 </body>
