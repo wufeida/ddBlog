@@ -30,6 +30,7 @@ class CommentController extends Controller
         $data = $request->all();
         $uid = Auth::user()->id;
         if ($uid == false) return custom_json('error', '请登录后评论');
+        if (Auth::user()->status == 0) return custom_json('error' ,'该用户被禁止评论');
         $is_admin = Auth::user()->is_admin;
         $data['user_id'] = $uid;
         if ($is_admin !== 1) {

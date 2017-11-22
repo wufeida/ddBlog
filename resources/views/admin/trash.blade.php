@@ -157,7 +157,7 @@
                                                                     <i class="fa fa-comments"></i>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-primary btn-xs">评论</button>
+                                                                    <button class="btn btn-primary btn-xs">评论</button>{{str_limit($v->content['raw'], $limit = 18, $end = '...')}}
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">

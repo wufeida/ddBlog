@@ -17,7 +17,7 @@ class AdminCheck
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->check() && Auth::user()->is_admin) {
+        if (Auth::guard($guard)->check() && Auth::user()->is_admin && Auth::user()->status) {
             return $next($request);
         }
         return redirect('/');
