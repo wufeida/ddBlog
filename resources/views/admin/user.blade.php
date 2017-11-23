@@ -181,24 +181,22 @@
                             <input type="text" id="password_confirm" name="password_confirm" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="link">是否启用</label>
-                            <div class="switch switch-small">
-                                <input type="checkbox" id='status' name="status"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="link">邮件通知</label>
-                            <div class="switch switch-small">
-                                <input type="checkbox" id='status' name="status"/>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="link">是否管理员</label>
-                            <div class="switch switch-small">
-                                <input type="checkbox" id='status' name="status"/>
-                            </div>
+                            <label class="control-label">
+                                是否启用：
+                            </label>
+                            <input type="checkbox" id="status" name="status" />
+
+                            <label class="control-label">
+                                邮件通知：
+                            </label>
+                            <input type="checkbox" id="email_notify" name="email_notify" />
+                            <label class="control-label">
+                                是否管理员：
+                            </label>
+                            <input type="checkbox" id="is_admin" name="is_admin" />
                         </div>
                     </div>
+
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                         <button type="button" onclick="save($(this))" class="btn btn-primary">保存</button>
@@ -238,7 +236,7 @@
     <script src="/admin/js/upload-img-show.js"></script>
     <script src="/admin/plugins/toastr/toastr.min.js"></script>
     <script src="/admin/plugins/toastr/toastr.config.js"></script>
-    <script src="/admin/category.js"></script>
+    <script src="/admin/user.js"></script>
     <script>
         $("#formModal").on("shown.bs.modal",function(){
             var uploader = WebUploader.create({
