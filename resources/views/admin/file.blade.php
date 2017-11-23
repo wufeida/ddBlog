@@ -78,10 +78,10 @@
                 </div>
                 <div class="col-lg-9 animated fadeInRight">
                     <div class="row">
-                        <div class="col-lg-12" id="dowebok">
+                        <div class="col-lg-12">
                             @foreach($data['files'] as $v)
                             <div class="file-box">
-                                <a target="_blank" @if(is_image($v['mimeType']) == false) href="{{$v['webPath']}}" @endif>
+                                <a target="_blank" href="{{$v['webPath']}}">
                                 <div class="file">
                                     <span class="corner"></span>
                                     @if(is_image($v['mimeType']))
@@ -232,11 +232,6 @@
             $('.file-box').each(function() {
                 animationHover(this, 'pulse');
             });
-        });
-
-        //viewer.js图片显示
-        $('#dowebok').viewer({
-            url: 'data-original',
         });
 
         //点击添加按钮
