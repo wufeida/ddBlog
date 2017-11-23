@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\UserRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -40,6 +41,7 @@ class OAuthController extends Controller
             'login_ip'      => $request->getClientIp(),
             'avatar'        => $user->avatar,
             'email'         => $user->email,
+            'last_time'     => Carbon::now(),
         ];
         $oldUser = $this->user->getUserByTypeAndId($type[$service], $uid);
         if ($oldUser) {

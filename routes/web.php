@@ -42,6 +42,7 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::delete('folder', 'FileController@deleteFolder');
         Route::post('upload', 'FileController@uploadForManager');
         Route::post('file/upload', 'FileController@fileUpload');
+        Route::resource('user', 'UserController', ['except' => ['create', 'show']]);
     });
 });
 

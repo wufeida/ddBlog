@@ -22,11 +22,13 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('status')->default(true);
             $table->boolean('is_admin')->default(false);
             $table->string('password')->nullable();
-            $table->enum('email_notify_enabled', ['yes',  'no'])->default('yes')->index();
+            $table->tinyInteger('email_notify')->default(true)->index();
             $table->tinyInteger('type')->nullable();
             $table->string('openid');
             $table->string('login_ip');
             $table->integer('login_times');
+            $table->string('description');
+            $table->timestamp('last_time');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
