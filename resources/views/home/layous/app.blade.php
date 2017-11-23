@@ -148,6 +148,7 @@
 <script src="/home/assets/js/amazeui.ie8polyfill.min.js"></script>
 <![endif]-->
 <script src="/home/assets/js/amazeui.min.js"></script>
+<script src="/home/assets/js/pace.min.js"></script>
 @yield('js')
 <!-- <script src="/home/assets/js/app.js"></script> -->
 </body>
