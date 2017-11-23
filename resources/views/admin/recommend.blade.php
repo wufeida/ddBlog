@@ -65,7 +65,7 @@
                             @foreach($data as $v)
                                 <tr id="{{$v->id}}" class="sort">
                                     <td class="text-center id">{{$v->id}}</td>
-                                    <td>{{$v->title}}</td>
+                                    <td><span title="{{$v->title}}">{{str_limit($v->title, $limit = 18, $end = '...')}}</span></td>
                                     <td>{{$v->subtitle}}</td>
                                     <td>{{$v->publish_at}}</td>
                                     <td>{{$v->created_at}}</td>

@@ -56,7 +56,7 @@
                                                                     </div>
                                                                 @endif
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-danger btn-xs">文章</button>{{str_limit($v->title, $limit = 18, $end = '...')}}
+                                                                    <button class="btn btn-danger btn-xs">文章</button><span title="{{$v->title}}">{{str_limit($v->title, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div data-type="{{$v->flag}}" data-id="{{$v->id}}" style="float: right">
@@ -85,7 +85,7 @@
                                                                     </div>
                                                                 @endif
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-info btn-xs">友链</button>{{str_limit($v->name, $limit = 18, $end = '...')}}
+                                                                    <button class="btn btn-info btn-xs">友链</button><span title="{{$v->name}}">{{str_limit($v->name, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
@@ -109,7 +109,7 @@
                                                                     <i class="fa fa-list-alt"></i>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-success btn-xs">分类</button>{{str_limit($v->name, $limit = 18, $end = '...')}}
+                                                                    <button class="btn btn-success btn-xs">分类</button><span title="{{$v->name}}">{{str_limit($v->name, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
@@ -133,7 +133,7 @@
                                                                     <i class="fa fa-tags"></i>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-warning btn-xs">标签</button>{{str_limit($v->tag, $limit = 18, $end = '...')}}
+                                                                    <button class="btn btn-warning btn-xs">标签</button><span title="{{$v->tag}}">{{str_limit($v->tag, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
@@ -157,7 +157,7 @@
                                                                     <i class="fa fa-comments"></i>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-primary btn-xs">评论</button>{{str_limit($v->content['raw'], $limit = 18, $end = '...')}}
+                                                                    <button class="btn btn-primary btn-xs">评论</button><span title="{{$v->content['raw']}}">{{str_limit($v->content['raw'], $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
@@ -196,7 +196,7 @@
                                                                     </div>
                                                                 @endif
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-danger btn-xs">文章</button>{{str_limit($v->title, $limit = 18, $end = '...')}}
+                                                                    <button class="btn btn-danger btn-xs">文章</button><span title="{{$v->title}}">{{str_limit($v->title, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
@@ -228,7 +228,7 @@
                                                                     <i class="fa fa-list-alt"></i>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-success btn-xs">分类</button>{{str_limit($v->name, $limit = 18, $end = '...')}}
+                                                                    <button class="btn btn-success btn-xs">分类</button><span title="{{$v->name}}">{{str_limit($v->name, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
@@ -260,7 +260,7 @@
                                                                     <i class="fa fa-tags"></i>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-warning btn-xs">标签</button>{{str_limit($v->tag, $limit = 18, $end = '...')}}
+                                                                    <button class="btn btn-warning btn-xs">标签</button><span title="{{$v->tag}}">{{str_limit($v->tag, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
@@ -297,7 +297,7 @@
                                                                     </div>
                                                                 @endif
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-info btn-xs">友链</button>{{str_limit($v->name, $limit = 18, $end = '...')}}
+                                                                    <button class="btn btn-info btn-xs">友链</button><span title="{{$v->name}}">{{str_limit($v->name, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
@@ -329,7 +329,7 @@
                                                                     <i class="fa fa-comments"></i>
                                                                 </div>
                                                                 <div class="file-name">
-                                                                    <button class="btn btn-primary btn-xs">评论</button>
+                                                                    <button class="btn btn-primary btn-xs">评论</button><span title="{{$v->content['raw']}}">{{str_limit($v->content['raw'], $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">

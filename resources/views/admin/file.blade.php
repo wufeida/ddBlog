@@ -94,7 +94,7 @@
                                         </div>
                                     @endif
                                     <div class="file-name">
-                                        {{str_limit($v['name'], $limit = 18, $end = '...')}}
+                                        <span title="{{$v['name']}}">{{str_limit($v['name'], $limit = 18, $end = '...')}}</span>
                                         <br/>
                                         <small>{{$v['size']}}</small>
                                         <div style="float: right">

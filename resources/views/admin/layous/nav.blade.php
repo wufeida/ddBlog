@@ -1,51 +1,29 @@
-{{--<nav class="navbar-default navbar-static-side" role="navigation">--}}
-    {{--<div class="sidebar-collapse">--}}
-        {{--<ul class="nav metismenu" id="side-menu">--}}
-            {{--<li class="nav-header">--}}
-                {{--<div class="dropdown profile-element"> <span>--}}
-                            {{--<img alt="image" class="img-circle" src="/admin/img/profile_small.jpg" />--}}
-                             {{--</span>--}}
-                    {{--<a data-toggle="dropdown" class="dropdown-toggle">--}}
-                            {{--<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{Auth::user()->name}}</strong>--}}
-                             {{--</span> <span class="text-muted text-xs block">More <b class="caret"></b></span> </span> </a>--}}
-                    {{--<ul class="dropdown-menu animated fadeInRight m-t-xs">--}}
-                        {{--<li><a href="profile.html">Profile</a></li>--}}
-                        {{--<li class="divider"></li>--}}
-                        {{--<li><a href="login.html">Logout</a></li>--}}
-                    {{--</ul>--}}
-                {{--</div>--}}
-                {{--<div class="logo-element">--}}
-                    {{--哒哒--}}
-                {{--</div>--}}
-            {{--</li>--}}
-            {{--<li  class="active">--}}
-                {{--<a href="{{url('/dd/index')}}"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a>--}}
-            {{--</li>--}}
-            {{--<li  class="active">--}}
-                {{--<a href="{{url('/dd/categories')}}"><i class="fa fa-home"></i> <span class="nav-label">Categories</span></a>--}}
-            {{--</li>--}}
-        {{--</ul>--}}
-
-    {{--</div>--}}
-{{--</nav>--}}
 <nav class="navbar-default navbar-static-side" role="navigation">
     <div class="sidebar-collapse">
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
                 <div class="dropdown profile-element"> <span>
-                            <img alt="image" class="img-circle" src="/admin/img/profile_small.jpg" />
+                        @if(Auth::user()->avatar)
+                            <img alt="image" width="48" height="48" class="img-circle" src="{{Auth::user()->avatar}}" />
+                        @else
+                            <img alt="image" width="48" height="48" class="img-circle" src="/home/images/default_avatar.jpg" />
+                        @endif
                              </span>
                     <a data-toggle="dropdown" class="dropdown-toggle">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">David Williams</strong>
-                             </span> <span class="text-muted text-xs block">Art Director <b class="caret"></b></span> </span> </a>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{Auth::user()->name}}</strong>
+                             </span> <span class="text-muted text-xs block">更多<b class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
                         <li><a href="mailbox.html">Mailbox</a></li>
                         <li class="divider"></li>
-                        <li><a href="login.html">Logout</a></li>
+                        <li><a href="{{url('dd/logout')}}">Logout</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
-                    DA+
+                    @if(Auth::user()->avatar)
+                        <img alt="image" width="48" height="48" class="img-circle" src="{{Auth::user()->avatar}}" />
+                    @else
+                        <img alt="image" width="48" height="48" class="img-circle" src="/home/images/default_avatar.jpg" />
+                    @endif
                 </div>
             </li>
             <li class="active">

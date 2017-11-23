@@ -58,7 +58,7 @@
                                 @foreach($data as $v)
                                 <tr>
                                     <td class="text-center">{{$v->id}}</td>
-                                    <td>{{$v->article->title}}</td>
+                                    <td>{{$v->article ? $v->article->title : '无'}}</td>
                                     <td>{{$v->ip}}</td>
                                     <td>{{$v->country}}</td>
                                     <td>{{$v->clicks}}</td>
