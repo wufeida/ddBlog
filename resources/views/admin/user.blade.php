@@ -180,6 +180,24 @@
                             <label for="up_cpath">确认密码</label>
                             <input type="text" id="password_confirm" name="password_confirm" class="form-control">
                         </div>
+                        <div class="form-group">
+                            <label for="link">是否启用</label>
+                            <div class="switch switch-small">
+                                <input type="checkbox" id='status' name="status"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="link">邮件通知</label>
+                            <div class="switch switch-small">
+                                <input type="checkbox" id='status' name="status"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="link">是否管理员</label>
+                            <div class="switch switch-small">
+                                <input type="checkbox" id='status' name="status"/>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
