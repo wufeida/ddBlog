@@ -6,6 +6,7 @@ use App\Repositories\UserRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Socialite\Facades\Socialite;
 
 class OAuthController extends Controller
@@ -37,7 +38,7 @@ class OAuthController extends Controller
         ];
         $uid = $user->id;
         $data = [
-            'name'          => $user->nickname,
+            'nickname'      => $user->nickname,
             'login_ip'      => $request->getClientIp(),
             'avatar'        => $user->avatar,
             'email'         => $user->email,
@@ -52,12 +53,35 @@ class OAuthController extends Controller
             $data['type']        = $type[$service];
             $data['openid']      = $uid;
             $data['login_times'] = 1;
+            $name = $this->suiji(10);
+            $data['name']        = $name;
             $res = $this->user->store($data);
             Auth::loginUsingId($res->id);
         }
         return redirect(session('ref_url', url('/')));
     }
 
+    /**
+     * 生成随机字符
+     * @param $len
+     * @return string
+     */
+    function suiji($len)
+    {
+        $key = '';
+        $pattern = '123456789abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ';
+        $chang = strlen($pattern);
+        for($i=0;$i<$len;$i++)
+        {
+            $key .= $pattern{mt_rand(0,$chang)};    //生成php随机数
+        }
+        $da = DB::table('users')->where('name',$key)->first();
+        if ($da)
+        {
+            $this->suiji($len);
+        }
+        return $key;
+    }
     /**
      * 退出登录
      *

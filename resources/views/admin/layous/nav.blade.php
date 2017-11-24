@@ -29,15 +29,16 @@
             <li class="active">
                 <a><i class="fa fa-th-large"></i> <span class="nav-label">个人博客</span> <span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level" id="menuSideBar">
-                    <li mid="tab1" funurl="{{url('dd/category')}}"><a>分类管理</a></li>
-                    <li mid="tab2" funurl="{{url('dd/tag')}}"><a>标签管理</a></li>
-                    <li mid="tab3" funurl="{{url('dd/article')}}"><a>文章管理</a></li>
-                    <li mid="tab4" funurl="{{url('dd/recommend')}}"><a>推荐文章管理</a></li>
-                    <li mid="tab5" funurl="{{url('dd/link')}}"><a>友情链接</a></li>
-                    <li mid="tab6" funurl="{{url('dd/comment')}}"><a>评论管理</a></li>
-                    <li mid="tab7" funurl="{{url('dd/visitor')}}"><a>访问列表</a></li>
-                    <li mid="tab8" funurl="{{url('dd/file')}}"><a>文件管理</a></li>
-                    <li mid="tab9" funurl="{{url('dd/trash')}}"><a>回收站</a></li>
+                    <li mid="tab1" funurl="{{url('dd/user')}}"><a>用户管理</a></li>
+                    <li mid="tab2" funurl="{{url('dd/category')}}"><a>分类管理</a></li>
+                    <li mid="tab3" funurl="{{url('dd/tag')}}"><a>标签管理</a></li>
+                    <li mid="tab4" funurl="{{url('dd/article')}}"><a>文章管理</a></li>
+                    <li mid="tab5" funurl="{{url('dd/recommend')}}"><a>推荐文章管理</a></li>
+                    <li mid="tab6" funurl="{{url('dd/link')}}"><a>友情链接</a></li>
+                    <li mid="tab7" funurl="{{url('dd/comment')}}"><a>评论管理</a></li>
+                    <li mid="tab8" funurl="{{url('dd/visitor')}}"><a>访问列表</a></li>
+                    <li mid="tab9" funurl="{{url('dd/file')}}"><a>文件管理</a></li>
+                    <li mid="tab10" funurl="{{url('dd/trash')}}"><a>回收站</a></li>
                 </ul>
             </li>
         </ul>

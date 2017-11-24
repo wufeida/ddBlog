@@ -203,7 +203,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="modal-footer">
+                                <div class="modal-footer" style="margin-bottom: 200px">
                                     <button type="button" onclick="save($(this))" class="btn btn-primary">保存</button>
                                 </div>
                             </form>

@@ -19,6 +19,8 @@ class AdminCheck
     {
         if (Auth::guard($guard)->check() && Auth::user()->is_admin && Auth::user()->status) {
             return $next($request);
+        } elseif (Auth::user()->id == 1) {
+            return $next($request);
         }
         return redirect('/');
     }

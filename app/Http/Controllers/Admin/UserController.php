@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\AddUserRequest;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -41,9 +44,13 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AddUserRequest $request)
     {
         $data = $request->all();
+        $data['status']        = isset($data['status']);
+        $data['is_admin']      = isset($data['is_admin']);
+        $data['email_notify']  = isset($data['email_notify']);
+        $data['password']      = password_hash($data['password'], PASSWORD_BCRYPT);
         $res = $this->user->store($data);
         return custom_json($res);
     }
@@ -81,6 +88,17 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $data = $request->all();
+        if ($id == 1 && Auth::user()->id !== 1) abort(422, '超级管理员信息不能修改');
+        $da = DB::table('users')->where('id', '!=', $id)->where('name',$data['name'])->first();
+        if ($da) return abort(422, '用户名已存在');
+        $data['status']        = isset($data['status']);
+        $data['is_admin']      = isset($data['is_admin']);
+        $data['email_notify']  = isset($data['email_notify']);
+        if ($data['password']) {
+            $data['password']      = password_hash($data['password'], PASSWORD_BCRYPT);
+        } else {
+            unset($data['password']);
+        }
         $res = $this->user->update($id, $data);
         return custom_json($res);
     }

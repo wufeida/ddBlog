@@ -14,6 +14,7 @@
     <link href="/admin/css/animate.css" rel="stylesheet">
     <link href="/admin/css/style.css" rel="stylesheet">
     <link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">
+    <link href="/admin/css/plugins/switchery/switchery.css" rel="stylesheet">
     <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
 
 </head>
@@ -84,8 +85,10 @@
                                 <tr>
                                     <th class="text-center">#</th>
                                     <th>用户名</th>
+                                    <th>昵称</th>
                                     <th>头像</th>
                                     <th>邮箱</th>
+                                    <th>状态</th>
                                     <th>是否管理员</th>
                                     <th>邮件通知</th>
                                     <th>登录方式</th>
@@ -102,8 +105,10 @@
                                 <tr>
                                     <td class="text-center">{{$v->id}}</td>
                                     <td>{{$v->name}}</td>
+                                    <td>{{$v->nickname}}</td>
                                     <td><img width="40" height="40" style="cursor: pointer" data-original="{{$v->avatar}}" src="{{$v->avatar}}" alt=""></td>
                                     <td>{{$v->email}}</td>
+                                    <td>{{$v->status ? '已启用' : '已禁用'}}</td>
                                     <td>{{$v->is_admin ? '是' : '否'}}</td>
                                     <td>{{$v->email_notify ? '已开启' : '已关闭'}}</td>
                                     <td>@if($v->type == 1) QQ登录 @elseif($v->type == 2) 微博登录 @elseif($v->type == 3) Github登录 @else 手动添加 @endif</td>
@@ -133,7 +138,7 @@
         </div>
         </div>
         <!--form Modal -->
-        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="add-label" aria-hidden="true" data-backdrop="static">
+        <div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="add-label" aria-hidden="true" data-backdrop="static" style="margin-bottom: 70px">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -148,6 +153,10 @@
                         <div class="form-group">
                             <label for="up_cname">用户名</label>
                             <input type="text" id="name" name="name" class="form-control" placeholder="用户名">
+                        </div>
+                        <div class="form-group">
+                            <label for="up_cname">昵称</label>
+                            <input type="text" id="nickname" name="nickname" class="form-control" placeholder="昵称">
                         </div>
                         <div class="form-group">
                             <label for="up_cdes">描述</label>
@@ -178,22 +187,21 @@
                         </div>
                         <div class="form-group">
                             <label for="up_cpath">确认密码</label>
-                            <input type="text" id="password_confirm" name="password_confirm" class="form-control">
+                            <input type="text" id="password_confirmation" name="password_confirmation" class="form-control">
                         </div>
                         <div class="form-group">
                             <label class="control-label">
                                 是否启用：
                             </label>
-                            <input type="checkbox" id="status" name="status" />
-
-                            <label class="control-label">
-                                邮件通知：
-                            </label>
-                            <input type="checkbox" id="email_notify" name="email_notify" />
+                             <input class="js-switch-status" id="status" type="checkbox" name="status" />
                             <label class="control-label">
                                 是否管理员：
                             </label>
-                            <input type="checkbox" id="is_admin" name="is_admin" />
+                            <input class="js-switch-admin" id="is_admin" type="checkbox" name="is_admin" />
+                            <label class="control-label">
+                                是否邮件通知：
+                            </label>
+                            <input class="js-switch-email" id="email_notify" type="checkbox" name="email_notify"/>
                         </div>
                     </div>
 
@@ -230,14 +238,66 @@
     <script src="/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script type="text/javascript" src="/admin/plugins/webuploader/webuploader.js"></script>
+    <script type="text/javascript" src="/admin/js/plugins/switchery/switchery.js"></script>
     <!-- self -->
     <script src="/admin/js/layer/layer.js"></script>
     <script src="/admin/js/viewer/viewer.min.js"></script>
     <script src="/admin/js/upload-img-show.js"></script>
     <script src="/admin/plugins/toastr/toastr.min.js"></script>
     <script src="/admin/plugins/toastr/toastr.config.js"></script>
-    <script src="/admin/user.js"></script>
     <script>
+        var elem1 = document.querySelector('.js-switch-status');
+        var switch1 = new Switchery(elem1);
+
+        var elem2 = document.querySelector('.js-switch-admin');
+        var switch2 = new Switchery(elem2);
+
+        var elem3 = document.querySelector('.js-switch-email');
+        var switch3 = new Switchery(elem3);
+
+        function setSwitchery(switchElement, checkedBool) {
+            if((checkedBool && !switchElement.isChecked()) || (!checkedBool && switchElement.isChecked())) {
+                switchElement.setPosition(true);
+                switchElement.handleOnchange(true);
+            } else {
+                switchElement.setPosition(false);
+                switchElement.handleOnchange(false);
+            }
+        }
+        //点击编辑按钮
+        $(document).on("click", ".edit", function () {
+            clearForm();
+            var id = $(this).parent().parent().children().eq(0).html();
+            var url = "/dd/user/"+id+"/edit";
+            $.getJSON(url, function(msg){
+                $('#name').val(msg.name);
+                $('#description').val(msg.description);
+                $('#email').val(msg.email);
+                $('#avatar').val(msg.avatar);
+                $('#nickname').val(msg.nickname);
+                $('#J_avatar1').attr('src',msg.avatar);
+                if (msg.status == 1) {
+                    setSwitchery(switch1, true);
+                } else {
+                    setSwitchery(switch1, false);
+                }
+                if (msg.is_admin == 1) {
+                    setSwitchery(switch2, true);
+                } else {
+                    setSwitchery(switch2, false);
+                }
+                if (msg.email_notify == 1) {
+                    setSwitchery(switch3, true);
+                } else {
+                    setSwitchery(switch3, false);
+                }
+                $('#add-label').html('修改用户');
+                var up_url = "/dd/user/"+msg.id;
+                $('#add-form').attr('action',up_url);
+                var put = '<input id="put" type="hidden" name="_method" value="PUT">';
+                $('#add-form').append(put);
+            })
+        });
         $("#formModal").on("shown.bs.modal",function(){
             var uploader = WebUploader.create({
 
@@ -267,13 +327,14 @@
             });
             uploader.on('uploadSuccess', function (file,response) {
                 if (response.success) {
-                    $('#image_url').val(response.url);
+                    $('#avatar').val(response.url);
                 } else {
                     toastr.error('上传失败');
                 }
             });
         });
     </script>
+    <script src="/admin/user.js"></script>
 </body>
 
 </html>

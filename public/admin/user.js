@@ -5,6 +5,9 @@ function resetFileInput(file){
 }
 //清空form表单
 function clearForm() {
+    setSwitchery(switch1, false);
+    setSwitchery(switch2, false);
+    setSwitchery(switch3, false);
     $('#add-form')[0].reset();
     $('#J_avatar1').attr('src','');
     $('#put').remove();
@@ -13,27 +16,7 @@ function clearForm() {
     $('#email_notify').removeAttr('checked', 'checked');
     resetFileInput($('#image'))
 }
-//点击编辑按钮
-$(document).on("click", ".edit", function () {
-    clearForm();
-    var id = $(this).parent().parent().children().eq(0).html();
-    var url = "/dd/user/"+id+"/edit";
-    $.getJSON(url, function(msg){
-        $('#name').val(msg.name);
-        $('#description').val(msg.description);
-        $('#email').val(msg.email);
-        $('#avatar').val(msg.avatar);
-        $('#J_avatar1').attr('src',msg.avatar);
-        if (msg.is_admin == 1) {
-            $('#is_admin').attr('checked', true);
-        }
-        $('#add-label').html('修改用户');
-        var up_url = "/dd/user/"+msg.id;
-        $('#add-form').attr('action',up_url);
-        var put = '<input id="put" type="hidden" name="_method" value="PUT">';
-        $('#add-form').append(put);
-    })
-});
+
 //点击删除按钮
 $(document).on("click", ".delete", function () {
     var id = $(this).parent().parent().children().eq(0).html();
@@ -72,7 +55,7 @@ function save(z) {
         },
         success: function (msg) {
             notice(parent.success, '成功');
-            location.reload();
+            // location.reload();
         }
     });
 }
