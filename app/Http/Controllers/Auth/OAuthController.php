@@ -41,7 +41,6 @@ class OAuthController extends Controller
             'nickname'      => $user->nickname,
             'login_ip'      => $request->getClientIp(),
             'avatar'        => $user->avatar,
-            'email'         => $user->email,
             'last_time'     => Carbon::now(),
         ];
         $oldUser = $this->user->getUserByTypeAndId($type[$service], $uid);

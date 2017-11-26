@@ -100,4 +100,15 @@ class CommentRepository
         $time = date('Y-m-d');
         return $this->model->where('user_id', $id)->whereBetween('created_at',[$time.' 00:00:00', $time.' 23:59:59'])->count();
     }
+
+    /**
+     * 通过pid获取用户id
+     *
+     * @param $pid
+     * @return mixed
+     */
+    public function getUidByPid($pid)
+    {
+        return $this->model->where('id', $pid)->select('user_id')->first();
+    }
 }
