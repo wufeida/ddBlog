@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Events\SendEmail;
 use App\Http\Requests\CommentRequest;
 use App\Jobs\SendCommentEmail;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
