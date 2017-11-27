@@ -19,10 +19,12 @@ class SendEmail
      *
      * @return void
      */
-    public function __construct($email)
+    public function __construct($email, $uid, $aid)
     {
         //
         $this->email = $email;
+        $this->uid = $uid;
+        $this->aid = $aid;
     }
 
     /**

@@ -3,6 +3,10 @@
 namespace App\Listeners;
 
 use App\Events\SendEmail;
+use App\Mail\CommentMail;
+use App\Model\User;
+use App\Repositories\ArticleRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Facades\Mail;
@@ -14,9 +18,12 @@ class CommentSendEmail
      *
      * @return void
      */
-    public function __construct()
+    protected $user;
+    protected $article;
+    public function __construct(UserRepository $user, ArticleRepository $article)
     {
-        //
+        $this->user = $user;
+        $this->article = $article;
     }
 
     /**
@@ -28,9 +35,11 @@ class CommentSendEmail
     public function handle(SendEmail $event)
     {
         $email = $event->email;
-        $res = Mail::raw('你好', function ($message) use ($email) {
-            $to = $email;
-            $message ->to($to)->subject('武飞达博客');
-        });
+        $uid = $event->uid;
+        $user = $this->user->getById($uid);
+        $aid = $event->aid;
+        $article = $this->article->getById($aid);
+        $res = Mail::to($email)->send(new CommentMail($user, $article));
+        dd($res);
     }
 }

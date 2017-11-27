@@ -69,7 +69,7 @@ class OAuthController extends Controller
     {
         $key = '';
         $pattern = '123456789abcdefghijklmnpqrstuvwxyzABCDEFGHIJKLMNPQRSTUVWXYZ';
-        $chang = strlen($pattern);
+        $chang = strlen($pattern)-1;
         for($i=0;$i<$len;$i++)
         {
             $key .= $pattern{mt_rand(0,$chang)};    //生成php随机数

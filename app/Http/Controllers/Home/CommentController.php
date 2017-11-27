@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Home;
 
 use App\Events\SendEmail;
 use App\Http\Requests\CommentRequest;
+use App\Jobs\SendCommentEmail;
+use App\Repositories\ArticleRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
@@ -16,11 +18,13 @@ class CommentController extends Controller
 
     protected $comment;
     protected $user;
+    protected $article;
 
-    public function __construct(CommentRepository $comment, UserRepository $user)
+    public function __construct(CommentRepository $comment, UserRepository $user, ArticleRepository $article)
     {
         $this->comment = $comment;
         $this->user = $user;
+        $this->article = $article;
     }
 
     /**
@@ -48,13 +52,30 @@ class CommentController extends Controller
             if ($email[0] === 'error') return custom_json('error', $email[1]);
             $this->user->update($uid, $data['email']);
         }
+
+        //给用户发送评论
+        $aid = $data['commentable_id'];
+        $article = $this->article->getById($aid);
         if (isset($data['pid'])) {
             $reply_uid = $this->comment->getUidByPid($data['pid'])->user_id;
-            $user = $this->user->getById($reply_uid);
-            if ($user && $user->email && $user->email_notify) {
-                event(new SendEmail($user->email));
+            if ($reply_uid !== $uid && $reply_uid !== 1) {
+                $user = $this->user->getById($reply_uid);
+                if ($user && $user->email && $user->email_notify) {
+                    dispatch(new SendCommentEmail($user->email, Auth::user(), $article, config('blog.name').'回复'));
+                }
             }
         }
+
+        //给超级管理员发送邮箱
+        if (Auth::user()->id !== 1) {
+            $admin = $this->user->getById(1);
+            $admin_email = $admin->email;
+            if ($admin_email) {
+                dispatch(new SendCommentEmail($admin_email, Auth::user(), $article, '有人评论了你的文章'));
+            }
+        }
+
+        //评论保存
         $res = $this->comment->store($data);
         return custom_json($res);
     }

@@ -41,7 +41,7 @@ function comment(z) {
                         toastr.error(msg.msg);
                     } else {
                         toastr.success('评论成功');
-                        // location.reload();
+                        location.reload();
                     }
                 }
             });
