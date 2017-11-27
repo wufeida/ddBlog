@@ -181,6 +181,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         SocialiteProviders\Manager\ServiceProvider::class,
 //        Stevenyangecho\UEditor\UEditorServiceProvider::class,
+        Appstract\Opcache\OpcacheServiceProvider::class,
     ],
 
     /*
