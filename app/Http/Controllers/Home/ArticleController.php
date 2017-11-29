@@ -32,7 +32,7 @@ class ArticleController extends Controller
         if (Input::get('page')) {
             $key = 'homeArticle-'.Input::get('page');
         } else {
-            $key = 'homeArticle';
+            $key = 'homeArticle-1';
         }
         if (Cache::has($key)) {
             $data = Cache::get($key);
@@ -53,7 +53,15 @@ class ArticleController extends Controller
         $article_id = $this->article->getIdBySlug($slug);
         if ($article_id == false) return view('404');
         $id = $article_id->id;
-        $comments = $this->comment->getByArticleId($id);
+        // 缓存评论
+        $comments_key = 'comments-'.$id;
+        if (Cache::has($comments_key)) {
+            $comments = Cache::get($comments_key);
+        } else {
+            $comments = $this->comment->getByArticleId($id);
+            Cache::forever($comments_key, $comments);
+        }
+        //缓存文章
         $key = 'article-'.$id;
         if (Cache::has($key)) {
             $data = Cache::get($key);
@@ -61,7 +69,7 @@ class ArticleController extends Controller
             $data = $this->article->getBySlug($slug);
             Cache::forever($key, $data);
         }
-
+        //缓存上一篇下一篇
         $prevNext = 'articlePrevNext-'.$id;
         if (Cache::has($prevNext)) {
             $arr = Cache::get($prevNext);
@@ -73,6 +81,7 @@ class ArticleController extends Controller
             $arr = ['prev' => $prev_article, 'next' => $next_article];
             Cache::forever($prevNext, $arr);
         }
+
         //添加点击次数和查看日志
         if ($this->visitor->isFirstLog($id)) {
             $data->increment('view_count');
@@ -88,7 +97,11 @@ class ArticleController extends Controller
      */
     public function category($id)
     {
-        $key = 'category-'.$id;
+        if (Input::get('page')) {
+            $key = 'category-'.$id.'-'.Input::get('page');
+        } else {
+            $key = 'category-'.$id.'-1';
+        }
         if (Cache::has($key)) {
             $data = Cache::get($key);
         } else {
@@ -105,7 +118,11 @@ class ArticleController extends Controller
      */
     public function tag($id)
     {
-        $key = 'tag-'.$id;
+        if (Input::get('page')) {
+            $key = 'tag-'.$id.'-'.Input::get('page');
+        } else {
+            $key = 'tag-'.$id.'-1';
+        }
         if (Cache::has($key)) {
             $data = Cache::get($key);
         } else {

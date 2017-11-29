@@ -10,6 +10,7 @@ use App\Repositories\UserRepository;
 use Carbon\Carbon;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class CommentController extends Controller
 {
@@ -51,7 +52,7 @@ class CommentController extends Controller
             $this->user->update($uid, $data['email']);
         }
 
-        //给用户发送评论
+        //给用户发送邮箱
         $aid = $data['commentable_id'];
         $article = $this->article->getById($aid);
         if (isset($data['pid'])) {
@@ -75,6 +76,8 @@ class CommentController extends Controller
 
         //评论保存
         $res = $this->comment->store($data);
+        //删除该篇文章评论缓存
+        Cache::forget('comments-'.$aid);
         return custom_json($res);
     }
 }
