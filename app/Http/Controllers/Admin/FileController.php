@@ -62,6 +62,7 @@ class FileController extends Controller
      */
     public function fileUpload(Request $request)
     {
+        dd($request->all());
         $strategy = $request->get('folder', 'images');
 
         if (!$request->hasFile('file')) {

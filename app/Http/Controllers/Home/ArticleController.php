@@ -108,7 +108,7 @@ class ArticleController extends Controller
             $data = $this->article->getListByCategoryId($id, config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
             Cache::forever($key, $data);
         }
-        return view('home.category', compact('data', 'id'));
+        return view('home.index', compact('data', 'id'));
     }
 
     /**
@@ -129,6 +129,6 @@ class ArticleController extends Controller
             $data = $this->article->getListByTagId($id, config('blog.article.number'), config('blog.article.sort'), config('blog.article.sortColumn'));
             Cache::forever($key, $data);
         }
-        return view('home.tag', compact('data'));
+        return view('home.index', compact('data'));
     }
 }
