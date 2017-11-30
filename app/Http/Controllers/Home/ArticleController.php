@@ -48,7 +48,7 @@ class ArticleController extends Controller
      * @param $slug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($slug)
+    public function show($slug, Request $request)
     {
         $article_id = $this->article->getIdBySlug($slug);
         if ($article_id == false) return view('404');
@@ -83,10 +83,13 @@ class ArticleController extends Controller
         }
 
         //添加点击次数和查看日志
-        if ($this->visitor->isFirstLog($id)) {
+        $ipCache = 'article'.$request->ip().':'.$id;
+        if (!Cache::has($ipCache)) {
             $data->increment('view_count');
+            $this->visitor->log($id);
+            Cache::put($ipCache, '', 1440);
         }
-        $this->visitor->log($id);
+
         return view('home.article', compact('data', 'prev_article', 'next_article','comments'));
     }
 
