@@ -46,6 +46,7 @@
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
                         <a href="{{url('dd/article/create')}}" class="btn btn-success btn-sm">添加文章</a>
+                        <span style="color: red"> 拖动可以排序</span>
                         <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;"><i class="fa fa-refresh"></i> Refresh</button>
                     </div>
                     <div class="ibox-content">
