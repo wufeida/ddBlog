@@ -17,6 +17,7 @@ class CreateConfigsTable extends Migration
             $table->increments('id');
             $table->string('name')->default('')->comment('配置项键名');
             $table->text('value')->nullable()->comment('配置项键值');
+            $table->boolean('status')->default(true)->comment('配置项开关');
             $table->timestamps();
             $table->softDeletes();
         });
