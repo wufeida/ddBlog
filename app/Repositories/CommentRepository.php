@@ -51,7 +51,7 @@ class CommentRepository
                     $oauthUserMap = [
                         'id' => $replyUserId
                     ];
-                    $child[$m]['reply_name'] = User::where($oauthUserMap)->value('name');
+                    $child[$m]['reply_name'] = User::where($oauthUserMap)->value('nickname');
                 }
             }
             $data[$k]['child'] = $child;

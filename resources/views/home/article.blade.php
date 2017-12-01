@@ -75,6 +75,7 @@
             </div>
               <input type="hidden" name="commentable_id" value="{{$data->id}}">
               <input type="hidden" name="commentable_type" value="articles">
+              <p><input type="text" placeholder="邮箱，有人回复您的评论以便发送通知邮件，可不填" name="email"></p>
             <p><button type="button" onclick="comment($(this))" class="am-btn am-btn-default">发表评论</button></p>
           </fieldset>
         </form>
@@ -92,11 +93,11 @@
                         </div>
                         <div class="media-body box-body">
                             <div class="heading">
-                                <i class="fa fa-user"></i>&nbsp;{{$v['user'] ? $v['user']['name'] : '无'}}
+                                <i class="fa fa-user"></i>&nbsp;{{$v['user'] ? $v['user']['nickname'] : '无'}}
                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                 <i class="fa fa-clock-o"></i>&nbsp;{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $v['created_at'])->diffForHumans() }}
                                 <span class="pull-right operate">
-                                    <a href="javascript:;" pid="{{$v['id']}}" aid="{{$data->id}}" username="{{$v['user']['name']}}" onclick="reply($(this))">
+                                    <a href="javascript:;" pid="{{$v['id']}}" aid="{{$data->id}}" username="{{$v['user']['nickname']}}" onclick="reply($(this))">
                                         <i class="fa fa-comment"></i>&nbsp;回复
                                     </a>
                                 </span>
@@ -119,10 +120,10 @@
                         </div>
                         <div class="media-body box-body">
                             <div class="heading">
-                                <i class="fa fa-user"></i><span class="child-user">&nbsp;{{$val['user'] ? $val['user']['name'] : '无'}}</span> &nbsp;<span class="re-black">回复:</span>&nbsp;{{$val['reply_name']}}&nbsp;
+                                <i class="fa fa-user"></i><span class="child-user">&nbsp;{{$val['user'] ? $val['user']['nickname'] : '无'}}</span> &nbsp;<span class="re-black">回复:</span>&nbsp;{{$val['reply_name']}}&nbsp;
                                 <i class="fa fa-clock-o"></i>&nbsp;{{ \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $val['created_at'])->diffForHumans() }}
                                 <span class="pull-right operate">
-                                    <a href="javascript:;" pid="{{$val['id']}}" aid="{{$data->id}}" username="{{$val['user']['name']}}" onclick="reply($(this))">
+                                    <a href="javascript:;" pid="{{$val['id']}}" aid="{{$data->id}}" username="{{$val['user']['nickname']}}" onclick="reply($(this))">
                                         <i class="fa fa-comment"></i>&nbsp;回复
                                     </a>
                                 </span>

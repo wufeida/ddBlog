@@ -40,7 +40,7 @@
                   <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
                   <div class="am-dropdown" data-am-dropdown>
                   <a href="{{url('dd/index')}}" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
-                  {{Auth::user()->name}}&nbsp;<span class="am-icon-caret-down"></span>
+                  {{Auth::user()->nickname}}&nbsp;<span class="am-icon-caret-down"></span>
                   </a>
                       <ul class="am-dropdown-content">
                           <li><a href="{{url('dd/index')}}" target="_blank">我的后台</a></li>
@@ -48,7 +48,7 @@
                   </div>
               @else
                   <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
-                  <span>{{Auth::user()->name}}</span>
+                  <span>{{Auth::user()->nickname}}</span>
               @endif
               &nbsp;<a style="color: #10D07A" href="{{url('auth/home/logout')}}">退出</a>
           @else

@@ -46,10 +46,10 @@ class CommentController extends Controller
             $count = $this->comment->getOneDayUserCount($uid);
             if ($count >= 10) return custom_json('error', '一天内只能评论10次');
         }
-        if (isset($data['email']) && $data['email']) {
+        if (isset($data['email']) && $data['email'] && $uid !== 1) {
             $email = check('邮箱', 'email',$data['email']);
             if ($email[0] === 'error') return custom_json('error', $email[1]);
-            $this->user->update($uid, $data['email']);
+            $this->user->update($uid, ['email'=>$data['email']]);
         }
 
         //给用户发送邮箱
@@ -66,7 +66,7 @@ class CommentController extends Controller
         }
 
         //给超级管理员发送邮箱
-        if (Auth::user()->id !== 1) {
+        if ($uid !== 1) {
             $admin = $this->user->getById(1);
             $admin_email = $admin->email;
             if ($admin_email) {

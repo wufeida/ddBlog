@@ -60,7 +60,7 @@ function reply(z) {
     if(boxTextarea.length >= 1){
         boxTextarea.remove();
     }
-    var str = '<fieldset class="dd-comment-box"><form class="add-form"><div class="am-form-group"><textarea name="content" rows="5" placeholder="回复'+username+'的评论"></textarea></div><input type="hidden" name="commentable_id" value="'+aid+'"><input type="hidden" name="pid" value="'+pid+'"><input type="hidden" name="commentable_type" value="articles"><p><button type="button" data-user="'+username+'" onclick="comment($(this))" class="am-btn am-btn-default">发表评论</button></p></form></fieldset>';
+    var str = '<fieldset class="dd-comment-box"><form class="add-form"><div class="dd-box"><textarea name="content" rows="5" placeholder="回复'+username+'的评论"></textarea><input type="hidden" name="commentable_id" value="'+aid+'"><input type="hidden" name="pid" value="'+pid+'"><input type="hidden" name="commentable_type" value="articles"><span class="email-span">邮箱：</span><input type="text" class="email-input" placeholder="接收回复邮箱" name="email"><button type="button" data-user="'+username+'" onclick="comment($(this))" class="am-btn am-btn-default">发表评论</button></div></form></fieldset>';
     z.parents('.dd-comment').eq(0).append(str);
     $('.dd-comment-box textarea').focus();
 }
