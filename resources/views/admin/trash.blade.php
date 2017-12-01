@@ -34,6 +34,7 @@
                                     <li class=""><a data-toggle="tab" href="#tab-4"><i class="fa fa-tags"></i>标签列表</a></li>
                                     <li class=""><a data-toggle="tab" href="#tab-5"><i class="fa fa-link"></i>友情链接</a></li>
                                     <li class=""><a data-toggle="tab" href="#tab-6"><i class="fa fa-comments"></i>评论列表</a></li>
+                                    <li class=""><a data-toggle="tab" href="#tab-7"><i class="fa fa-user"></i>用户列表</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div id="tab-1" class="tab-pane active">
@@ -158,6 +159,30 @@
                                                                 </div>
                                                                 <div class="file-name">
                                                                     <button class="btn btn-primary btn-xs">评论</button><span title="{{$v->content['raw']}}">{{str_limit($v->content['raw'], $limit = 18, $end = '...')}}</span>
+                                                                    <br/>
+                                                                    <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
+                                                                    <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
+                                                                        <a class="btn btn-white btn-xs btn-bitbucket reset" title="还原">
+                                                                            <i class="fa fa-undo"></i>
+                                                                        </a>
+                                                                        <a class="btn btn-white btn-xs btn-bitbucket del" title="永久删除？">
+                                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @break
+                                                        @case('user')
+                                                        <div class="file-box">
+                                                            <div class="file">
+                                                                <span class="corner"></span>
+
+                                                                <div class="icon">
+                                                                    <i class="fa fa-user"></i>
+                                                                </div>
+                                                                <div class="file-name">
+                                                                    <button class="btn btn-primary btn-xs">用户</button><span title="{{$v->name}}">{{str_limit($v->nickname, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
@@ -330,6 +355,38 @@
                                                                 </div>
                                                                 <div class="file-name">
                                                                     <button class="btn btn-primary btn-xs">评论</button><span title="{{$v->content['raw']}}">{{str_limit($v->content['raw'], $limit = 18, $end = '...')}}</span>
+                                                                    <br/>
+                                                                    <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
+                                                                    <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">
+                                                                        <a class="btn btn-white btn-xs btn-bitbucket reset" title="还原">
+                                                                            <i class="fa fa-undo"></i>
+                                                                        </a>
+                                                                        <a class="btn btn-white btn-xs btn-bitbucket del" title="永久删除？">
+                                                                            <i class="glyphicon glyphicon-trash"></i>
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="tab-7" class="tab-pane">
+                                        <div class="panel-body da-body">
+                                            <div class="col-lg-12 animated fadeInRight">
+                                                <div class="row">
+                                                    @foreach($users as $v)
+                                                        <div class="file-box">
+                                                            <div class="file">
+                                                                <span class="corner"></span>
+
+                                                                <div class="icon">
+                                                                    <i class="fa fa-user"></i>
+                                                                </div>
+                                                                <div class="file-name">
+                                                                    <button class="btn btn-primary btn-xs">用户</button><span title="{{$v->name}}">{{str_limit($v->nickname, $limit = 18, $end = '...')}}</span>
                                                                     <br/>
                                                                     <small>删除时间: {{$v->deleted_at->diffForHumans()}}</small>
                                                                     <div style="float: right" data-type="{{$v->flag}}" data-id="{{$v->id}}">

@@ -111,6 +111,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        if ($id == 1) abort(422, '超级管理员不能删除');
         $res = $this->user->destroy($id);
         return custom_json($res);
     }

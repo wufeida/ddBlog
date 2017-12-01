@@ -73,7 +73,15 @@ function del(z) {
         data:formData,
         async: false,
         error: function(msg) {
-            toastr.error('删除失败');
+            if(msg.responseJSON.errors) {
+                for (x in msg.responseJSON.errors) {
+                    toastr.error(msg.responseJSON.errors[x]);
+                }
+            } else if(msg.responseJSON.message) {
+                toastr.error(msg.responseJSON.message);
+            } else {
+                toastr.error('服务器错误');
+            }
         },
         success: function (msg) {
             notice(parent.success, '删除成功');

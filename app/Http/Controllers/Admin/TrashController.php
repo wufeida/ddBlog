@@ -7,6 +7,7 @@ use App\Repositories\CategoryRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\LinkRepository;
 use App\Repositories\TagRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -23,17 +24,21 @@ class TrashController extends Controller
 
     protected $category;
 
+    protected $user;
+
     public function __construct(ArticleRepository $article,
                                 TagRepository $tag,
                                 LinkRepository $link,
                                 CommentRepository $comment,
-                                CategoryRepository $category)
+                                CategoryRepository $category,
+                                UserRepository $user)
     {
         $this->article  = $article;
         $this->tag      = $tag;
         $this->link     = $link;
         $this->comment  = $comment;
         $this->category = $category;
+        $this->user     = $user;
     }
 
     /**
@@ -68,12 +73,14 @@ class TrashController extends Controller
         $comments = $this->flag($comments, 'comment');
         $categories = $this->category->getTrash();
         $categories = $this->flag($categories, 'category');
-        $collection = collect([$articles, $tags, $links, $comments, $categories]);
+        $users = $this->user->getTrash();
+        $users = $this->flag($users, 'user');
+        $collection = collect([$articles, $tags, $links, $comments, $categories, $users]);
         //合并集合
         $collapsed = $collection->collapse();
         //按最新删除时间排序
         $data = $collapsed->sortByDesc('deleted_at');
-        return view('admin.trash',compact('data', 'articles', 'tags', 'links', 'comments', 'categories'));
+        return view('admin.trash',compact('data', 'articles', 'tags', 'links', 'comments', 'categories', 'users'));
     }
 
     /**
@@ -106,6 +113,10 @@ class TrashController extends Controller
                 $res = $this->comment->forceDelById($id);
                 return custom_json($res);
                 break;
+            case 'user':
+                $res = $this->user->forceDelById($id);
+                return custom_json($res);
+                break;
         }
     }
 
@@ -119,6 +130,7 @@ class TrashController extends Controller
         $this->tag->forceDelAll();
         $this->link->forceDelAll();
         $this->comment->forceDelAll();
+        $this->user->forceDelAll();
         return 1;
     }
 
@@ -152,6 +164,10 @@ class TrashController extends Controller
                 $res = $this->comment->undoById($id);
                 return custom_json($res);
                 break;
+            case 'user':
+                $res = $this->user->undoById($id);
+                return custom_json($res);
+                break;
         }
     }
 
@@ -165,6 +181,7 @@ class TrashController extends Controller
         $this->tag->undoAll();
         $this->link->undoAll();
         $this->comment->undoAll();
+        $this->user->undoAll();
         return 1;
     }
 }
