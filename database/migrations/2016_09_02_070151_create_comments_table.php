@@ -18,7 +18,6 @@ class CreateCommentsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('commentable_id')->unsigned();
             $table->char('commentable_type');
-            // $table->json('content');
             $table->text('content');
             $table->integer('pid')->unsigned()->default(0);
             $table->string('ip', 32);
