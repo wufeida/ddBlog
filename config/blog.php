@@ -5,7 +5,10 @@ return [
     'name' => '博客',
     // Default Icon
     'default_icon' => '/favicon.ico',
-
+    //水印开关
+    'water' => true,
+    //水印文字
+    'water_text' => 'wufeida.com',
     // Meta
     'meta' => [
         'title'         => '武飞达个人博客,php技术博客,博客系统',

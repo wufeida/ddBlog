@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Tools\BaseManager;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Intervention\Image\Facades\Image;
 
 class FileController extends Controller
 {
@@ -62,7 +63,6 @@ class FileController extends Controller
      */
     public function fileUpload(Request $request)
     {
-        dd($request->all());
         $strategy = $request->get('folder', 'images');
 
         if (!$request->hasFile('file')) {
@@ -72,8 +72,24 @@ class FileController extends Controller
         $path = $strategy . '/' . date('Y') . '/' . date('m') . '/' . date('d');
 
         $result = $this->manager->store($request->file('file'), $path);
-
+        // 添加水印
+        if ($result['success'] == true && config('blog.water')) {
+            $this->water_text($result['relative_url'], config('blog.water_text'));
+        }
         return custom_json($result);
+    }
+
+    public function water_text($file, $text, $color = '#10D07A') {
+        $image = Image::make($file);
+        $image->text($text, $image->width()-20, $image->height()-30, function($font) use($color) {
+            $font->file(public_path('fonts/msyh.ttf'));
+            $font->size(12);
+            $font->color($color);
+            $font->align('right');
+            $font->valign('bottom');
+        });
+        $image->save($file);
+        return $image;
     }
     /**
      * 创建文件夹
