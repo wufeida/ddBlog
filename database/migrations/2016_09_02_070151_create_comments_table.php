@@ -20,8 +20,6 @@ class CreateCommentsTable extends Migration
             $table->char('commentable_type');
             $table->text('content');
             $table->integer('pid')->unsigned()->default(0);
-            $table->string('ip', 32);
-            $table->string('country')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

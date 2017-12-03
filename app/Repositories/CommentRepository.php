@@ -22,6 +22,18 @@ class CommentRepository
         return $this->model->with('commentable')->with('user')->orderBy($sortColumn, $sort)->paginate($number);
     }
 
+    public function getNewComment($number = 20)
+    {
+        return $this->model->with('commentable')
+            ->with('user')
+            ->whereHas('user', function ($q) {
+                $q->where('is_admin', '!=', 1);
+            })
+            ->orderBy('created_at', 'desc')
+            ->limit($number)
+            ->get();
+    }
+
     public function getByArticleId($id)
     {
         $data = $this->model->with('user')

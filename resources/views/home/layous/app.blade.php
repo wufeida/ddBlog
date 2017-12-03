@@ -37,7 +37,11 @@
       <div style="float: right;padding: 0 10px;margin-top: 8px">
           @if(Auth::check())
               @if(Auth::user()->is_admin)
-                  <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
+                  @if(Auth::user()->avatar)
+                      <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
+                  @else
+                      <img width="30" height="30" src="/home/images/default_avatar.jpg" alt="">
+                  @endif
                   <div class="am-dropdown" data-am-dropdown>
                   <a href="{{url('dd/index')}}" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                   {{Auth::user()->nickname}}&nbsp;<span class="am-icon-caret-down"></span>
@@ -47,7 +51,11 @@
                       </ul>
                   </div>
               @else
-                  <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
+                  @if(Auth::user()->avatar)
+                      <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
+                  @else
+                      <img width="30" height="30" src="/home/images/default_avatar.jpg" alt="">
+                  @endif
                   <span>{{Auth::user()->nickname}}</span>
               @endif
               &nbsp;<a style="color: #10D07A" href="{{url('auth/home/logout')}}">退出</a>
@@ -80,7 +88,25 @@
             <h2 class="blog-title"><span>置顶推荐</span></h2>
             <ul class="am-list">
                 @foreach($recommend as $v)
-                <li><a href="{{url("/$v->slug")}}">{{$v->title}}</a></li>
+                <li><a href="{{url($v->slug)}}" target="_blank">{{$v->title}}</a></li>
+                @endforeach
+            </ul>
+        </div>
+        <div class="blog-sidebar-widget blog-bor">
+            <h2 class="blog-title"><span>最新评论</span></h2>
+            <ul class="am-list">
+                @foreach($comment as $v)
+                    @if($v->commentable)
+                        <li><a href="{{ url($v->commentable->slug) }}" target="_blank">@if($v->user) {{$v->user->nickname}}@endif&nbsp;<span style="color: #999">在</span>&nbsp;{{$v->commentable->title}}&nbsp;<span style="color: #999">中评论</span></a></li>
+                    @endif
+                @endforeach
+            </ul>
+        </div>
+        <div class="blog-sidebar-widget blog-bor">
+            <h2 class="blog-title"><span>友情链接</span></h2>
+            <ul class="am-list">
+                @foreach($links as $v)
+                    <li><a href="{{ $v->link }}" target="_blank">{{$v->name}}</a></li>
                 @endforeach
             </ul>
         </div>
