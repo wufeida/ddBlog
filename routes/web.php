@@ -43,6 +43,8 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::post('upload', 'FileController@uploadForManager');
         Route::post('file/upload', 'FileController@fileUpload');
         Route::resource('user', 'UserController', ['except' => ['create', 'show']]);
+        Route::get('config', 'ConfigController@index');
+        Route::post('config', 'ConfigController@upConfig');
     });
 });
 
