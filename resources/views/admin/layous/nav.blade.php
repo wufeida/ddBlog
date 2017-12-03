@@ -39,6 +39,7 @@
                     <li mid="tab8" funurl="{{url('dd/visitor')}}"><a>访问列表</a></li>
                     <li mid="tab9" funurl="{{url('dd/file')}}"><a>文件管理</a></li>
                     <li mid="tab10" funurl="{{url('dd/trash')}}"><a>回收站</a></li>
+                    <li mid="tab11" funurl="{{url('dd/config')}}"><a>基本配置</a></li>
                 </ul>
             </li>
         </ul>
