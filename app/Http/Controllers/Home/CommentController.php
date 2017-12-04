@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
+use App\Http\Controllers\Admin\ConfigController;
 use App\Http\Requests\CommentRequest;
 use App\Jobs\SendCommentEmail;
 use App\Repositories\ArticleRepository;
@@ -18,12 +19,16 @@ class CommentController extends Controller
     protected $comment;
     protected $user;
     protected $article;
-
-    public function __construct(CommentRepository $comment, UserRepository $user, ArticleRepository $article)
+    protected $config;
+    public function __construct(CommentRepository $comment,
+                                UserRepository $user,
+                                ArticleRepository $article,
+                                ConfigController $config)
     {
         $this->comment = $comment;
         $this->user = $user;
         $this->article = $article;
+        $this->config = $config->getConfig();
     }
 
     /**
@@ -60,7 +65,7 @@ class CommentController extends Controller
             if ($reply_uid !== $uid && $reply_uid !== 1) {
                 $user = $this->user->getById($reply_uid);
                 if ($user && $user->email && $user->email_notify) {
-                    dispatch(new SendCommentEmail($user->email, Auth::user(), $article, config('blog.name').'回复'));
+                    dispatch(new SendCommentEmail($user->email, Auth::user(), $article, $this->config->name.'回复'));
                 }
             }
         }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Http\Controllers\Admin\ConfigController;
 use App\Model\Article;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
@@ -47,7 +48,9 @@ class AppServiceProvider extends ServiceProvider
             $comment = Cache::remember('home-comment', 10080, function () {
                 return app(CommentRepository::class)->getNewComment(20);
             });
-            view()->share(compact('categories','tags', 'recommend', 'links', 'comment'));
+            //配置内容 已有缓存 此处不加
+            $config = app(ConfigController::class)->getConfig();
+            view()->share(compact('categories','tags', 'recommend', 'links', 'comment', 'config'));
         });
 
 

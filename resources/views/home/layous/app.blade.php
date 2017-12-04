@@ -9,7 +9,7 @@
   <meta name="description" content="@yield('description')">
   <meta name="renderer" content="webkit">
   <meta http-equiv="Cache-Control" content="no-siteapp"/>
-  <link rel="shortcut icon" href="{{ config('blog.default_icon') }}">
+  <link rel="shortcut icon" href="{{ $config->default_icon }}">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -28,7 +28,7 @@
 
   <div class="am-collapse am-topbar-collapse" id="blog-collapse">
     <ul class="am-nav am-nav-pills am-topbar-nav">
-        <li><a href="/" style="font-size: 30px;">{{config('blog.name')}}</a></li>
+        <li><a href="/" style="font-size: 30px;">{{$config->name}}</a></li>
       <li class="{{isset($id) ? '' : 'am-active'}}"><a href="/">首页</a></li>
       @foreach($categories as $v)
       <li class="{{isset($id) ? $v->id == $id ? 'am-active' : '' : ''}}"><a href="{{url('category').'/'.$v->id}}">{{$v->name}}</a></li>
@@ -118,15 +118,15 @@
  <footer class="blog-footer">
     <div class="am-g am-g-fixed blog-fixed am-u-sm-centered blog-footer-padding" style="padding: 0">
         <p style="text-align: center">
-            @if(config('blog.footer.qq.open'))
-            <a href="{{ config('blog.footer.qq.url') }}" target="_blank"><span class="am-icon-qq am-icon-fw am-primary blog-icon blog-icon"></span></a>
+            @if($config->footer_qq_status)
+            <a href="{{ $config->footer_qq_url }}" target="_blank"><span class="am-icon-qq am-icon-fw am-primary blog-icon blog-icon"></span></a>
             @endif
-            @if(config('blog.footer.github.open'))
-            <a href="{{ config('blog.footer.github.url') }}" target="_blank"><span class="am-icon-github am-icon-fw blog-icon blog-icon"></span></a>
+            @if($config->footer_github_status)
+            <a href="{{ $config->footer_github_url }}" target="_blank"><span class="am-icon-github am-icon-fw blog-icon blog-icon"></span></a>
             @endif
         </p>
     </div>
-    <div class="blog-text-center">{!! config('blog.license') !!}<a target="_blank" href="http://www.miitbeian.gov.cn/">{{env('ICP')}}</a></div>
+    <div class="blog-text-center">{!! $config->license !!}<a target="_blank" href="http://www.miitbeian.gov.cn/">{{env('ICP')}}</a></div>
   </footer>
 {{--登录模态--}}
 <div class="am-modal-actions" id="loginModal">

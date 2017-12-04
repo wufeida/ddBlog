@@ -1,8 +1,8 @@
 @extends('home.layous.app')
 
-@section('title', $data->title.config('blog.article.title'))
+@section('title', $data->title.$config->article_title)
 @section('keywords', $data->subtitle)
-@section('description', config('blog.article.description'))
+@section('description', $config->article_description)
 
 @section('css')
     <link href="/admin/plugins/toastr/toastr.min.css" rel="stylesheet">

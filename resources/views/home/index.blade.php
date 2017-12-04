@@ -1,8 +1,8 @@
 @extends('home.layous.app')
 
-@section('title', config('blog.meta.title'))
-@section('keywords', config('blog.meta.keywords'))
-@section('description', config('blog.meta.description'))
+@section('title', $config->meta_title)
+@section('keywords', $config->meta_keywords)
+@section('description', $config->meta_description)
 
 @section('content')
     <div class="am-u-md-8 am-u-sm-12">

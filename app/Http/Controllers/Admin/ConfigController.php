@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Repositories\ConfigRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class ConfigController extends Controller
 {
@@ -37,5 +38,17 @@ class ConfigController extends Controller
             return custom_json('success', '更新成功');
         }
         return custom_json('error', '更新失败');
+    }
+
+    /**
+     * 获取配置项
+     *
+     * @return mixed
+     */
+    public function getConfig()
+    {
+        return Cache::remember('home-config', 10080, function () {
+            return $this->config->getConfig();
+        });
     }
 }

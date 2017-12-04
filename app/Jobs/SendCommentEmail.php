@@ -23,6 +23,16 @@ class SendCommentEmail implements ShouldQueue
     protected $article;
     protected $email;
     protected $subject;
+
+    /**
+     * 发送邮件
+     *
+     * SendCommentEmail constructor.
+     * @param $email 发送邮箱
+     * @param $user 用户的信息 用于邮件模板使用
+     * @param $article  文章信息 用户邮件模板使用
+     * @param $subject  邮件主题
+     */
     public function __construct($email, $user, $article, $subject)
     {
         $this->user = $user;
