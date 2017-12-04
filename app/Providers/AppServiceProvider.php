@@ -42,7 +42,7 @@ class AppServiceProvider extends ServiceProvider
             });
             //友链
             $links = Cache::remember('home-link', 10080, function () {
-                return app(LinkRepository::class)->all();
+                return app(LinkRepository::class)->getHomeLink();
             });
             //最新评论
             $comment = Cache::remember('home-comment', 10080, function () {

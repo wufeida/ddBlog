@@ -77,6 +77,7 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <button type="button" class="btn btn-success btn-sm add" data-toggle="modal" data-target="#formModal">添加友链</button>
+                            <span style="color: red"> 拖动可以排序</span>
                             <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;"><i class="fa fa-refresh"></i> Refresh</button>
                         </div>
                         <div class="ibox-content">
@@ -95,7 +96,7 @@
                                 </thead>
                                 <tbody id="dowebok">
                                 @foreach($data as $v)
-                                <tr>
+                                <tr id="{{$v->id}}" class="sort">
                                     <td class="text-center">{{$v->id}}</td>
                                     <td><img width="40" height="40" style="cursor: pointer" data-original="{{$v->image}}" src="{{$v->image}}" alt=""></td>
                                     <td>{{$v->name}}</td>
@@ -112,9 +113,6 @@
 
                             </table>
 
-                        </div>
-                        <div style="float: right;">
-                            {{ $data->links() }}
                         </div>
 
                     </div>
@@ -194,6 +192,7 @@
         </div>
     <!-- Mainly scripts -->
     <script src="/admin/js/jquery-2.1.1.js"></script>
+    <script src="/admin/js/jquery-ui-1.10.4.min.js"></script>
     <script src="/admin/js/bootstrap.min.js"></script>
     <script src="/admin/js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="/admin/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
@@ -208,6 +207,53 @@
     <script src="/admin/plugins/switch/js/bootstrap-switch.min.js"></script>
     <script src="/admin/link.js"></script>
     <script>
+        window.Laravel = {
+            csrfToken: "{{ csrf_token() }}"
+        }
+
+        var fixHelper = function(e, ui) {
+            //console.log(ui)
+            ui.children().each(function() {
+                $(this).width($(this).width());  //在拖动时，拖动行的cell（单元格）宽度会发生改变。在这里做了处理就没问题了
+            });
+            return ui;
+        };
+        //排序功能
+        $(document).ready(function(){
+            $("#dowebok").sortable({
+                cursor: "move",
+                helper: fixHelper,
+                update: function( event, ui ) {
+                    var arr = $( "#dowebok" ).sortable( "toArray" );
+                    var url = '/dd/link/sort';
+                    console.log(arr)
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        headers:{
+                            'X-CSRF-TOKEN': window.Laravel.csrfToken,
+                        },
+                        data:{'data':arr},
+                        async: true,
+                        error: function(msg) {
+                            if(msg.responseJSON.errors) {
+                                for (x in msg.responseJSON.errors) {
+                                    toastr.error(msg.responseJSON.errors[x]);
+                                }
+                            } else if(msg.responseJSON.message) {
+                                toastr.error(msg.responseJSON.message);
+                            } else {
+                                toastr.error('服务器错误');
+                            }
+                        },
+                        success: function (msg) {
+                            toastr.success('排序成功');
+                        }
+                    });
+                }
+            }).disableSelection();
+
+        });
         //初始化开关键
         function initSwitch() {
             $('#status').removeAttr('checked');

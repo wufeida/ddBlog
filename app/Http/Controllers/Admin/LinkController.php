@@ -21,10 +21,19 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $data = $this->link->page(10, 'desc', 'id');
+        $data = $this->link->getAll();
         return view('admin.link')->with(compact('data'));
     }
 
+    public function sort(Request $request)
+    {
+        $info = array_filter($request->get('data'));
+        foreach ($info as $k=>$v) {
+            $data['sort'] = $k;
+            $res = $this->link->update($v, $data);
+        }
+        if ($res) return 1;
+    }
 
     /**
      * Store a newly created resource in storage.

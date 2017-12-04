@@ -12,6 +12,6 @@ class Link extends Model
     protected $dates = ['deleted_at'];
 
     protected $fillable = [
-        'name', 'link', 'image', 'status'
+        'name', 'link', 'image', 'status', 'sort'
     ];
 }

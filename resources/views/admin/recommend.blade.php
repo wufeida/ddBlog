@@ -144,7 +144,6 @@
             update: function( event, ui ) {
                 var arr = $( "#dowebok" ).sortable( "toArray" );
                 var url = '/dd/sort';
-                console.log(arr)
                 $.ajax({
                         type: "POST",
                         url: url,
@@ -166,7 +165,6 @@
                         },
                         success: function (msg) {
                             toastr.success('排序成功');
-//                          location.reload();
                         }
                     });
             }

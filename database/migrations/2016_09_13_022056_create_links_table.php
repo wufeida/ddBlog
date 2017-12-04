@@ -19,6 +19,7 @@ class CreateLinksTable extends Migration
             $table->string('link')->index();
             $table->text('image')->nullable();
             $table->boolean('status')->default(true);
+            $table->integer('sort')->unsigned()->comment('排序');
             $table->timestamps();
             $table->softDeletes();
         });
