@@ -23,6 +23,9 @@
     width: 100%;
     max-width: 0px;
 }
+.dd-comment .comment-body img {
+    max-width: 100%;
+}
 .media .media-body .heading {
     padding: 10px 20px;
     background: #ECF0F1;

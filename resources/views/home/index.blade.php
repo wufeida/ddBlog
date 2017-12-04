@@ -24,7 +24,7 @@
                     <span><i class="fa fa-eye"></i> &nbsp;{{$v->view_count}}</span>
                     <h1><a href="{{url("/$v->slug")}}" target="_blank">{{$v->title}}</a></h1>
                     <p>
-                        {{str_limit($v->meta_description, $limit = 100, $end = '...')}}
+                        {{str_limit($v->meta_description, $limit = 200, $end = '...')}}
                     </p>
                     <p>
                         <i class="fa fa-tags"></i>

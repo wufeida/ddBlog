@@ -10,10 +10,9 @@
                         @endif
                              </span>
                     <a data-toggle="dropdown" class="dropdown-toggle">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{Auth::user()->name}}</strong>
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{Auth::user()->nickname}}</strong>
                              </span> <span class="text-muted text-xs block">更多<b class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="mailbox.html">Mailbox</a></li>
                         <li class="divider"></li>
                         <li><a href="{{url('dd/logout')}}">Logout</a></li>
                     </ul>
