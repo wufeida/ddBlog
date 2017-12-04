@@ -226,7 +226,6 @@
                 update: function( event, ui ) {
                     var arr = $( "#dowebok" ).sortable( "toArray" );
                     var url = '/dd/link/sort';
-                    console.log(arr)
                     $.ajax({
                         type: "POST",
                         url: url,
