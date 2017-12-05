@@ -24,10 +24,10 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable()->comment('密码');
             $table->tinyInteger('email_notify')->default(true)->index()->comment('邮箱通知开关');
             $table->tinyInteger('type')->nullable()->comment('登录类型1：qq2：微博3：github');
-            $table->string('openid')->comment('第三方唯一id');
-            $table->string('login_ip')->comment('最后登录ip');
-            $table->integer('login_times')->comment('登录次数');
-            $table->string('description')->comment('描述');
+            $table->string('openid')->default('')->comment('第三方唯一id');
+            $table->string('login_ip')->default('')->comment('最后登录ip');
+            $table->integer('login_times')->default(0)->comment('登录次数');
+            $table->string('description')->default('')->comment('描述');
             $table->timestamp('last_time')->comment('最后登录时间');
             $table->rememberToken();
             $table->timestamps();
