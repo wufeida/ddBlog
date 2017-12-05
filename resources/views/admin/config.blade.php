@@ -146,7 +146,7 @@
                                     <div class="form-group">
                                         <label class="col-sm-1 control-label" for="title">文章顺序：</label>
                                         <div class="col-sm-11">
-                                            <input type="text" value="{{$data ? $data->article_sort : ''}}" name="article_sort " class="form-control" placeholder="文章顺序 desc倒序 asc正序">
+                                            <input type="text" value="{{$data ? $data->article_sort : ''}}" name="article_sort" class="form-control" placeholder="文章顺序 desc倒序 asc正序">
                                         </div>
                                     </div>
                                     <div class="form-group">
