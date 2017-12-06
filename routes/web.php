@@ -87,6 +87,7 @@ Route::group(['namespace' => 'Home'], function () {
     });
     Route::group(['prefix' => 'home'], function () {
         Route::post('comment', 'CommentController@store');
+        Route::get('search', 'ArticleController@search');
     });
 });
 

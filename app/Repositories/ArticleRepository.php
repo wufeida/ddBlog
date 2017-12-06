@@ -174,4 +174,24 @@ class ArticleRepository {
         return $data;
 
     }
+
+    /**
+     * 前台 搜索文章
+     *
+     * @param $keywords
+     * @param int $number
+     * @param string $sort
+     * @param string $sortColumn
+     * @return mixed
+     */
+    public function searchBykeywords($keywords, $number = 10, $sort = 'desc', $sortColumn = 'published_at')
+    {
+        $data = $this->model->with('category', 'tags', 'user')
+            ->draft()
+            ->published()
+            ->where('title', 'like', "%$keywords%")
+            ->orderBy($sortColumn, $sort)
+            ->paginate($number);
+        return $data;
+    }
 }

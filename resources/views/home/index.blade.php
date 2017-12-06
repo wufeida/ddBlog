@@ -36,7 +36,12 @@
             </article>
         @endforeach
             <div style="text-align: center">
-            {{$data->links()}}
+                @if(isset($keywords))
+                    {{$data->appends(['keywords' => $keywords])->links()}}
+                @else
+                    {{$data->links()}}
+                @endif
+
             </div>
     </div>
 @endsection

@@ -6,7 +6,6 @@ use App\Http\Controllers\Admin\ConfigController;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\VisitorRepository;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Cache;
@@ -31,6 +30,7 @@ class ArticleController extends Controller
 
     /**
      * 首页文章列表显示
+     *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index()
@@ -56,6 +56,7 @@ class ArticleController extends Controller
 
     /**
      * 文章页以及上一篇下一篇
+     *
      * @param $slug
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -106,6 +107,7 @@ class ArticleController extends Controller
 
     /**
      * 分类对应的文章页
+     *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -132,6 +134,7 @@ class ArticleController extends Controller
 
     /**
      * 标签对应的文章页
+     *
      * @param $id
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
@@ -153,5 +156,21 @@ class ArticleController extends Controller
             Cache::forever($key, $data);
         }
         return view('home.index', compact('data'));
+    }
+
+    /**
+     * 搜索文章
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search()
+    {
+        $keywords = Input::get('keywords');
+        if ($this->config == false) {
+            $data = $this->article->searchBykeywords($keywords, 10, 'desc','published_at');
+        } else {
+            $data = $this->article->searchBykeywords($keywords,  $this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
+        }
+        return view('home.index', compact('data', 'keywords'));
     }
 }

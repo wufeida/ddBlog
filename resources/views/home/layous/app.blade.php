@@ -63,9 +63,9 @@
               <a style="color: #10D07A;cursor: pointer" data-am-modal="{target: '#loginModal'}">登录</a>
           @endif
       </div>
-    <form class="am-topbar-form am-topbar-right am-form-inline" role="search">
+    <form action="{{url('home/search')}}" method="get" class="am-topbar-form am-topbar-right am-form-inline" role="search">
       <div class="am-form-group">
-        <input type="text" class="am-form-field am-input-sm" placeholder="搜索">
+        <input type="text" class="am-form-field am-input-sm" name="keywords" value="{{isset($keywords) ? $keywords : ''}}" placeholder="搜索">
       </div>
     </form>
   </div>
