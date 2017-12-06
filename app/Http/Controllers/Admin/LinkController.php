@@ -6,6 +6,7 @@ use App\Http\Requests\LinkRequest;
 use App\Repositories\LinkRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class LinkController extends Controller
 {
@@ -32,6 +33,7 @@ class LinkController extends Controller
             $data['sort'] = $k;
             $res = $this->link->update($v, $data);
         }
+        Cache::forget('home-link');
         if ($res) return 1;
     }
 
@@ -46,6 +48,9 @@ class LinkController extends Controller
         $data = $request->all();
         $data['status'] = isset($data['status']);
         $res = $this->link->store($data);
+        if ($res) {
+            Cache::forget('home-link');
+        }
         return custom_json($res);
     }
 
@@ -73,6 +78,9 @@ class LinkController extends Controller
         $data = $request->all();
         $data['status'] = isset($data['status']);
         $res = $this->link->update($id, $data);
+        if ($res) {
+            Cache::forget('home-link');
+        }
         return custom_json($res);
     }
 
@@ -85,6 +93,9 @@ class LinkController extends Controller
     public function destroy($id)
     {
         $res = $this->link->destroy($id);
+        if ($res) {
+            Cache::forget('home-link');
+        }
         return custom_json($res);
     }
 }

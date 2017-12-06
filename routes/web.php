@@ -43,7 +43,7 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         //浏览量显示
         Route::get('visitor','VisitorController@index');
         //评论
-        Route::resource('comment', 'CommentController', ['except' => ['create', 'show']]);
+        Route::resource('comment', 'CommentController', ['except' => ['create', 'show', 'store', 'edit', 'update']]);
         //回收站显示
         Route::get('trash', 'TrashController@index');
         //永久删除某一个

@@ -35,6 +35,7 @@ class ConfigController extends Controller
             $res = $this->config->store($data);
         }
         if ($res) {
+            Cache::flush();
             return custom_json('success', '更新成功');
         }
         return custom_json('error', '更新失败');

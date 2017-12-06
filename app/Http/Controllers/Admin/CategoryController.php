@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Requests\CategoryRequest;
 use App\Http\Controllers\Controller;
 use App\Repositories\CategoryRepository;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryController extends Controller
 {
@@ -45,6 +46,9 @@ class CategoryController extends Controller
     {
         $data = $request->all();
         $res = $this->category->store($data);
+        if ($res) {
+            Cache::forget('home-category');
+        }
         return custom_json($res);
     }
 
@@ -71,6 +75,9 @@ class CategoryController extends Controller
     {
         $data = $request->all();
         $res = $this->category->update($id, $data);
+        if ($res) {
+            Cache::forget('home-category');
+        }
         return custom_json($res);
     }
 
@@ -83,6 +90,9 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $res = $this->category->destroy($id);
+        if ($res) {
+            Cache::forget('home-category');
+        }
         return custom_json($res);
     }
 }

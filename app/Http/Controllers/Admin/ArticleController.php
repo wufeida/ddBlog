@@ -8,6 +8,7 @@ use App\Tools\Markdowner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class ArticleController extends Controller
 {
@@ -64,6 +65,9 @@ class ArticleController extends Controller
             $data['is_recommend'] = 0;
         }
         $res = $this->article->update($id, $data);
+        if ($res) {
+            Cache::forget('home-recommend');
+        }
         return custom_json($res);
     }
 
@@ -81,6 +85,7 @@ class ArticleController extends Controller
             $data['sort'] = $k;
             $res = $this->article->update($v, $data);
         }
+        Cache::forget('home-recommend');
         if ($res) return 1;
     }
 
@@ -113,6 +118,9 @@ class ArticleController extends Controller
         $res = $this->article->store($data);
         $tags = explode(',', $request->get('tag'));
         $this->article->syncTag($tags);
+        if ($res) {
+            Cache::tags('home-list')->flush();
+        }
         return custom_json($res);
     }
 
@@ -151,6 +159,9 @@ class ArticleController extends Controller
         $res = $this->article->update($id, $data);
         $tags = explode(',', $request->get('tag'));
         $this->article->syncTag($tags);
+        if ($res) {
+            Cache::forget('article-'.$id);
+        }
         return custom_json($res);
     }
 
@@ -163,6 +174,9 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         $res = $this->article->destroy($id);
+        if ($res) {
+            Cache::tags('home-list')->flush();
+        }
         return custom_json($res);
     }
 }

@@ -67,32 +67,23 @@ class ArticleController extends Controller
         $id = $article_id->id;
         // 缓存评论
         $comments_key = 'article-comments-'.$id;
-        if (Cache::tags('article')->has($comments_key)) {
-            $comments = Cache::tags('article')->get($comments_key);
+        if (Cache::tags('comment')->has($comments_key)) {
+            $comments = Cache::tags('comment')->get($comments_key);
         } else {
             $comments = $this->comment->getByArticleId($id);
-            Cache::tags('article')->forever($comments_key, $comments);
+            Cache::tags('comment')->forever($comments_key, $comments);
         }
         //缓存文章
         $key = 'article-'.$id;
-        if (Cache::tags('article')->has($key)) {
-            $data = Cache::tags('article')->get($key);
+        if (Cache::has($key)) {
+            $data = Cache::get($key);
         } else {
             $data = $this->article->getBySlug($slug);
-            Cache::tags('article')->forever($key, $data);
+            Cache::forever($key, $data);
         }
-        //缓存上一篇下一篇
-        $prevNext = 'article-PrevNext-'.$id;
-        if (Cache::tags('article')->has($prevNext)) {
-            $arr = Cache::tags('article')->get($prevNext);
-            $prev_article = $arr['prev'];
-            $next_article = $arr['next'];
-        } else {
-            $prev_article = $this->article->getPrevArticle($data->id);
-            $next_article = $this->article->getNextArticle($data->id);
-            $arr = ['prev' => $prev_article, 'next' => $next_article];
-            Cache::tags('article')->forever($prevNext, $arr);
-        }
+
+        $prev_article = $this->article->getPrevArticle($data->id);
+        $next_article = $this->article->getNextArticle($data->id);
 
         //添加点击次数和查看日志
         $ipCache = 'article-'.$request->ip().':'.$id;

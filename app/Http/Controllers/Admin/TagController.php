@@ -6,6 +6,7 @@ use App\Http\Requests\TagRequest;
 use App\Repositories\TagRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class TagController extends Controller
 {
@@ -45,8 +46,10 @@ class TagController extends Controller
      */
     public function store(TagRequest $request)
     {
-        //
         $res = $this->tag->store($request->all());
+        if ($res) {
+            Cache::forget('home-tag');
+        }
         return custom_json($res);
     }
 
@@ -74,6 +77,9 @@ class TagController extends Controller
     {
         if ($request->get('title') == null) abort(422, '标题必填');
         $res = $this->tag->update($id, $request->except('tag'));
+        if ($res) {
+            Cache::forget('home-tag');
+        }
         return custom_json($res);
     }
 
@@ -87,6 +93,9 @@ class TagController extends Controller
     {
         //
         $res = $this->tag->destroy($id);
+        if ($res) {
+            Cache::forget('home-tag');
+        }
         return custom_json($res);
     }
 }
