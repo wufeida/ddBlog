@@ -36,12 +36,12 @@ class ArticleController extends Controller
     public function index()
     {
         if (Input::get('page')) {
-            $key = 'homeArticle-'.Input::get('page');
+            $key = 'list-home-'.Input::get('page');
         } else {
-            $key = 'homeArticle-1';
+            $key = 'list-home-1';
         }
-        if (Cache::has($key)) {
-            $data = Cache::get($key);
+        if (Cache::tags('home-list')->has($key)) {
+            $data = Cache::tags('home-list')->get($key);
         } else {
             if ($this->config == false) {
                 $data = $this->article->getHomeData(10, 'desc', 'published_at');
@@ -49,7 +49,7 @@ class ArticleController extends Controller
                 $data = $this->article->getHomeData($this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
             }
 
-            Cache::forever($key, $data);
+            Cache::tags('home-list')->forever($key, $data);
         }
         return view('home.index', compact('data'));
     }
@@ -66,36 +66,36 @@ class ArticleController extends Controller
         if ($article_id == false) return view('404');
         $id = $article_id->id;
         // 缓存评论
-        $comments_key = 'comments-'.$id;
-        if (Cache::has($comments_key)) {
-            $comments = Cache::get($comments_key);
+        $comments_key = 'article-comments-'.$id;
+        if (Cache::tags('article')->has($comments_key)) {
+            $comments = Cache::tags('article')->get($comments_key);
         } else {
             $comments = $this->comment->getByArticleId($id);
-            Cache::forever($comments_key, $comments);
+            Cache::tags('article')->forever($comments_key, $comments);
         }
         //缓存文章
         $key = 'article-'.$id;
-        if (Cache::has($key)) {
-            $data = Cache::get($key);
+        if (Cache::tags('article')->has($key)) {
+            $data = Cache::tags('article')->get($key);
         } else {
             $data = $this->article->getBySlug($slug);
-            Cache::forever($key, $data);
+            Cache::tags('article')->forever($key, $data);
         }
         //缓存上一篇下一篇
-        $prevNext = 'articlePrevNext-'.$id;
-        if (Cache::has($prevNext)) {
-            $arr = Cache::get($prevNext);
+        $prevNext = 'article-PrevNext-'.$id;
+        if (Cache::tags('article')->has($prevNext)) {
+            $arr = Cache::tags('article')->get($prevNext);
             $prev_article = $arr['prev'];
             $next_article = $arr['next'];
         } else {
             $prev_article = $this->article->getPrevArticle($data->id);
             $next_article = $this->article->getNextArticle($data->id);
             $arr = ['prev' => $prev_article, 'next' => $next_article];
-            Cache::forever($prevNext, $arr);
+            Cache::tags('article')->forever($prevNext, $arr);
         }
 
         //添加点击次数和查看日志
-        $ipCache = 'article'.$request->ip().':'.$id;
+        $ipCache = 'article-'.$request->ip().':'.$id;
         if (!Cache::has($ipCache)) {
             $data->increment('view_count');
             $this->visitor->log($id);
@@ -114,12 +114,12 @@ class ArticleController extends Controller
     public function category($id)
     {
         if (Input::get('page')) {
-            $key = 'category-'.$id.'-'.Input::get('page');
+            $key = 'list-category-'.$id.'-'.Input::get('page');
         } else {
-            $key = 'category-'.$id.'-1';
+            $key = 'list-category-'.$id.'-1';
         }
-        if (Cache::has($key)) {
-            $data = Cache::get($key);
+        if (Cache::tags('home-list')->has($key)) {
+            $data = Cache::tags('home-list')->get($key);
         } else {
             if ($this->config == false) {
                 $data = $this->article->getListByCategoryId($id, 10, 'desc','published_at');
@@ -127,7 +127,7 @@ class ArticleController extends Controller
                 $data = $this->article->getListByCategoryId($id, $this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
             }
 
-            Cache::forever($key, $data);
+            Cache::tags('home-list')->forever($key, $data);
         }
         return view('home.index', compact('data', 'id'));
     }
@@ -141,19 +141,19 @@ class ArticleController extends Controller
     public function tag($id)
     {
         if (Input::get('page')) {
-            $key = 'tag-'.$id.'-'.Input::get('page');
+            $key = 'list-tag-'.$id.'-'.Input::get('page');
         } else {
-            $key = 'tag-'.$id.'-1';
+            $key = 'list-tag-'.$id.'-1';
         }
-        if (Cache::has($key)) {
-            $data = Cache::get($key);
+        if (Cache::tags('home-list')->has($key)) {
+            $data = Cache::tags('home-list')->get($key);
         } else {
             if ($this->config == false) {
                 $data = $this->article->getListByTagId($id, 10, 'desc','published_at');
             } else {
                 $data = $this->article->getListByTagId($id, $this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
             }
-            Cache::forever($key, $data);
+            Cache::tags('home-list')->forever($key, $data);
         }
         return view('home.index', compact('data'));
     }
