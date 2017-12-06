@@ -61,10 +61,17 @@ class CreateAdmin extends Command
      */
     public function register($data)
     {
+        $message = [
+            'name.required' => "用户名不能为空",
+            'name.unique' => "用户名已存在",
+            'name.max' => "用户名最大255位",
+            'password.required' => "密码必填",
+            'password.min' => "密码最少6位",
+        ];
         $validator = Validator::make($data, [
             'name' => 'required|max:255|unique:users',
             'password' => 'required|min:6',
-        ]);
+        ],$message);
 
         if (!$validator->passes()) {
             throw new RuntimeException($validator->errors()->first());
