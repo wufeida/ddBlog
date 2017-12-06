@@ -1,8 +1,8 @@
 @extends('home.layous.app')
 
-@section('title', $config->meta_title)
-@section('keywords', $config->meta_keywords)
-@section('description', $config->meta_description)
+@section('title', $config ? $config->meta_title : '')
+@section('keywords', $config? $config->meta_keywords : '')
+@section('description', $config ? $config->meta_description: '')
 
 @section('content')
     <div class="am-u-md-8 am-u-sm-12">

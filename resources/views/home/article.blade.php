@@ -1,8 +1,11 @@
 @extends('home.layous.app')
-
+@if($config)
 @section('title', $data->title.$config->article_title)
+@else
+@section('title', $data->title)
+@endif
 @section('keywords', $data->subtitle)
-@section('description', $config->article_description)
+@section('description', $config ? $config->article_description : '')
 
 @section('css')
     <link href="/admin/plugins/toastr/toastr.min.css" rel="stylesheet">

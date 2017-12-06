@@ -43,7 +43,12 @@ class ArticleController extends Controller
         if (Cache::has($key)) {
             $data = Cache::get($key);
         } else {
-            $data = $this->article->getHomeData($this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
+            if ($this->config == false) {
+                $data = $this->article->getHomeData(10, 'desc', 'published_at');
+            } else {
+                $data = $this->article->getHomeData($this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
+            }
+
             Cache::forever($key, $data);
         }
         return view('home.index', compact('data'));
@@ -114,7 +119,12 @@ class ArticleController extends Controller
         if (Cache::has($key)) {
             $data = Cache::get($key);
         } else {
-            $data = $this->article->getListByCategoryId($id, $this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
+            if ($this->config == false) {
+                $data = $this->article->getListByCategoryId($id, 10, 'desc','published_at');
+            } else {
+                $data = $this->article->getListByCategoryId($id, $this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
+            }
+
             Cache::forever($key, $data);
         }
         return view('home.index', compact('data', 'id'));
@@ -135,7 +145,11 @@ class ArticleController extends Controller
         if (Cache::has($key)) {
             $data = Cache::get($key);
         } else {
-            $data = $this->article->getListByTagId($id, $this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
+            if ($this->config == false) {
+                $data = $this->article->getListByTagId($id, 10, 'desc','published_at');
+            } else {
+                $data = $this->article->getListByTagId($id, $this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
+            }
             Cache::forever($key, $data);
         }
         return view('home.index', compact('data'));

@@ -75,7 +75,7 @@ class FileController extends Controller
 
         $result = $this->manager->store($request->file('file'), $path);
         // 添加水印
-        if ($result['success'] == true && $this->config->water_status) {
+        if ($result['success'] == true && $this->config && $this->config->water_status) {
             $this->water_text($result['relative_url'], $this->config->water_text);
         }
         return custom_json($result);
