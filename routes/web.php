@@ -14,7 +14,6 @@
 
 Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
     Route::get('login','LoginController@login')->name('dd.login');
-    Route::get('reg','LoginController@reg');
     Route::get('check','LoginController@check');
     Route::post('login','LoginController@toLogin');
 
