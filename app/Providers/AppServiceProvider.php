@@ -11,6 +11,7 @@ use App\Repositories\LinkRepository;
 use App\Repositories\TagRepository;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        //解决数据库迁移时报字段过长的错
+        Schema::defaultStringLength(191);
         \Carbon\Carbon::setLocale('zh');
         Relation::morphMap([
             'articles'    => Article::class,
