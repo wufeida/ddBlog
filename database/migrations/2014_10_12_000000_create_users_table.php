@@ -27,7 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('openid')->default('')->comment('第三方唯一id');
             $table->string('login_ip')->default('')->comment('最后登录ip');
             $table->integer('login_times')->default(0)->comment('登录次数');
-            $table->string('description')->default('')->comment('描述');
+            $table->string('description')->nullable()->comment('描述');
             $table->timestamp('last_time')->nullable()->comment('最后登录时间');
             $table->rememberToken();
             $table->timestamps();
