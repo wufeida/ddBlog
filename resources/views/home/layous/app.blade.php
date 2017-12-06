@@ -128,7 +128,7 @@
             @endif
         </p>
     </div>
-    <div class="blog-text-center">{!! $config ? $config->license : '' !!}<a target="_blank" href="http://www.miitbeian.gov.cn/">{{env('ICP')}}</a></div>
+    <div class="blog-text-center">{!! $config ? $config->license : '' !!}<a target="_blank" href="http://www.miitbeian.gov.cn/">{{$config ? $config->icp : ''}}</a></div>
   </footer>
 {{--登录模态--}}
 <div class="am-modal-actions" id="loginModal">

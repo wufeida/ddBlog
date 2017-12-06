@@ -25,7 +25,8 @@ class Config extends Model
         'footer_github_url',
         'footer_qq_status',
         'footer_qq_url',
-        'license'
+        'license',
+        'icp'
     ];
 
     protected $casts = [

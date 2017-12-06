@@ -185,6 +185,12 @@
                                             <input type="text" value="{{$data ? $data->license : ''}}" name="license" class="form-control" placeholder="">
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label" for="title">网站备案号：</label>
+                                        <div class="col-sm-11">
+                                            <input type="text" value="{{$data ? $data->icp : ''}}" name="icp" class="form-control" placeholder="网站备案号">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" onclick="save($(this))" class="btn btn-primary">保存</button>
