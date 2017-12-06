@@ -55,7 +55,7 @@ function save(z) {
         },
         success: function (msg) {
             notice(parent.success, '成功');
-            // location.reload();
+            location.reload();
         }
     });
 }
