@@ -27,7 +27,7 @@ class CreateArticlesTable extends Migration
             $table->boolean('is_original')->default(false)->comment('是否原创');
             $table->boolean('is_draft')->default(false)->comment('是否草稿');
             $table->boolean('is_recommend')->default(false)->comment('是否推荐');
-            $table->integer('sort')->unsigned()->comment('排序');
+            $table->integer('sort')->nullable()->unsigned()->comment('排序');
             $table->integer('view_count')->unsigned()->default(0)->index()->comment('查看次数');
             $table->timestamp('published_at')->nullable()->comment('发布时间');
             $table->boolean('flag')->default(false)->comment('markdown和富文本标记1：为markdown');
