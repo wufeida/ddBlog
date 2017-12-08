@@ -63,7 +63,8 @@ class ArticleController extends Controller
     public function show($slug, Request $request)
     {
         $article_id = $this->article->getIdBySlug($slug);
-        if ($article_id == false) return view('404');
+        abort(404);
+//        if ($article_id == false) return view('404');
         $id = $article_id->id;
         // 缓存评论
         $comments_key = 'article-comments-'.$id;
