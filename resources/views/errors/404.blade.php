@@ -2,7 +2,7 @@
 <html >
 <head>
     <meta charset="UTF-8">
-    <title>404</title>
+    <title>404 - {{$config ? $config->name : ''}}</title>
 
     <link rel="stylesheet" href="/home/assets/css/reset.min.css">
 

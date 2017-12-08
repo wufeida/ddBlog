@@ -51,12 +51,16 @@ class AppServiceProvider extends ServiceProvider
             $comment = Cache::remember('home-comment', 10080, function () {
                 return app(CommentRepository::class)->getNewComment(20);
             });
-            //配置内容 已有缓存 此处不加
-            $config = app(ConfigController::class)->getConfig();
-            view()->share(compact('categories','tags', 'recommend', 'links', 'comment', 'config'));
+
+            view()->share(compact('categories','tags', 'recommend', 'links', 'comment'));
         });
 
-
+        //全局通用变量
+        view()->composer('*', function () {
+            //配置内容 已有缓存 此处不加
+            $config = app(ConfigController::class)->getConfig();
+            view()->share(compact('config'));
+        });
     }
 
     /**
