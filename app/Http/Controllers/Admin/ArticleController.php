@@ -176,6 +176,7 @@ class ArticleController extends Controller
     public function destroy($id, Comment $comment)
     {
         $res = $this->article->destroy($id);
+        //删除文章后删除该文章的评论
         $comment->where('commentable_type', 'articles')->where('commentable_id', $id)->delete();
         if ($res) {
             Cache::tags('home-list')->flush();
