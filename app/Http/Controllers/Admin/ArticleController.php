@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\ArticleRequest;
+use App\Model\Comment;
 use App\Repositories\ArticleRepository;
+use App\Repositories\CommentRepository;
 use App\Tools\Markdowner;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -171,11 +173,15 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, Comment $comment)
     {
         $res = $this->article->destroy($id);
+        $comment->where('commentable_type', 'articles')->where('commentable_id', $id)->delete();
         if ($res) {
             Cache::tags('home-list')->flush();
+            //评论缓存
+            Cache::forget('home-comment');
+            Cache::tags('comment')->flush();
         }
         return custom_json($res);
     }

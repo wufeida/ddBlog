@@ -10,6 +10,7 @@ use App\Repositories\TagRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 
 class TrashController extends Controller
 {
@@ -146,22 +147,28 @@ class TrashController extends Controller
         switch ($type) {
             case 'article':
                 $res = $this->article->undoById($id);
+                Cache::tags('home-list')->flush();
                 return custom_json($res);
                 break;
             case 'tag':
                 $res = $this->tag->undoById($id);
+                Cache::forget('home-tag');
                 return custom_json($res);
                 break;
             case 'link':
                 $res = $this->link->undoById($id);
+                Cache::forget('home-link');
                 return custom_json($res);
                 break;
             case 'category':
                 $res = $this->category->undoById($id);
+                Cache::forget('home-category');
                 return custom_json($res);
                 break;
             case 'comment':
                 $res = $this->comment->undoById($id);
+                Cache::forget('home-comment');
+                Cache::tags('comment')->flush();
                 return custom_json($res);
                 break;
             case 'user':
@@ -182,6 +189,7 @@ class TrashController extends Controller
         $this->link->undoAll();
         $this->comment->undoAll();
         $this->user->undoAll();
+        Cache::flush();
         return 1;
     }
 }
