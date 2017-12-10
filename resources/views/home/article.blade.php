@@ -76,7 +76,7 @@
             <h3 class="blog-comment">评论</h3>
           <fieldset>
             <div class="am-form-group">
-              <textarea name="content" class="" rows="5" placeholder="markdown"></textarea>
+              <textarea name="content" @if(!Auth::check()) disabled placeholder="请登录后评论" @else placeholder="支持markdown" @endif rows="5" ></textarea>
             </div>
               <input type="hidden" name="commentable_id" value="{{$data->id}}">
               <input type="hidden" name="commentable_type" value="articles">

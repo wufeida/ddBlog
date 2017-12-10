@@ -54,16 +54,23 @@ function comment(z) {
 }
 //回复
 function reply(z) {
-    var aid = z.attr('aid');
-    var pid = z.attr('pid');
-    var username = z.attr('username');
-    var boxTextarea= $('.nav-second-level').find('.dd-comment-box');
-    if(boxTextarea.length >= 1){
-        boxTextarea.remove();
-    }
-    var str = '<fieldset class="dd-comment-box"><form class="add-form"><div class="dd-box"><textarea name="content" rows="5" placeholder="回复'+username+'的评论"></textarea><input type="hidden" name="commentable_id" value="'+aid+'"><input type="hidden" name="pid" value="'+pid+'"><input type="hidden" name="commentable_type" value="articles"><span class="email-span">邮箱：</span><input type="text" class="email-input" placeholder="接收回复邮箱" name="email"><button type="button" data-user="'+username+'" onclick="comment($(this))" class="am-btn am-btn-default">发表评论</button></div></form></fieldset>';
-    z.parents('.dd-comment').eq(0).append(str);
-    $('.dd-comment-box textarea').focus();
+    $.get('/auth/home/check',function (msg) {
+        if (msg == 1) {
+            var aid = z.attr('aid');
+            var pid = z.attr('pid');
+            var username = z.attr('username');
+            var boxTextarea= $('.nav-second-level').find('.dd-comment-box');
+            if(boxTextarea.length >= 1){
+                boxTextarea.remove();
+            }
+            var str = '<fieldset class="dd-comment-box"><form class="add-form"><div class="dd-box"><textarea name="content" rows="5" placeholder="回复'+username+'的评论"></textarea><input type="hidden" name="commentable_id" value="'+aid+'"><input type="hidden" name="pid" value="'+pid+'"><input type="hidden" name="commentable_type" value="articles"><span class="email-span">邮箱：</span><input type="text" class="email-input" placeholder="接收回复邮箱" name="email"><button type="button" data-user="'+username+'" onclick="comment($(this))" class="am-btn am-btn-default">发表评论</button></div></form></fieldset>';
+            z.parents('.dd-comment').eq(0).append(str);
+            $('.dd-comment-box textarea').focus();
+        } else {
+            $('#loginModal').modal('open');
+        }
+    });
+
 }
 //viewer初始化 图片查看
 $('.am-article-bd').viewer({
