@@ -9,8 +9,8 @@
 
 @section('css')
     <link href="/admin/plugins/toastr/toastr.min.css" rel="stylesheet">
-    <link href="/home/assets/css/article.css" rel="stylesheet">
     <link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">
+    <link href="/home/assets/css/article.css" rel="stylesheet">
 @endsection
 
 @section('js')

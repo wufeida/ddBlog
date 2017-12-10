@@ -1,6 +1,9 @@
 .am-article-bd blockquote p {
     overflow: auto;
 }
+.am-article-bd img {
+    cursor: pointer;
+}
 .media {
     float: right;
     width: 100%;
