@@ -15,13 +15,8 @@
 
 @section('js')
     <script src="/admin/plugins/toastr/toastr.min.js"></script>
-    <script src="/home/assets/js/article.js"></script>
     <script src="/admin/js/viewer/viewer.min.js"></script>
-    <script>
-        $('.am-article-bd').viewer({
-            url: 'src',
-        });
-    </script>
+    <script src="/home/assets/js/article.js"></script>
 @endsection
 
 @section('content')

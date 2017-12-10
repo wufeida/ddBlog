@@ -13,6 +13,7 @@ toastr.options=
         "showMethod":"fadeIn",//显示时的动画方式
         "hideMethod":"fadeOut"//消失时的动画方式
     };
+//评论
 function comment(z) {
     $.get('/auth/home/check',function (msg) {
         if (msg == 1) {
@@ -51,7 +52,7 @@ function comment(z) {
     });
 
 }
-
+//回复
 function reply(z) {
     var aid = z.attr('aid');
     var pid = z.attr('pid');
@@ -64,3 +65,7 @@ function reply(z) {
     z.parents('.dd-comment').eq(0).append(str);
     $('.dd-comment-box textarea').focus();
 }
+//viewer初始化 图片查看
+$('.am-article-bd').viewer({
+    url: 'src',
+});
