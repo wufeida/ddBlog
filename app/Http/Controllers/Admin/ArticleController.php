@@ -164,7 +164,6 @@ class ArticleController extends Controller
         $this->article->syncTag($tags);
         if ($res) {
             Cache::forget('article-'.$id);
-            Cache::forget('site-map');
         }
         return custom_json($res);
     }
