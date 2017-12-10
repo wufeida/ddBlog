@@ -148,6 +148,7 @@ class TrashController extends Controller
             case 'article':
                 $res = $this->article->undoById($id);
                 Cache::tags('home-list')->flush();
+                Cache::forget('site-map');
                 return custom_json($res);
                 break;
             case 'tag':

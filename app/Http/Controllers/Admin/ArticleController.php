@@ -122,6 +122,7 @@ class ArticleController extends Controller
         $this->article->syncTag($tags);
         if ($res) {
             Cache::tags('home-list')->flush();
+            Cache::forget('site-map');
         }
         return custom_json($res);
     }
@@ -163,6 +164,7 @@ class ArticleController extends Controller
         $this->article->syncTag($tags);
         if ($res) {
             Cache::forget('article-'.$id);
+            Cache::forget('site-map');
         }
         return custom_json($res);
     }
@@ -183,6 +185,7 @@ class ArticleController extends Controller
             //评论缓存
             Cache::forget('home-comment');
             Cache::tags('comment')->flush();
+            Cache::forget('site-map');
         }
         return custom_json($res);
     }
