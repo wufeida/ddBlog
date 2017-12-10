@@ -492,10 +492,10 @@
                 url: url,
                 async: false,
                 error: function(msg) {
-                    toastr.error('删除失败');
+                    toastr.error('还原失败');
                 },
                 success: function (msg) {
-                    notice(parent.success, '删除成功');
+                    notice(parent.success, '还原成功');
                     location.reload();
                 }
             });
@@ -530,10 +530,10 @@
                 url: url,
                 async: false,
                 error: function(msg) {
-                    toastr.error('删除失败');
+                    toastr.error('清空失败');
                 },
                 success: function (msg) {
-                    notice(parent.success, '删除成功');
+                    notice(parent.success, '清空成功');
                     location.reload();
                 }
             });
