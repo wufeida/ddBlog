@@ -26,7 +26,6 @@ class HomeController extends Controller
             'db_database'     => isset($_SERVER['DB_DATABASE']) ? $_SERVER['DB_DATABASE'] : 'Secret',
             'db_version'      => $version,
         ];
-//        dd($data);
         return view('admin/index')->with(compact('data'));
     }
 
