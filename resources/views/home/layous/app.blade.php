@@ -179,5 +179,15 @@
 <script src="/home/assets/js/pace.min.js"></script>
 @yield('js')
 <!-- <script src="/home/assets/js/app.js"></script> -->
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?ae47a8184bfc4356a371f494ab66e471";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
 </body>
 </html>
