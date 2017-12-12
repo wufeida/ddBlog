@@ -191,6 +191,12 @@
                                             <input type="text" value="{{$data ? $data->icp : ''}}" name="icp" class="form-control" placeholder="网站备案号">
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-1 control-label" for="title">百度统计代码：</label>
+                                        <div class="col-sm-11">
+                                            <textarea class="form-control" name="baidu_statistics" cols="30" rows="5">{{$data ? $data->baidu_statistics : ''}}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" onclick="save($(this))" class="btn btn-primary">保存</button>

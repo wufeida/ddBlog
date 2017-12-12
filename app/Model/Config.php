@@ -26,7 +26,8 @@ class Config extends Model
         'footer_qq_status',
         'footer_qq_url',
         'license',
-        'icp'
+        'icp',
+        'baidu_statistics'
     ];
 
     protected $casts = [
