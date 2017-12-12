@@ -72,6 +72,8 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::get('config', 'ConfigController@index');
         //修改配置
         Route::post('config', 'ConfigController@upConfig');
+        //便签管理
+        Route::resource('note', 'NoteController', ['except' => ['create', 'show']]);
     });
 });
 
