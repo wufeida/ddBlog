@@ -33,6 +33,7 @@ class CreateConfigsTable extends Migration
             $table->string('footer_qq_url')->nullable()->comment('底部qq图标地址');
             $table->string('license')->nullable()->comment('底部版权信息');
             $table->string('icp')->nullable()->comment('备案号');
+            $table->text('baidu_statistics')->nullable()->comment('百度统计代码');
         });
     }
 
