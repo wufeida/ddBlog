@@ -22,6 +22,7 @@ class NoteController extends Controller
     public function index()
     {
         $data = $this->note->all();
+
         return view('admin.note', compact('data'));
     }
 
@@ -34,6 +35,7 @@ class NoteController extends Controller
     public function store(Request $request)
     {
         $res = $this->note->store($request->all());
+
         return custom_json($res);
     }
 
@@ -45,8 +47,8 @@ class NoteController extends Controller
      */
     public function edit($id)
     {
-        //
-        $data = $this->tag->getById($id);
+        $data = $this->note->getById($id);
+
         return custom_json($data);
     }
 
@@ -59,11 +61,8 @@ class NoteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($request->get('title') == null) abort(422, '标题必填');
-        $res = $this->tag->update($id, $request->except('tag'));
-        if ($res) {
-            Cache::forget('home-tag');
-        }
+        $res = $this->note->update($id, $request->all());
+
         return custom_json($res);
     }
 
@@ -75,11 +74,8 @@ class NoteController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $res = $this->tag->destroy($id);
-        if ($res) {
-            Cache::forget('home-tag');
-        }
+        $res = $this->note->destroy($id);
+
         return custom_json($res);
     }
 }

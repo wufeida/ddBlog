@@ -6,8 +6,8 @@ function clearForm() {
 
 //点击删除按钮
 $(document).on("click", ".delete", function () {
-    var id = $(this).parent().parent().children().eq(0).html();
-    var url = "/dd/user/"+id;
+    var id = $(this).parent().attr('data-id');
+    var url = "/dd/note/"+id;
     $('#del-form').attr('action',url);
 });
 //点击添加按钮
@@ -20,23 +20,13 @@ $(document).on("click", ".add", function () {
 //点击编辑按钮
 $(document).on("click", ".edit", function () {
     clearForm();
-    var id = $(this).parent().parent().children().eq(0).html();
-    var url = "/dd/link/"+id+"/edit";
+    var id = $(this).parent().attr('data-id');
+    var url = "/dd/note/"+id+"/edit";
     $.getJSON(url, function(msg){
         $('#name').val(msg.name);
-        $('#link').val(msg.link);
-        if (msg.status == 1) {
-            if ( ! $("[name='status']").bootstrapSwitch('state')) {
-                $("[name='status']").bootstrapSwitch('toggleState');
-            }
-        } else {
-            // 开关按钮
-            initSwitch();
-        }
-        $('#image_url').val(msg.image);
-        $('#J_avatar1').attr('src',msg.image);
-        $('#add-label').html('修改友链');
-        var up_url = "/dd/link/"+msg.id;
+        $('#content').val(msg.content);
+        $('#add-label').html('修改便签');
+        var up_url = "/dd/note/"+msg.id;
         $('#add-form').attr('action',up_url);
         var put = '<input id="put" type="hidden" name="_method" value="PUT">';
         $('#add-form').append(put);
@@ -108,7 +98,3 @@ function notice(fname, msg) {
         fname(msg);
     }
 }
-//viewer.js图片显示
-$('#dowebok').viewer({
-    url: 'data-original',
-});

@@ -13,7 +13,7 @@
 
     <link href="/admin/css/animate.css" rel="stylesheet">
     <link href="/admin/css/style.css" rel="stylesheet">
-
+    <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
 </head>
 
 <body class="gray-bg">
@@ -29,12 +29,12 @@
                     <ul class="notes">
                         @foreach($data as $v)
                         <li>
-                            <div>
+                            <div data-id="{{$v->id}}">
                                 <small>{{$v->created_at}}</small>
                                 <h4>{{$v->name}}</h4>
                                 <p>{{$v->content}}</p>
-                                <a style="right: 30px" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-pencil"></i></a>
-                                <a><i class="fa fa-trash-o "></i></a>
+                                <a style="right: 30px" class="edit" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a data-toggle="modal" data-target="#delModal" class="delete"><i class="fa fa-trash-o"></i></a>
                             </div>
                         </li>
                         @endforeach
@@ -75,6 +75,25 @@
             </div>
         </div>
     </div>
+    <!-- delete modal -->
+    <div class="modal fade" id="delModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <form method="post" id="del-form">
+                    {{csrf_field()}}
+                    {{ method_field('DELETE') }}
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title del-h4" id="del-label">确认删除？</h4>
+                    </div>
+                    <div class="modal-footer del-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+                        <button type="button" onclick="del($(this))" class="btn btn-danger">确认</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Mainly scripts -->
     <script src="/admin/js/jquery-2.1.1.js"></script>
     <script src="/admin/js/bootstrap.min.js"></script>
@@ -84,6 +103,8 @@
     <!-- Custom and plugin javascript -->
     <script src="/admin/js/inspinia.js"></script>
     <script src="/admin/js/plugins/pace/pace.min.js"></script>
+    <script src="/admin/plugins/toastr/toastr.min.js"></script>
+    <script src="/admin/plugins/toastr/toastr.config.js"></script>
 
     <script src="/admin/note.js"></script>
 

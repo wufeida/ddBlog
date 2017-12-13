@@ -15,5 +15,8 @@ class NoteRepository {
         $this->model = $note;
     }
 
-
+    public function all()
+    {
+        return $this->model->orderBy('id', 'desc')->get();
+    }
 }
