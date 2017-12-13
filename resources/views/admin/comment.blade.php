@@ -60,7 +60,7 @@
                                 <tr>
                                     <td class="text-center">{{$v->id}}</td>
                                     <td>{{$v->commentable ? $v->commentable->title: '无'}}</td>
-                                    <td>{{$v->user ? $v->user->name: '无'}}</td>
+                                    <td>{{$v->user ? $v->user->nickname: '无'}}</td>
                                     <td>{{$v->commentable_type}}</td>
                                     <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">{{$v->content['raw'] }}</td>
                                     <td>{{$v->created_at}}</td>
