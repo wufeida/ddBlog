@@ -6,6 +6,7 @@ use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\CommentRepository;
 use App\Repositories\LinkRepository;
+use App\Repositories\NoteRepository;
 use App\Repositories\TagRepository;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -27,12 +28,15 @@ class TrashController extends Controller
 
     protected $user;
 
+    protected $note;
+
     public function __construct(ArticleRepository $article,
                                 TagRepository $tag,
                                 LinkRepository $link,
                                 CommentRepository $comment,
                                 CategoryRepository $category,
-                                UserRepository $user)
+                                UserRepository $user,
+                                NoteRepository $note)
     {
         $this->article  = $article;
         $this->tag      = $tag;
@@ -40,6 +44,7 @@ class TrashController extends Controller
         $this->comment  = $comment;
         $this->category = $category;
         $this->user     = $user;
+        $this->note     = $note;
     }
 
     /**
@@ -64,24 +69,33 @@ class TrashController extends Controller
      */
     public function index()
     {
+        //文章
         $articles = $this->article->getTrash();
         $articles = $this->flag($articles, 'article');
+        //标签
         $tags = $this->tag->getTrash();
         $tags = $this->flag($tags, 'tag');
+        //友链
         $links = $this->link->getTrash();
         $links = $this->flag($links, 'link');
+        //评价
         $comments = $this->comment->getTrash();
         $comments = $this->flag($comments, 'comment');
+        //分类
         $categories = $this->category->getTrash();
         $categories = $this->flag($categories, 'category');
+        //用户
         $users = $this->user->getTrash();
         $users = $this->flag($users, 'user');
-        $collection = collect([$articles, $tags, $links, $comments, $categories, $users]);
+        //便签
+        $notes = $this->note->getTrash();
+        $notes = $this->flag($notes, 'note');
+        $collection = collect([$articles, $tags, $links, $comments, $categories, $users, $notes]);
         //合并集合
         $collapsed = $collection->collapse();
         //按最新删除时间排序
         $data = $collapsed->sortByDesc('deleted_at');
-        return view('admin.trash',compact('data', 'articles', 'tags', 'links', 'comments', 'categories', 'users'));
+        return view('admin.trash',compact('data', 'articles', 'tags', 'links', 'comments', 'categories', 'users', 'notes'));
     }
 
     /**
@@ -118,6 +132,10 @@ class TrashController extends Controller
                 $res = $this->user->forceDelById($id);
                 return custom_json($res);
                 break;
+            case 'note':
+                $res = $this->note->forceDelById($id);
+                return custom_json($res);
+                break;
         }
     }
 
@@ -132,6 +150,7 @@ class TrashController extends Controller
         $this->link->forceDelAll();
         $this->comment->forceDelAll();
         $this->user->forceDelAll();
+        $this->note->forceDelAll();
         return 1;
     }
 
@@ -176,6 +195,10 @@ class TrashController extends Controller
                 $res = $this->user->undoById($id);
                 return custom_json($res);
                 break;
+            case 'note':
+                $res = $this->note->undoById($id);
+                return custom_json($res);
+                break;
         }
     }
 
@@ -190,6 +213,7 @@ class TrashController extends Controller
         $this->link->undoAll();
         $this->comment->undoAll();
         $this->user->undoAll();
+        $this->note->undoAll();
         Cache::flush();
         return 1;
     }
