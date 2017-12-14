@@ -4,6 +4,9 @@
 .am-article-bd img {
     cursor: pointer;
 }
+.am-article-bd code {
+    white-space: pre;
+}
 .media {
     float: right;
     width: 100%;
