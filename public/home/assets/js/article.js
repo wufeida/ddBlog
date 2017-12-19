@@ -73,6 +73,6 @@ function reply(z) {
 
 }
 //viewer初始化 图片查看
-$('.am-article-bd').viewer({
-    url: 'src',
-});
+// $('.am-article-bd').viewer({
+//     url: 'src',
+// });
