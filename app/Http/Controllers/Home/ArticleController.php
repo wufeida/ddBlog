@@ -92,6 +92,7 @@ class ArticleController extends Controller
             $data->increment('view_count');
             $this->visitor->log($id);
             Cache::put($ipCache, '', 1440);
+            //如果第一次就把文章重新存入缓存，以显示正确的查看次数
             Cache::forever($key, $data);
         }
 
