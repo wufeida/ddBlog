@@ -15,7 +15,7 @@ toastr.options=
     };
 //评论
 function comment(z) {
-    $.get('/auth/home/check',function (msg) {
+    $.get('/dd/home/check',function (msg) {
         if (msg == 1) {
             var formData = new FormData(z.parents('.add-form').eq(0)[0]);
             $.ajax({
@@ -54,7 +54,7 @@ function comment(z) {
 }
 //回复
 function reply(z) {
-    $.get('/auth/home/check',function (msg) {
+    $.get('/dd/home/check',function (msg) {
         if (msg == 1) {
             var aid = z.attr('aid');
             var pid = z.attr('pid');

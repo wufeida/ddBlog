@@ -58,7 +58,7 @@
                   @endif
                   <span>{{Auth::user()->nickname}}</span>
               @endif
-              &nbsp;<a style="color: #10D07A" href="{{url('auth/home/logout')}}">退出</a>
+              &nbsp;<a style="color: #10D07A" href="{{url('dd/home/logout')}}">退出</a>
           @else
               <a style="color: #10D07A;cursor: pointer" data-am-modal="{target: '#loginModal'}">登录</a>
           @endif
