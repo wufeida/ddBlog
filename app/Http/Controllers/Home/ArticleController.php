@@ -92,6 +92,7 @@ class ArticleController extends Controller
             $data->increment('view_count');
             $this->visitor->log($id);
             Cache::put($ipCache, '', 1440);
+            Cache::forever($key, $data);
         }
 
         return view('home.article', compact('data', 'prev_article', 'next_article','comments'));
