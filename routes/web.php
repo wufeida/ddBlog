@@ -93,7 +93,7 @@ Route::group(['namespace' => 'Home'], function () {
     });
 });
 
-Route::group(['namespace' => 'Auth', 'prefix' => 'dd'], function () {
+Route::group(['namespace' => 'Auth', 'prefix' => 'auth'], function () {
     // 重定向
     Route::get('/{service}', 'OAuthController@redirectToProvider');
     // 获取用户资料并登录
