@@ -148,7 +148,7 @@
             @endforeach
         </div>
     </div>
-
+{{--图片查看--}}
 <div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="pswp__bg"></div>
     <div class="pswp__scroll-wrap">
@@ -180,11 +180,5 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-
-
-
-</script>
-
 @endsection
 <!-- content end -->
