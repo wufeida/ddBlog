@@ -72,10 +72,6 @@ function reply(z) {
     });
 
 }
-//viewer初始化 图片查看
-// $('.am-article-bd').viewer({
-//     url: 'src',
-// });
 
 //自动给图片加data-size属性 以及包裹<figure>标签
 function auto_data_size(){
@@ -93,7 +89,6 @@ function auto_data_size(){
 
 
 var initPhotoSwipeFromDOM = function(gallerySelector) {
-
     // parse slide data (url, title, size ...) from DOM elements
     // (children of gallerySelector)
     var parseThumbnailElements = function(el) {
@@ -105,7 +100,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             size,
             item;
         for(var i = 0; i < numNodes; i++) {
-
             figureEl = thumbElements[i]; // <figure> element
             // include only element nodes
             if(figureEl.tagName !== 'FIGURE') {
@@ -120,8 +114,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
                 w: parseInt(size[0], 10),
                 h: parseInt(size[1], 10)
             };
-
-
 
             if(figureEl.children.length > 1) {
                 // <figcaption> content
@@ -179,8 +171,6 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             }
             nodeIndex++;
         }
-
-
 
         if(index >= 0) {
             // open PhotoSwipe if valid index found
@@ -289,10 +279,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
         openPhotoSwipe( hashData.pid ,  galleryElements[ hashData.gid - 1 ], true, true );
     }
 };
-
-// execute above function
 // window.onload=function(){
     auto_data_size();
     initPhotoSwipeFromDOM('.am-article-bd');
 // };
-// execute above function

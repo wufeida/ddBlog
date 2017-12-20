@@ -9,7 +9,6 @@
 
 @section('css')
     <link href="/admin/plugins/toastr/toastr.min.css" rel="stylesheet">
-    {{--<link href="/admin/css/plugins/viewer/viewer.min.css" rel="stylesheet">--}}
     <link href="/home/assets/plugins/photo/photoswipe.css" rel="stylesheet">
     <link href="/home/assets/plugins/photo/default-skin/default-skin.css" rel="stylesheet">
     <link href="/home/assets/css/article.css" rel="stylesheet">
@@ -17,7 +16,6 @@
 
 @section('js')
     <script src="/admin/plugins/toastr/toastr.min.js"></script>
-    {{--<script src="/admin/js/viewer/viewer.min.js"></script>--}}
     <script src="/home/assets/plugins/photo/photoswipe.js"></script>
     <script src="/home/assets/plugins/photo/photoswipe-ui-default.js"></script>
     <script src="/home/assets/js/article.js"></script>
