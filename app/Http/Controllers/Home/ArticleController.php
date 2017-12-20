@@ -86,7 +86,8 @@ class ArticleController extends Controller
         $next_article = $this->article->getNextArticle($data->id);
 
         //添加点击次数和查看日志
-        $ipCache = 'article-'.$request->ip().':'.$id;
+        $ip = GetIp();
+        $ipCache = 'article-'.$ip.':'.$id;
         if (!Cache::has($ipCache)) {
             $data->increment('view_count');
             $this->visitor->log($id);

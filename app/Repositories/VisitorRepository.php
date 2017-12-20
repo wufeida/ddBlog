@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 
 use App\Model\Visitor;
-use App\Tools\IP;
 use Carbon\Carbon;
 
 class VisitorRepository {
@@ -13,14 +12,9 @@ class VisitorRepository {
 
     protected $model;
 
-    protected $ip;
-
-    public function __construct(Visitor $visitor,
-                                IP $ip)
+    public function __construct(Visitor $visitor)
     {
         $this->model = $visitor;
-
-        $this->ip = $ip;
     }
 
     public function page($number = 10, $sort = 'desc', $sortColumn = 'created_at')
@@ -34,7 +28,7 @@ class VisitorRepository {
      * @param $article_id
      */
     public function log($article_id) {
-        $ip = $this->ip->get();
+        $ip = GetIp();
         $log = $this->hasArticleIp($article_id, $ip);
         if ($log) {
             if ($log->viewed_at->diffInSeconds(Carbon::now()) > 86400) {
@@ -51,7 +45,7 @@ class VisitorRepository {
                     ->increment('clicks');
             }
         } else {
-            $site = $this->ip->getSite();
+            $site = GetIpLookup($ip);
             if ($site) {
                 $country = $site['country'].' '.$site['province'].' '.$site['city'];
             } else {
@@ -77,7 +71,7 @@ class VisitorRepository {
      */
     public function isFirstLog($article_id)
     {
-        $ip = $this->ip->get();
+        $ip = GetIp();
         $log = $this->hasArticleIp($article_id, $ip);
         if ($log) {
             return $log->viewed_at->diffInSeconds(Carbon::now()) > 86400 ? true : false;
