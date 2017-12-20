@@ -83,6 +83,7 @@ class CommentController extends Controller
         $res = $this->comment->store($data);
         //删除该篇文章评论缓存
         Cache::tags('comment')->forget('article-comments-'.$aid);
+        Cache::forget('home-comment');
         return custom_json($res);
     }
 }
