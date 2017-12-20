@@ -136,6 +136,7 @@
                                             <ul class="nav nav-tabs ">
                                                 <li class="active"><a data-toggle="tab" href="#tab-1"><i class="fa fa-file-archive-o"></i>markdown</a></li>
                                                 <li class=""><a data-toggle="tab" href="#tab-2"><i class="fa fa-file-word-o"></i>富文本</a></li>
+                                                <p style="margin:0;color: red;line-height: 3">* 添加图片时，想让图片有放大功能，用a标签将图片包住，href是图片地址 markdown语法：[![img alt](img src)](a href)</p>
                                             </ul>
                                             <div class="tab-content">
                                                 <div id="tab-1" class="tab-pane active">
