@@ -87,7 +87,7 @@ function auto_data_size(){
     })
 };
 
-
+//photoSwipe插件初始化
 var initPhotoSwipeFromDOM = function(gallerySelector) {
     // parse slide data (url, title, size ...) from DOM elements
     // (children of gallerySelector)
@@ -101,7 +101,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             item;
         for(var i = 0; i < numNodes; i++) {
             figureEl = thumbElements[i]; // <figure> element
-            // include only element nodes
+            // 这里改成自己要识别的标签为figure
             if(figureEl.tagName !== 'FIGURE') {
                 continue;
             }
@@ -160,6 +160,7 @@ var initPhotoSwipeFromDOM = function(gallerySelector) {
             numChildNodes = childNodes.length,
             nodeIndex = 0,
             index;
+        // 这里改成自己要识别的标签为figure
         for (var i = 0; i < numChildNodes; i++) {
             if(childNodes[i].tagName !== 'FIGURE') {
                 continue;
