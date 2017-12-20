@@ -80,7 +80,7 @@ function auto_data_size(){
         imgs.src=$(this).attr("src");
         var w = imgs.width,
             h =imgs.height;
-        $(this).parent("a").attr("data-size","").attr("data-size",w+"x"+h);
+        $(this).parent("a").attr("data-size",w+"x"+h);
         $(this).parent("a").wrap(function(){
             return "<figure></figure>"
         })
