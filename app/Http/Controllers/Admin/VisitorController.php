@@ -17,7 +17,7 @@ class VisitorController extends Controller
 
     public function index()
     {
-        $data = $this->visitor->page('10', 'desc', 'id');
+        $data = $this->visitor->page('10', 'desc', 'updated_at');
         return view('admin.visitor')->with(compact('data'));
     }
 }

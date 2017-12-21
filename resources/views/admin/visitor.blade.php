@@ -51,6 +51,7 @@
                                     <th>ip</th>
                                     <th>城市</th>
                                     <th>点击次数</th>
+                                    <th class="text-center">更新时间</th>
                                     <th class="text-center">创建时间</th>
                                 </tr>
                                 </thead>
@@ -62,6 +63,7 @@
                                     <td>{{$v->ip}}</td>
                                     <td>{{$v->country}}</td>
                                     <td>{{$v->clicks}}</td>
+                                    <td class="text-center">{{$v->updated_at}}</td>
                                     <td class="text-center">{{$v->created_at}}</td>
                                 </tr>
                                 @endforeach
