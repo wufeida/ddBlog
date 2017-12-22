@@ -63,6 +63,34 @@ function save(z) {
     });
 }
 
+//改变便签状态
+$(document).on('click', '.status', function () {
+    var status = $(this).attr('data-status');
+    var id = $(this).parent().parent().attr('data-id');
+    var data = {'status':status};
+    var url = '/dd/note/status/'+id;
+    $.ajax({
+        url:url,
+        type:'get',
+        data:data,
+        datatype:'json',
+        error: function(msg) {
+            if(msg.responseJSON.errors) {
+                for (x in msg.responseJSON.errors) {
+                    toastr.error(msg.responseJSON.errors[x]);
+                }
+            } else if(msg.responseJSON.message) {
+                toastr.error(msg.responseJSON.message);
+            } else {
+                toastr.error('服务器错误');
+            }
+        },
+        success: function (msg) {
+            notice(parent.success, '成功');
+            location.reload();
+        }
+    });
+})
 
 //确认删除
 function del(z) {

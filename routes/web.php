@@ -74,6 +74,8 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
         Route::post('config', 'ConfigController@upConfig');
         //便签管理
         Route::resource('note', 'NoteController', ['except' => ['create', 'show']]);
+        //便签修改状态
+        Route::get('note/status/{id}', 'NoteController@status');
     });
 });
 

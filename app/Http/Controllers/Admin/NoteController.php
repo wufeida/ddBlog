@@ -26,6 +26,15 @@ class NoteController extends Controller
         return view('admin.note', compact('data'));
     }
 
+    public function status(Request $request, $id)
+    {
+        $data['status'] = $request->get('status');
+
+        $res = $this->note->update($id, $data);
+
+        return custom_json($res);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
