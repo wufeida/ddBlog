@@ -14,40 +14,6 @@
     <link href="/admin/css/animate.css" rel="stylesheet">
     <link href="/admin/css/style.css" rel="stylesheet">
     <link href="/admin/plugins/toastr/toastr.css" rel="stylesheet">
-    <link rel="stylesheet" href="/admin/css/normalize.css">
-    <link rel="stylesheet" type="text/css" href="/admin/css/default.css">
-    <style type="text/css">
-        #gallery-wrapper {
-            position: relative;
-            max-width: 75%;
-            width: 75%;
-            margin:20px auto;
-        }
-        .white-panel {
-            position: absolute;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0px 1px 2px rgba(0,0,0,0.3);
-            padding: 10px;
-        }
-        .white-panel h1 {
-            font-size: 1em;
-        }
-        .white-panel h1 a {
-            color: #A92733;
-        }
-        .white-panel:hover {
-            box-shadow: 1px 1px 10px rgba(0,0,0,0.5);
-            margin-top: -5px;
-            -webkit-transition: all 0.3s ease-in-out;
-            -moz-transition: all 0.3s ease-in-out;
-            -o-transition: all 0.3s ease-in-out;
-            transition: all 0.3s ease-in-out;
-        }
-    </style>
-    <!--[if IE]>
-    <script src="http://cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <![endif]-->
 </head>
 
 <body class="gray-bg">
@@ -60,17 +26,19 @@
                     <button type="button" onclick="location.reload();" id="loading-example-btn" class="btn btn-white btn-sm" style="float: right;"><i class="fa fa-refresh"></i> Refresh</button>
                 </div>
                 <div class="wrapper wrapper-content animated fadeInUp">
-                    <section id="gallery-wrapper">
+                    <ul class="notes">
                         @foreach($data as $v)
-                        <article class="white-panel" data-id="{{$v->id}}">
-                            <p class="thumb" style="color: black">{{$v->content}}</p>
-                            <h1><a>{{$v->name}}</a></h1>
-                            <p style="color: grey">{{$v->created_at}}</p>
-                            <a style="right: 30px;" class="edit" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-pencil"></i></a>
-                            <a data-toggle="modal" data-target="#delModal" class="delete"><i class="fa fa-trash-o"></i></a>
-                        </article>
+                        <li>
+                            <div data-id="{{$v->id}}">
+                                <small>{{$v->created_at}}</small>
+                                <h4>{{$v->name}}</h4>
+                                <p>{{$v->content}}</p>
+                                <a style="right: 30px" class="edit" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-pencil"></i></a>
+                                <a data-toggle="modal" data-target="#delModal" class="delete"><i class="fa fa-trash-o"></i></a>
+                            </div>
+                        </li>
                         @endforeach
-                    </section>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -137,19 +105,9 @@
     <script src="/admin/js/plugins/pace/pace.min.js"></script>
     <script src="/admin/plugins/toastr/toastr.min.js"></script>
     <script src="/admin/plugins/toastr/toastr.config.js"></script>
+
     <script src="/admin/note.js"></script>
-    <script src="/admin/js/pinterest_grid.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            $("#gallery-wrapper").pinterest_grid({
-                no_columns: 4,
-                padding_x: 10,
-                padding_y: 10,
-                margin_bottom: 50,
-                single_column_breakpoint: 700
-            });
-        });
-    </script>
+
 </body>
 
 </html>
