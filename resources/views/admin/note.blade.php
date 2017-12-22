@@ -65,7 +65,7 @@
                         <article class="white-panel" data-id="{{$v->id}}">
                             <p class="thumb" style="color: black">{{$v->content}}</p>
                             <h1><a>{{$v->name}}</a></h1>
-                            <p style="color: grey">{{$v->created_at}}</p>
+                            <p style="color: grey">{{$v->created_at->diffForHumans()}}创建</p>
                             <a style="right: 30px;" class="edit" data-toggle="modal" data-target="#formModal"><i class="glyphicon glyphicon-pencil"></i></a>
                             <a data-toggle="modal" data-target="#delModal" class="delete"><i class="fa fa-trash-o"></i></a>
                             <div class="dropdown" style="float: right;width: 15px;height: 10px;margin-top: 5px">
