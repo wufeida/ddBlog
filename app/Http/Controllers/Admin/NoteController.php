@@ -26,6 +26,13 @@ class NoteController extends Controller
         return view('admin.note', compact('data'));
     }
 
+    /**
+     * 改变便签状态
+     *
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function status(Request $request, $id)
     {
         $data['status'] = $request->get('status');
