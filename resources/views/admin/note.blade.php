@@ -70,12 +70,12 @@
                             <a data-toggle="modal" data-target="#delModal" class="delete"><i class="fa fa-trash-o"></i></a>
                             <div class="dropdown" style="float: right;width: 15px;height: 10px;margin-top: 5px">
                                 <a data-toggle="dropdown" class="dropdown-toggle">
-                                    <button class="btn btn-circle @if($v->status == 0) btn-danger @elseif($v->status == 1) btn-success @elseif($v->status == 2) btn-info @endif" class="note-status" style="width: 15px;height: 10px"></button>
+                                    <button class="btn btn-circle @if($v->status == 3) btn-danger @elseif($v->status == 1) btn-success @elseif($v->status == 2) btn-info @endif" class="note-status" style="width: 15px;height: 10px"></button>
                                 </a>
                                 <ul class="dropdown-menu animated fadeInRight m-t-xs" data-id="{{$v->id}}">
+                                    <li><a class="status" data-status="3"><button class="btn btn-danger btn-circle" style="width: 15px;height: 10px;margin-right: 10px"></button>还未开始</a></li>
                                     <li><a class="status" data-status="2"><button class="btn btn-info btn-circle" style="width: 15px;height: 10px;margin-right: 10px"></button>正在进行</a></li>
                                     <li><a class="status" data-status="1"><button class="btn btn-success btn-circle" style="width: 15px;height: 10px;margin-right: 10px"></button>已经完成</a></li>
-                                    <li><a class="status" data-status="0"><button class="btn btn-danger btn-circle" style="width: 15px;height: 10px;margin-right: 10px"></button>还未开始</a></li>
                                 </ul>
                             </div>
                         </article>
