@@ -194,4 +194,14 @@ class ArticleRepository {
             ->paginate($number);
         return $data;
     }
+
+    public function getTimeLine()
+    {
+        $data = $this->model->with('category', 'tags')
+            ->draft()
+            ->published()
+            ->orderBy('published_at', 'desc')
+            ->get();
+        return $data;
+    }
 }

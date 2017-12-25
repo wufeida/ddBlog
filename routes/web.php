@@ -82,6 +82,7 @@ Route::group(['prefix'=>'dd','namespace'=>'\Admin'],function (){
 Route::group(['namespace' => 'Home'], function () {
     Route::get('/', 'ArticleController@index');
     Route::get('sitemap.xml', 'SiteMapController@getSiteMap');
+    Route::get('timeline', 'TimeLineController@index');
     Route::get('{slug}', 'ArticleController@show');
     Route::group(['prefix' => 'category'], function () {
         Route::get('/{id}', 'ArticleController@category');
