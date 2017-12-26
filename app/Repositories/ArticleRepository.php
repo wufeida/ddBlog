@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Model\Article;
+use Illuminate\Support\Facades\DB;
 
 class ArticleRepository {
 
@@ -197,11 +198,20 @@ class ArticleRepository {
 
     public function getTimeLine()
     {
-        $data = $this->model->with('category', 'tags')
-            ->draft()
-            ->published()
-            ->orderBy('published_at', 'desc')
+        $data = DB::table('articles')
+            ->select('published_at')
+            ->groupBy(DB::raw('date_format(from_unixtime(published_at),"%Y-%m")'))
             ->get();
+        dd($data);
+//            ->draft()
+//            ->published()
+//            DB::raw('date_format(from_unixtime(published_at),"%Y-%m") as month group by month');
+//            ->groupBy('month')
+//            ->orderBy('published_at', 'desc')
+//            ->select('id','category_id','published_at')
+//            ->with('category', 'tags')
+//            ->first();
+//        dd($data->toArray());
         return $data;
     }
 }
