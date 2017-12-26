@@ -198,20 +198,48 @@ class ArticleRepository {
 
     public function getTimeLine()
     {
-        $data = DB::table('articles')
-            ->select('published_at')
-            ->groupBy(DB::raw('date_format(from_unixtime(published_at),"%Y-%m")'))
+        $yearData = $this->model
+            ->draft()
+            ->published()
+            ->select(DB::raw('date_format(published_at,"%Y") as year'))
+            ->groupBy(DB::raw('date_format(published_at,"%Y")'))
+            ->orderBy('year', 'desc')
             ->get();
-        dd($data);
-//            ->draft()
-//            ->published()
-//            DB::raw('date_format(from_unixtime(published_at),"%Y-%m") as month group by month');
-//            ->groupBy('month')
-//            ->orderBy('published_at', 'desc')
-//            ->select('id','category_id','published_at')
-//            ->with('category', 'tags')
-//            ->first();
-//        dd($data->toArray());
-        return $data;
+        if ($yearData) {
+            $yearData = $yearData->toArray();
+        }
+        if ($yearData) {
+            foreach ($yearData as $v) {
+                $month = $this->model
+                    ->draft()
+                    ->published()
+                    ->whereBetween('published_at',[$v['year']."-01-01 00:00:00",$v['year']."-12-31 23:59:59"])
+                    ->select(DB::raw('date_format(published_at,"%m") as month'))
+                    ->groupBy(DB::raw('date_format(published_at,"%m")'))
+                    ->orderBy('month', 'desc')
+                    ->get();
+                if ($month) {
+                    $month = $month->toArray();
+                    foreach ($month as $val) {
+                        $data = $this->model
+                            ->draft()
+                            ->published()
+                            ->whereBetween('published_at',[$v['year']."-".$val['month']."-01 00:00:00",$v['year']."-".$val['month']."-31 23:59:59"])
+                            ->with('category','tags')
+                            ->orderBy('published_at', 'desc')
+                            ->get();
+                        if ($data) {
+                            $data = $data->toArray();
+                        }
+                        $timeLine[$v['year']][$val['month']] = $data;
+
+                    }
+                }
+            }
+        }
+        if ($timeLine) {
+            return $timeLine;
+        }
+        return null;
     }
 }

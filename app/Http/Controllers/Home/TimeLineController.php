@@ -12,6 +12,6 @@ class TimeLineController extends Controller
     public function index(ArticleRepository $article)
     {
         $data = $article->getTimeLine();
-        return view('home.timeline');
+        return view('home.timeline', compact('data'));
     }
 }
