@@ -67,7 +67,7 @@ class CommentController extends Controller
                 if ($reply_uid !== $uid && $reply_uid !== 1) {
                     $user = $this->user->getById($reply_uid);
                     if ($user && $user->email && $user->email_notify) {
-                        dispatch(new SendCommentEmail($user->email, Auth::user(), $article, $this->config->name.'回复', $res->content['html']));
+                        dispatch(new SendCommentEmail($user->email, Auth::user(), $article, $this->config->name.'回复', $res->content['raw']));
                     }
                 }
             }
@@ -77,7 +77,7 @@ class CommentController extends Controller
                 $admin = $this->user->getById(1);
                 $admin_email = $admin->email;
                 if ($admin_email) {
-                    dispatch(new SendCommentEmail($admin_email, Auth::user(), $article, '小主，有人评论了你的文章', $res->content['html']));
+                    dispatch(new SendCommentEmail($admin_email, Auth::user(), $article, '小主，有人评论了你的文章', $res->content['raw']));
                 }
             }
 
