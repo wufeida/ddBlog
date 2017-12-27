@@ -31,8 +31,13 @@
         <li><a href="/" style="font-size: 30px;">{{$config ? $config->name : ''}}</a></li>
       <li class="{{isset($id) ? '' : 'am-active'}}"><a href="/">首页</a></li>
       @foreach($categories as $v)
-      <li class="{{isset($id) ? $v->id == $id ? 'am-active' : '' : ''}}"><a href="{{url('category').'/'.$v->id}}">{{$v->name}}</a></li>
+      <li class="{{isset($id) ? $v->id == $id ? 'am-active' : '' : ''}}">
+          <a href="{{url('category').'/'.$v->id}}">{{$v->name}}</a>
+      </li>
       @endforeach
+        <li class="{{isset($id) ? $id == 'time' ? 'am-active' : '' : ''}}">
+            <a href="{{url('timeline')}}">归档</a>
+        </li>
     </ul>
       <div style="float: right;padding: 0 10px;margin-top: 8px">
           @if(Auth::check())
@@ -113,9 +118,9 @@
     </div>
 </div>
 <!-- content end -->
-
-
- <footer class="blog-footer">
+ <footer class="blog-footer" style="bottom: 0px;
+    position: relative;
+    width: 100%;">
     <div class="am-g am-g-fixed blog-fixed am-u-sm-centered blog-footer-padding" style="padding: 0">
         <p style="text-align: center">
             @if($config)
