@@ -8,7 +8,7 @@
 <!-- content srart -->
 <div class="am-g am-g-fixed blog-fixed blog-content">
     <div class="am-u-sm-12">
-        <h1 class="blog-text-center">-- 存档 --</h1>
+        <h1 class="blog-text-center">-- 归档 --</h1>
         @foreach($data as $k=>$v)
         <div class="timeline-year">
             <h1>{{$k}}</h1>
