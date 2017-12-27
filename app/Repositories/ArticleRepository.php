@@ -196,8 +196,14 @@ class ArticleRepository {
         return $data;
     }
 
+    /**
+     * 按时间轴获取归档数据
+     *
+     * @return null
+     */
     public function getTimeLine()
     {
+        //将文章发布时间按年份分组
         $yearData = $this->model
             ->draft()
             ->published()
@@ -210,6 +216,7 @@ class ArticleRepository {
         }
         if ($yearData) {
             foreach ($yearData as $v) {
+                //获取一年内的所有月份 按月份分组
                 $month = $this->model
                     ->draft()
                     ->published()
@@ -219,6 +226,7 @@ class ArticleRepository {
                     ->orderBy('month', 'desc')
                     ->get();
                 if ($month) {
+                    //获取当前月份所有文章
                     $month = $month->toArray();
                     foreach ($month as $val) {
                         $data = $this->model
@@ -231,6 +239,7 @@ class ArticleRepository {
                         if ($data) {
                             $data = $data->toArray();
                         }
+                        //组装数据
                         $timeLine[$v['year']][$val['month']] = $data;
 
                     }
