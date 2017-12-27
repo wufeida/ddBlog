@@ -48,7 +48,7 @@ class ConfigController extends Controller
      */
     public function getConfig()
     {
-        return Cache::remember('home-config', 10080, function () {
+        return Cache::remember('home-config', config('blog.cache.common'), function () {
             return $this->config->getConfig();
         });
     }

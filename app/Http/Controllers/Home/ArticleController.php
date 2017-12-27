@@ -49,7 +49,7 @@ class ArticleController extends Controller
                 $data = $this->article->getHomeData($this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
             }
 
-            Cache::tags('home-list')->forever($key, $data);
+            Cache::tags('home-list')->put($key, $data, config('blog.cache.article'));
         }
         return view('home.index', compact('data'));
     }
@@ -71,7 +71,7 @@ class ArticleController extends Controller
             $comments = Cache::tags('comment')->get($comments_key);
         } else {
             $comments = $this->comment->getByArticleId($id);
-            Cache::tags('comment')->forever($comments_key, $comments);
+            Cache::tags('comment')->put($comments_key, $comments, config('blog.cache.article'));
         }
         //缓存文章
         $key = 'article-'.$id;
@@ -79,7 +79,7 @@ class ArticleController extends Controller
             $data = Cache::get($key);
         } else {
             $data = $this->article->getBySlug($slug);
-            Cache::forever($key, $data);
+            Cache::put($key, $data, config('blog.cache.article'));
         }
 
         $prev_article = $this->article->getPrevArticle($data->id);
@@ -93,9 +93,8 @@ class ArticleController extends Controller
             $this->visitor->log($id);
             Cache::put($ipCache, '', 1440);
             //如果第一次就把文章重新存入缓存，以显示正确的查看次数
-            Cache::forever($key, $data);
+            Cache::put($key, $data, config('blog.cache.article'));
         }
-
         return view('home.article', compact('data', 'prev_article', 'next_article','comments'));
     }
 
@@ -121,7 +120,7 @@ class ArticleController extends Controller
                 $data = $this->article->getListByCategoryId($id, $this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
             }
 
-            Cache::tags('home-list')->forever($key, $data);
+            Cache::tags('home-list')->put($key, $data, config('blog.cache.article'));
         }
         return view('home.index', compact('data', 'id'));
     }
@@ -147,7 +146,7 @@ class ArticleController extends Controller
             } else {
                 $data = $this->article->getListByTagId($id, $this->config->article_number, $this->config->article_sort,$this->config->article_sortColumn);
             }
-            Cache::tags('home-list')->forever($key, $data);
+            Cache::tags('home-list')->put($key, $data, config('blog.cache.article'));
         }
         return view('home.index', compact('data'));
     }

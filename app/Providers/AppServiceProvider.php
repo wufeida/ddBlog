@@ -32,23 +32,23 @@ class AppServiceProvider extends ServiceProvider
 
         view()->composer('home/*', function(){
             //分类
-            $categories = Cache::remember('home-category', 10080, function () {
+            $categories = Cache::remember('home-category', config('blog.cache.common'), function () {
                 return app(CategoryRepository::class)->all();
             });
             //标签
-            $tags = Cache::remember('home-tag', 10080, function () {
+            $tags = Cache::remember('home-tag', config('blog.cache.common'), function () {
                 return app(TagRepository::class)->all();
             });
             //推荐
-            $recommend = Cache::remember('home-recommend', 10080, function () {
+            $recommend = Cache::remember('home-recommend', config('blog.cache.common'), function () {
                 return app(ArticleRepository::class)->getRecommend();
             });
             //友链
-            $links = Cache::remember('home-link', 10080, function () {
+            $links = Cache::remember('home-link', config('blog.cache.common'), function () {
                 return app(LinkRepository::class)->getHomeLink();
             });
             //最新评论
-            $comment = Cache::remember('home-comment', 10080, function () {
+            $comment = Cache::remember('home-comment', config('blog.cache.common'), function () {
                 return app(CommentRepository::class)->getNewComment(20);
             });
 
