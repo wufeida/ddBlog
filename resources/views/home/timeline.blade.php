@@ -27,8 +27,6 @@
         <hr>
         @endforeach
     </div>
-
-
 </div>
 <!-- content end -->
 @endsection
