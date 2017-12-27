@@ -10,7 +10,13 @@ class TimeLineController extends Controller
 {
     public function index(ArticleRepository $article)
     {
-        $data = $article->getTimeLine();
+        $key = 'timeline';
+        if (Cache::tags('home-list')->has($key)) {
+            $data = Cache::tags('home-list')->get($key);
+        } else {
+            $data = $article->getTimeLine();
+            Cache::tags('home-list')->forever($key, $data);
+        }
         $id = 'time';
         return view('home.timeline', compact('data', 'id'));
     }
