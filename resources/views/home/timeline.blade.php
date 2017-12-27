@@ -1,4 +1,9 @@
 @extends('home.layous.timeline')
+
+@section('title', $config ? $config->meta_title : '')
+@section('keywords', $config? $config->meta_keywords : '')
+@section('description', $config ? $config->meta_description: '')
+
 @section('content')
 <!-- content srart -->
 <div class="am-g am-g-fixed blog-fixed blog-content">
