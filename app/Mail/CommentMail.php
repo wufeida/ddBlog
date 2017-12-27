@@ -19,11 +19,13 @@ class CommentMail extends Mailable
     public $user;
     public $article;
     public $subject;
-    public function __construct($user, $article, $subject)
+    public $comment;
+    public function __construct($user, $article, $subject, $comment)
     {
         $this->user = $user;
         $this->article = $article;
         $this->subject = $subject;
+        $this->comment = $comment;
     }
 
     /**
@@ -33,6 +35,6 @@ class CommentMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.index');
+        return $this->view('email.commentArticle');
     }
 }

@@ -23,6 +23,7 @@ class SendCommentEmail implements ShouldQueue
     protected $article;
     protected $email;
     protected $subject;
+    protected $comment;
 
     /**
      * 发送邮件
@@ -32,13 +33,15 @@ class SendCommentEmail implements ShouldQueue
      * @param $user 用户的信息 用于邮件模板使用
      * @param $article  文章信息 用户邮件模板使用
      * @param $subject  邮件主题
+     * @param $comment  评论内容
      */
-    public function __construct($email, $user, $article, $subject)
+    public function __construct($email, $user, $article, $subject, $comment)
     {
         $this->user = $user;
         $this->article = $article;
         $this->email = $email;
         $this->subject = $subject;
+        $this->comment = $comment;
     }
 
     /**
@@ -48,6 +51,6 @@ class SendCommentEmail implements ShouldQueue
      */
     public function handle()
     {
-        $res = Mail::to($this->email)->send(new CommentMail($this->user, $this->article, $this->subject));
+        $res = Mail::to($this->email)->send(new CommentMail($this->user, $this->article, $this->subject, $this->comment));
     }
 }

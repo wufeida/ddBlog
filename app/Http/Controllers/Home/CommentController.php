@@ -56,34 +56,36 @@ class CommentController extends Controller
             if ($email[0] === 'error') return custom_json('error', $email[1]);
             $this->user->update($uid, ['email'=>$data['email']]);
         }
-
-        //给用户发送邮箱
-        $aid = $data['commentable_id'];
-        $article = $this->article->getById($aid);
-        if (isset($data['pid'])) {
-            $reply_uid = $this->comment->getUidByPid($data['pid'])->user_id;
-            if ($reply_uid !== $uid && $reply_uid !== 1) {
-                $user = $this->user->getById($reply_uid);
-                if ($user && $user->email && $user->email_notify) {
-                    dispatch(new SendCommentEmail($user->email, Auth::user(), $article, $this->config->name.'回复'));
-                }
-            }
-        }
-
-        //给超级管理员发送邮箱
-        if ($uid !== 1) {
-            $admin = $this->user->getById(1);
-            $admin_email = $admin->email;
-            if ($admin_email) {
-                dispatch(new SendCommentEmail($admin_email, Auth::user(), $article, '有人评论了你的文章'));
-            }
-        }
-
         //评论保存
         $res = $this->comment->store($data);
-        //删除该篇文章评论缓存
-        Cache::tags('comment')->forget('article-comments-'.$aid);
-        Cache::forget('home-comment');
-        return custom_json($res);
+        if ($res) {
+            //给用户发送邮箱
+            $aid = $data['commentable_id'];
+            $article = $this->article->getById($aid);
+            if (isset($data['pid'])) {
+                $reply_uid = $this->comment->getUidByPid($data['pid'])->user_id;
+                if ($reply_uid !== $uid && $reply_uid !== 1) {
+                    $user = $this->user->getById($reply_uid);
+                    if ($user && $user->email && $user->email_notify) {
+                        dispatch(new SendCommentEmail($user->email, Auth::user(), $article, $this->config->name.'回复', $res->content['html']));
+                    }
+                }
+            }
+
+            //给超级管理员发送邮箱
+            if ($uid !== 1) {
+                $admin = $this->user->getById(1);
+                $admin_email = $admin->email;
+                if ($admin_email) {
+                    dispatch(new SendCommentEmail($admin_email, Auth::user(), $article, '小主，有人评论了你的文章', $res->content['html']));
+                }
+            }
+
+            //删除该篇文章评论缓存
+            Cache::tags('comment')->forget('article-comments-'.$aid);
+            Cache::forget('home-comment');
+            return custom_json($res);
+        }
+        return custom_json('error', '评论失败');
     }
 }
