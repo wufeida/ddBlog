@@ -9,7 +9,7 @@
         @foreach($data as $v)
             <article class="am-g blog-entry-article">
                 <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-img">
-                    <a href="{{url("/$v->slug")}}" target="_blank"><img src="{{$v->page_image}}" alt="" class="am-u-sm-12"></a>
+                    <a href="{{url("/$v->slug")}}" target="_blank"><img src="{{$v->page_image}}" alt="{{config('blog.img_alt')}}" title="{{config('blog.img_alt')}}" class="am-u-sm-12"></a>
                 </div>
                 <div class="am-u-lg-6 am-u-md-12 am-u-sm-12 blog-entry-text">
                     <span><i class="fa fa-list-alt"></i>

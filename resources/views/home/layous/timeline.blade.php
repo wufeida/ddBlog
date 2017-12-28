@@ -43,9 +43,9 @@
           @if(Auth::check())
               @if(Auth::user()->is_admin)
                   @if(Auth::user()->avatar)
-                      <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
+                      <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="{{Auth::user()->nickname}}" title="{{Auth::user()->nickname}}">
                   @else
-                      <img width="30" height="30" src="/home/images/default_avatar.jpg" alt="">
+                      <img width="30" height="30" src="/home/images/default_avatar.jpg" alt="{{Auth::user()->nickname}}" title="{{Auth::user()->nickname}}">
                   @endif
                   <div class="am-dropdown" data-am-dropdown>
                   <a href="{{url('dd/index')}}" class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
@@ -57,9 +57,9 @@
                   </div>
               @else
                   @if(Auth::user()->avatar)
-                      <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="">
+                      <img width="30" height="30" src="{{Auth::user()->avatar}}" alt="{{Auth::user()->nickname}}" title="{{Auth::user()->nickname}}">
                   @else
-                      <img width="30" height="30" src="/home/images/default_avatar.jpg" alt="">
+                      <img width="30" height="30" src="/home/images/default_avatar.jpg" alt="{{Auth::user()->nickname}}" title="{{Auth::user()->nickname}}">
                   @endif
                   <span>{{Auth::user()->nickname}}</span>
               @endif

@@ -93,9 +93,9 @@
                     <div class="media">
                         <div class="media-left">
                             @if($v['user']['avatar'])
-                                <img src="{{$v['user']['avatar']}}" class="media-object img-circle">
+                                <img src="{{$v['user']['avatar']}}" class="media-object img-circle" alt="{{$v['user'] ? $v['user']['nickname'] : '无'}}" title="{{$v['user'] ? $v['user']['nickname'] : '无'}}">
                             @else
-                                <img src="/home/images/default_avatar.jpg" class="media-object img-circle">
+                                <img src="/home/images/default_avatar.jpg" class="media-object img-circle" alt="{{$v['user'] ? $v['user']['nickname'] : '无'}}" title="{{$v['user'] ? $v['user']['nickname'] : '无'}}">
                             @endif
                         </div>
                         <div class="media-body box-body">
@@ -120,9 +120,9 @@
                     <div class="media dada-media-child">
                         <div class="media-left">
                             @if($val['user']['avatar'])
-                                <img src="{{$val['user']['avatar']}}" class="media-object img-circle">
+                                <img src="{{$val['user']['avatar']}}" class="media-object img-circle" alt="{{$val['user'] ? $val['user']['nickname'] : '无'}}" title="{{$val['user'] ? $val['user']['nickname'] : '无'}}">
                             @else
-                                <img src="/home/images/default_avatar.jpg" class="media-object img-circle">
+                                <img src="/home/images/default_avatar.jpg" class="media-object img-circle"alt="{{$val['user'] ? $val['user']['nickname'] : '无'}}" title="{{$val['user'] ? $val['user']['nickname'] : '无'}}">
                             @endif
                         </div>
                         <div class="media-body box-body">
