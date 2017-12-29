@@ -19,10 +19,21 @@
     <script src="/home/assets/plugins/photo/photoswipe.js"></script>
     <script src="/home/assets/plugins/photo/photoswipe-ui-default.js"></script>
     <script src="/home/assets/js/article.js"></script>
+    <!-- JiaThis Button BEGIN -->
+    <script type="text/javascript">
+        var jiathis_config = {data_track_clickback:'true'};
+    </script>
+    <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?uid=2153028" charset="utf-8"></script>
+    <!-- JiaThis Button END -->
 @endsection
 
 @section('content')
 <!-- content srart -->
+<style>
+     .jiathis_style:nth-child{
+        border: none !important;
+    }
+</style>
     <div class="am-u-md-8 am-u-sm-12">
       <article class="am-article blog-article-p">
         <div class="am-article-hd">
