@@ -163,7 +163,9 @@ class ArticleController extends Controller
         $tags = explode(',', $request->get('tag'));
         $this->article->syncTag($tags);
         if ($res) {
+            Cache::tags('home-list')->flush();
             Cache::forget('article-'.$id);
+            Cache::forget('site-map');
         }
         return custom_json($res);
     }
