@@ -85,3 +85,6 @@
     float: right;
     border-radius: 0 0 5px 0;
 }
+.jiathis_style:nth-child(4)>div{
+    border: none !important;
+}

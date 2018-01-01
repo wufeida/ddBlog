@@ -29,11 +29,6 @@
 
 @section('content')
 <!-- content srart -->
-<style>
-     .jiathis_style:nth-child{
-        border: none !important;
-    }
-</style>
     <div class="am-u-md-8 am-u-sm-12">
       <article class="am-article blog-article-p">
         <div class="am-article-hd">
