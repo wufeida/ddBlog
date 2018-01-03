@@ -19,12 +19,9 @@
     <script src="/home/assets/plugins/photo/photoswipe.js"></script>
     <script src="/home/assets/plugins/photo/photoswipe-ui-default.js"></script>
     <script src="/home/assets/js/article.js"></script>
-    <!-- JiaThis Button BEGIN -->
-    <script type="text/javascript">
-        var jiathis_config = {data_track_clickback:'true'};
-    </script>
-    <script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?uid=2153028" charset="utf-8"></script>
-    <!-- JiaThis Button END -->
+    {{--百度分享开始--}}
+    <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"slide":{"type":"slide","bdImg":"1","bdPos":"right","bdTop":"100"}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+    {{--百度分享结束--}}
 @endsection
 
 @section('content')
