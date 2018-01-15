@@ -19,9 +19,15 @@
                 <hr>
                 @foreach($val as $value)
                 <li>
-                    <span class="am-u-sm-4 am-u-md-2 timeline-span">{{$value['published_at']}}</span>
-                    <span class="am-u-sm-8 am-u-md-6"><a href="{{url($value['slug'])}}" target="_blank">{{$value['title']}}</a></span>
-                    <span class="am-u-sm-4 am-u-md-2 am-hide-sm-only"><a href="{{url("category").'/'.$value['category']['id']}}" target="_blank">{{$value['category']['name']}}</a></span>
+                    <span class="am-u-sm-4 am-u-md-2 timeline-span">
+                        {{str_limit($value['published_at'], $limit = 10, $end = '')}}
+                    </span>
+                    <span class="am-u-sm-8 am-u-md-8">
+                        <a href="{{url($value['slug'])}}" target="_blank">{{$value['title']}}</a>
+                    </span>
+                    <span class="am-u-sm-4 am-u-md-2 am-hide-sm-only">
+                        <a href="{{url("category").'/'.$value['category']['id']}}" target="_blank">{{$value['category']['name']}}</a>
+                    </span>
                 </li>
                 @endforeach
                 </ul>
